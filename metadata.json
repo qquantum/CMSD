@@ -1,0 +1,6 @@
+{
+  "name": "Tire Digital Product Passport",
+  "description": "Enterprise-grade Digital Product Passport (DPP) platform for individual tire traceability, material composition, carbon footprint, circularity, and end-of-life intelligence.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
