@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import { SupplierNetworkNode, DataProvenance } from '../../types';
 import { Network, ShieldCheck, Building2, MapPin, Award, FileSearch, Filter, Flame, CheckCircle2, AlertTriangle, Users } from 'lucide-react';
+import { StageNavigationFooter } from '../StageNavigationFooter';
 
 interface SupplierNetworkSectionProps {
   suppliers: SupplierNetworkNode[];
   onOpenProvenance: (prov: DataProvenance) => void;
+  onSelectSection?: (section: any) => void;
 }
 
 export const SupplierNetworkSection: React.FC<SupplierNetworkSectionProps> = ({
   suppliers,
   onOpenProvenance,
+  onSelectSection,
 }) => {
   const [selectedSupplierId, setSelectedSupplierId] = useState<string>(suppliers[0].id);
   const [filterCategory, setFilterCategory] = useState<string>('All');
@@ -32,41 +35,41 @@ export const SupplierNetworkSection: React.FC<SupplierNetworkSectionProps> = ({
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <span className="status-tag tag-verified">
-              SECTION 06
+            <span className="status-tag tag-verified text-xs">
+              SECTION 06 • VALUE CHAIN
             </span>
-            <h2 className="text-xl sm:text-2xl font-extrabold text-[#FFFFFF] font-tech tracking-wide uppercase">
+            <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
               Tier-1 & Tier-2 Supplier Network & ESG Scorecard
             </h2>
           </div>
-          <p className="text-xs sm:text-sm text-[#8E9299] mt-1.5">
-            Interactive supplier ecosystem graph connected to the central AeroCrest manufacturing hub with audited ESG metrics.
+          <p className="text-sm text-slate-500 mt-1">
+            Interactive supplier ecosystem graph connected to the central Michelin manufacturing hub with audited ESG metrics.
           </p>
         </div>
 
         {/* Aggregate Supplier Confidence Pill */}
-        <div className="flex items-center gap-3 bg-[#151619] border border-[#2D2F33] px-3.5 py-2 rounded">
+        <div className="flex items-center gap-3 bg-white border border-slate-200 px-4 py-2.5 rounded-xl shadow-xs">
           <div>
-            <span className="text-[10px] text-[#8E9299] block font-mono-code uppercase">Audited Tier-1 Coverage</span>
-            <span className="text-xs font-mono-code font-bold text-[#00FF41]">100% PASSED VALID AUDIT</span>
+            <span className="text-[11px] text-slate-500 block font-mono-code uppercase font-semibold">Audited Tier-1 Coverage</span>
+            <span className="text-xs font-mono-code font-bold text-emerald-700">100% PASSED VALID AUDIT</span>
           </div>
         </div>
       </div>
 
       {/* Filter Row */}
-      <div className="flex flex-wrap items-center justify-between gap-3 bg-[#151619] border border-[#2D2F33] p-2.5 rounded">
+      <div className="flex flex-wrap items-center justify-between gap-3 bg-white border border-slate-200 p-3 rounded-xl shadow-2xs">
         <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar">
-          <span className="text-xs text-[#8E9299] font-mono-code mr-1 flex items-center gap-1">
+          <span className="text-xs text-slate-500 font-mono-code mr-1 flex items-center gap-1">
             <Filter className="w-3.5 h-3.5" /> Category:
           </span>
           {categories.map((c) => (
             <button
               key={c}
               onClick={() => setFilterCategory(c)}
-              className={`px-2.5 py-1 rounded text-xs font-mono-code font-bold uppercase whitespace-nowrap transition-colors ${
+              className={`px-3 py-1 rounded-lg text-xs font-mono-code font-bold uppercase whitespace-nowrap transition-colors ${
                 filterCategory === c
-                  ? 'bg-[#00F5FF]/15 text-[#00F5FF] border border-[#00F5FF]'
-                  : 'bg-[#0B0C0E] text-[#8E9299] hover:text-[#FFFFFF] border border-[#2D2F33]'
+                  ? 'bg-blue-600 text-white shadow-2xs'
+                  : 'bg-slate-50 text-slate-600 hover:text-slate-900 border border-slate-200'
               }`}
             >
               {c}
@@ -75,15 +78,15 @@ export const SupplierNetworkSection: React.FC<SupplierNetworkSectionProps> = ({
         </div>
 
         <div className="flex items-center gap-1.5">
-          <span className="text-xs text-[#8E9299] font-mono-code mr-1">Risk:</span>
+          <span className="text-xs text-slate-500 font-mono-code mr-1">Risk:</span>
           {risks.map((r) => (
             <button
               key={r}
               onClick={() => setFilterRisk(r)}
-              className={`px-2 py-1 rounded text-xs font-mono-code font-bold uppercase transition-colors ${
+              className={`px-2.5 py-1 rounded-lg text-xs font-mono-code font-bold uppercase transition-colors ${
                 filterRisk === r
-                  ? 'bg-[#00FF41]/15 text-[#00FF41] border border-[#00FF41]'
-                  : 'bg-[#0B0C0E] text-[#8E9299] hover:text-[#FFFFFF] border border-[#2D2F33]'
+                  ? 'bg-emerald-600 text-white shadow-2xs'
+                  : 'bg-slate-50 text-slate-600 hover:text-slate-900 border border-slate-200'
               }`}
             >
               {r}
@@ -95,20 +98,20 @@ export const SupplierNetworkSection: React.FC<SupplierNetworkSectionProps> = ({
       {/* Network Graph Visualizer & Supplier Dossier */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left: Dynamic Node Visualizer Graph */}
-        <div className="lg:col-span-7 bg-[#151619] border border-[#2D2F33] rounded-lg p-6 flex flex-col justify-between relative overflow-hidden shadow-xl min-h-[420px]">
-          <div className="flex items-center justify-between text-xs text-[#8E9299] mb-2">
-            <span className="font-mono-code font-bold uppercase tracking-wider text-[#00F5FF]">
+        <div className="lg:col-span-7 bg-white border border-slate-200 rounded-xl p-6 flex flex-col justify-between relative overflow-hidden shadow-xs min-h-[420px]">
+          <div className="flex items-center justify-between text-xs text-slate-500 mb-2">
+            <span className="font-mono-code font-bold uppercase tracking-wider text-blue-700">
               INTERACTIVE TOPOLOGY HUB
             </span>
-            <span className="text-[10px] text-[#8E9299] font-mono-code">Click any supplier node</span>
+            <span className="text-xs text-slate-500 font-mono-code">Click any supplier node</span>
           </div>
 
           {/* SVG Radial Topology Graph */}
           <div className="relative w-full aspect-square max-w-md mx-auto flex items-center justify-center p-2">
             <svg className="w-full h-full" viewBox="0 0 500 500">
               {/* Radial orbits */}
-              <circle cx="250" cy="250" r="180" fill="none" stroke="#2D2F33" strokeWidth="1" strokeDasharray="4 4" />
-              <circle cx="250" cy="250" r="110" fill="none" stroke="#2D2F33" strokeWidth="1" strokeDasharray="3 3" />
+              <circle cx="250" cy="250" r="180" fill="none" stroke="#e2e8f0" strokeWidth="1.5" strokeDasharray="4 4" />
+              <circle cx="250" cy="250" r="110" fill="none" stroke="#e2e8f0" strokeWidth="1.5" strokeDasharray="3 3" />
 
               {/* Connecting Lines to Central Hub */}
               {suppliers.map((s, i) => {
@@ -125,24 +128,24 @@ export const SupplierNetworkSection: React.FC<SupplierNetworkSectionProps> = ({
                     y1="250"
                     x2={nodeX}
                     y2={nodeY}
-                    stroke={isSelected ? '#00F5FF' : '#2D2F33'}
-                    strokeWidth={isSelected ? '2' : '1'}
-                    strokeDasharray={isSelected ? 'none' : '3 2'}
+                    stroke={isSelected ? '#2563eb' : '#cbd5e1'}
+                    strokeWidth={isSelected ? '2.5' : '1.5'}
+                    strokeDasharray={isSelected ? 'none' : '4 3'}
                   />
                 );
               })}
 
               {/* Central Node: Tire Manufacturer */}
-              <circle cx="250" cy="250" r="42" fill="#0B0C0E" stroke="#00F5FF" strokeWidth="2" />
-              <circle cx="250" cy="250" r="48" fill="none" stroke="#00F5FF" strokeWidth="1" opacity="0.3" className="animate-pulse" />
-              <text x="250" y="246" textAnchor="middle" fill="#FFFFFF" fontSize="10" fontWeight="bold" fontFamily="Chakra Petch">
-                AEROCREST
+              <circle cx="250" cy="250" r="44" fill="#0f172a" stroke="#2563eb" strokeWidth="3" className="shadow-lg" />
+              <circle cx="250" cy="250" r="50" fill="none" stroke="#2563eb" strokeWidth="1.5" opacity="0.4" className="animate-pulse" />
+              <text x="250" y="246" textAnchor="middle" fill="#ffffff" fontSize="11" fontWeight="bold" fontFamily="Plus Jakarta Sans">
+                MICHELIN
               </text>
-              <text x="250" y="258" textAnchor="middle" fill="#8E9299" fontSize="8" fontFamily="JetBrains Mono">
-                PLANT #4 (FR)
+              <text x="250" y="260" textAnchor="middle" fill="#93c5fd" fontSize="9" fontWeight="bold" fontFamily="JetBrains Mono">
+                FRANCE PLANT
               </text>
 
-              {/* Outer Supplier Nodes */}
+              {/* Outer Nodes */}
               {suppliers.map((s, i) => {
                 const angle = (i / suppliers.length) * 2 * Math.PI - Math.PI / 2;
                 const radius = 180;
@@ -152,7 +155,7 @@ export const SupplierNetworkSection: React.FC<SupplierNetworkSectionProps> = ({
 
                 return (
                   <g
-                    key={`node-${s.id}`}
+                    key={s.id}
                     className="cursor-pointer group"
                     onClick={() => setSelectedSupplierId(s.id)}
                   >
@@ -160,44 +163,46 @@ export const SupplierNetworkSection: React.FC<SupplierNetworkSectionProps> = ({
                       <circle
                         cx={nodeX}
                         cy={nodeY}
-                        r="28"
+                        r="26"
                         fill="none"
-                        stroke="#00F5FF"
+                        stroke="#2563eb"
                         strokeWidth="2"
                         className="animate-ping"
+                        opacity="0.6"
                       />
                     )}
                     <circle
                       cx={nodeX}
                       cy={nodeY}
-                      r={isSelected ? '20' : '16'}
-                      fill={isSelected ? '#151619' : '#0B0C0E'}
-                      stroke={isSelected ? '#00F5FF' : '#2D2F33'}
-                      strokeWidth="2"
-                      className="transition-all group-hover:scale-110"
+                      r={isSelected ? '22' : '17'}
+                      fill={isSelected ? '#eff6ff' : '#ffffff'}
+                      stroke={isSelected ? '#2563eb' : '#94a3b8'}
+                      strokeWidth={isSelected ? '2.5' : '1.5'}
+                      className="transition-transform group-hover:scale-110 shadow-sm"
                     />
                     <text
                       x={nodeX}
                       y={nodeY + 4}
                       textAnchor="middle"
-                      fill={isSelected ? '#00F5FF' : '#FFFFFF'}
+                      fill={isSelected ? '#1d4ed8' : '#334155'}
                       fontSize="9"
                       fontWeight="bold"
                       fontFamily="JetBrains Mono"
                       className="pointer-events-none"
                     >
-                      {s.esgScore}
+                      {s.tier}
                     </text>
                     <text
                       x={nodeX}
-                      y={nodeY + 32}
+                      y={nodeY + (nodeY > 250 ? 34 : -24)}
                       textAnchor="middle"
-                      fill="#8E9299"
-                      fontSize="9"
-                      fontFamily="JetBrains Mono"
-                      className="pointer-events-none"
+                      fill="#0f172a"
+                      fontSize="10"
+                      fontWeight="600"
+                      fontFamily="Plus Jakarta Sans"
+                      className="pointer-events-none drop-shadow-sm"
                     >
-                      {s.country}
+                      {(s.name || '').split(' ')[0] || ''}
                     </text>
                   </g>
                 );
@@ -205,21 +210,21 @@ export const SupplierNetworkSection: React.FC<SupplierNetworkSectionProps> = ({
             </svg>
           </div>
 
-          {/* Bottom Chips */}
-          <div className="flex flex-wrap items-center gap-1.5 mt-3 pt-3 border-t border-[#2D2F33]">
+          {/* Quick List Selector */}
+          <div className="flex flex-wrap items-center gap-1.5 mt-3 pt-3 border-t border-slate-100">
             {filteredSuppliers.map((s) => {
               const isSelected = s.id === activeSupplier.id;
               return (
                 <button
                   key={s.id}
                   onClick={() => setSelectedSupplierId(s.id)}
-                  className={`px-2.5 py-1 rounded text-xs font-mono-code font-bold uppercase transition-all ${
+                  className={`px-3 py-1 rounded-lg text-xs font-mono-code font-bold uppercase transition-all ${
                     isSelected
-                      ? 'bg-[#00F5FF]/15 text-[#00F5FF] border border-[#00F5FF]'
-                      : 'bg-[#0B0C0E] text-[#8E9299] hover:text-[#FFFFFF] border border-[#2D2F33]'
+                      ? 'bg-blue-600 text-white shadow-2xs'
+                      : 'bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200'
                   }`}
                 >
-                  {s.name} ({s.country})
+                  {s.name}
                 </button>
               );
             })}
@@ -227,87 +232,86 @@ export const SupplierNetworkSection: React.FC<SupplierNetworkSectionProps> = ({
         </div>
 
         {/* Right: Selected Supplier Dossier */}
-        <div className="lg:col-span-5 bg-[#151619] border border-[#2D2F33] rounded-lg p-6 flex flex-col justify-between shadow-xl">
+        <div className="lg:col-span-5 bg-white border border-slate-200 rounded-xl p-6 flex flex-col justify-between shadow-xs space-y-4">
           <div className="space-y-4">
-            {/* Header */}
             <div>
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-mono-code text-[#00F5FF] font-bold uppercase tracking-wider">
-                  TIER-{activeSupplier.tier} VERIFIED PARTNER
+                <span className="text-xs font-mono-code text-blue-700 font-bold uppercase tracking-wider">
+                  TIER {activeSupplier.tier} • {activeSupplier.category}
                 </span>
-                <span className="status-tag tag-green">
-                  {activeSupplier.auditStatus}
+                <span className="status-tag tag-green text-xs">
+                  {activeSupplier.status}
                 </span>
               </div>
-              <h3 className="text-xl font-bold font-tech text-[#FFFFFF] mt-1">
+              <h3 className="text-xl font-bold text-slate-900 mt-1">
                 {activeSupplier.name}
               </h3>
-              <p className="text-xs text-[#8E9299] mt-0.5 flex items-center gap-1 font-mono-code">
-                <MapPin className="w-3.5 h-3.5 text-[#00FF41]" />
+              <p className="text-xs text-slate-500 mt-0.5 flex items-center gap-1 font-mono-code">
+                <MapPin className="w-3.5 h-3.5 text-emerald-600" />
                 {activeSupplier.city}, {activeSupplier.country} • {activeSupplier.facilityType}
               </p>
             </div>
 
             {/* ESG & Traceability Metric Tiles */}
             <div className="grid grid-cols-3 gap-2">
-              <div className="bg-[#0B0C0E] border border-[#2D2F33] p-2.5 rounded text-center">
-                <span className="text-[10px] text-[#8E9299] uppercase font-mono-code block">ESG Rating</span>
-                <span className="text-lg font-extrabold font-mono-code text-[#00FF41] mt-0.5 block">
+              <div className="bg-slate-50 border border-slate-200 p-3 rounded-xl text-center">
+                <span className="text-[10px] text-slate-500 uppercase font-mono-code block font-semibold">ESG Rating</span>
+                <span className="text-lg font-extrabold font-mono-code text-emerald-700 mt-0.5 block">
                   {activeSupplier.esgScore}/100
                 </span>
-                <span className="text-[9px] text-[#8E9299] font-mono-code">EcoVadis Gold</span>
+                <span className="text-[10px] text-slate-500 font-mono-code">EcoVadis Gold</span>
               </div>
 
-              <div className="bg-[#0B0C0E] border border-[#2D2F33] p-2.5 rounded text-center">
-                <span className="text-[10px] text-[#8E9299] uppercase font-mono-code block">Traceability</span>
-                <span className="text-lg font-extrabold font-mono-code text-[#00F5FF] mt-0.5 block">
+              <div className="bg-slate-50 border border-slate-200 p-3 rounded-xl text-center">
+                <span className="text-[10px] text-slate-500 uppercase font-mono-code block font-semibold">Traceability</span>
+                <span className="text-lg font-extrabold font-mono-code text-blue-700 mt-0.5 block">
                   {activeSupplier.traceabilityPercentage}%
                 </span>
-                <span className="text-[9px] text-[#8E9299] font-mono-code">Batch Level</span>
+                <span className="text-[10px] text-slate-500 font-mono-code">Batch Level</span>
               </div>
 
-              <div className="bg-[#0B0C0E] border border-[#2D2F33] p-2.5 rounded text-center">
-                <span className="text-[10px] text-[#8E9299] uppercase font-mono-code block">Risk Level</span>
-                <span className="text-lg font-extrabold font-mono-code text-[#00FF41] mt-0.5 block">
+              <div className="bg-slate-50 border border-slate-200 p-3 rounded-xl text-center">
+                <span className="text-[10px] text-slate-500 uppercase font-mono-code block font-semibold">Risk Level</span>
+                <span className="text-lg font-extrabold font-mono-code text-emerald-700 mt-0.5 block">
                   {activeSupplier.riskLevel}
                 </span>
-                <span className="text-[9px] text-[#8E9299] font-mono-code">Monitored</span>
+                <span className="text-[10px] text-slate-500 font-mono-code">Monitored</span>
               </div>
             </div>
 
             {/* Materials Supplied */}
-            <div className="bg-[#0B0C0E] border border-[#2D2F33] p-3.5 rounded space-y-1.5">
-              <span className="text-[10px] font-bold text-[#8E9299] uppercase tracking-wider block font-mono-code">
+            <div className="bg-slate-50 border border-slate-200 p-4 rounded-xl space-y-2">
+              <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block font-mono-code">
                 Supplied Feedstocks & Intermediate Products
               </span>
               <div className="flex flex-wrap gap-1.5">
                 {activeSupplier.materialsSupplied.map((m, i) => (
                   <span
                     key={i}
-                    className="status-tag tag-verified"
+                    className="status-tag tag-verified text-xs"
                   >
                     {m}
                   </span>
                 ))}
               </div>
-              <div className="pt-2 flex items-center justify-between text-xs text-[#8E9299] border-t border-[#2D2F33] font-mono-code text-[11px]">
-                <span>Carbon Intensity: <strong className="text-[#00F5FF]">{activeSupplier.carbonIntensityKgCO2e} kg CO₂e/kg</strong></span>
-                <span>Contract: <strong className="text-[#FFFFFF]">{activeSupplier.contractsRenewed}</strong></span>
+              <div className="pt-2 flex items-center justify-between text-xs text-slate-600 border-t border-slate-200 font-mono-code">
+                <span>Carbon Intensity: <strong className="text-blue-700">{activeSupplier.carbonIntensityKgCO2e} kg CO₂e/kg</strong></span>
+                <span>Contract: <strong className="text-slate-900">{activeSupplier.contractsRenewed}</strong></span>
               </div>
             </div>
 
             {/* Certifications */}
             <div>
-              <span className="text-[10px] font-bold text-[#8E9299] uppercase tracking-wider block mb-1.5 font-mono-code">
+              <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-1.5 font-mono-code">
                 Audited Standards & Certifications
               </span>
               <div className="flex flex-wrap gap-1.5">
                 {activeSupplier.certifications.map((c, i) => (
                   <span
                     key={i}
-                    className="status-tag tag-green flex items-center gap-1"
+                    className="status-tag tag-green text-xs flex items-center gap-1"
                   >
-                    <Award className="w-3 h-3 text-[#00FF41]" /> {c}
+                    <Award className="w-3 h-3 text-emerald-600" /> {c}
                   </span>
                 ))}
               </div>
@@ -315,20 +319,23 @@ export const SupplierNetworkSection: React.FC<SupplierNetworkSectionProps> = ({
           </div>
 
           {/* Provenance Button */}
-          <div className="mt-5 pt-3 border-t border-[#2D2F33] flex items-center justify-between">
-            <span className="text-xs text-[#8E9299] font-mono-code text-[11px]">
+          <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
+            <span className="text-xs text-slate-500 font-mono-code">
               Last Audit: {activeSupplier.lastAuditDate}
             </span>
             <button
               onClick={() => onOpenProvenance(activeSupplier.provenance)}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded bg-[#0B0C0E] hover:bg-[#1A1C1F] border border-[#2D2F33] text-[#00F5FF] text-xs font-mono-code font-bold uppercase transition-colors"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-xs font-mono-code font-bold uppercase transition-colors shadow-2xs"
             >
-              <FileSearch className="w-3.5 h-3.5" />
-              [SOURCE: {activeSupplier.provenance.sourceDoc}]
+              <FileSearch className="w-3.5 h-3.5 text-cyan-400" />
+              <span>SOURCE: {activeSupplier.provenance.sourceDoc}</span>
             </button>
           </div>
         </div>
       </div>
+
+      {/* Stage Navigation Footer to Eco-Manufacturing */}
+      <StageNavigationFooter activeSection="supply-chain" onSelectSection={onSelectSection || (() => {})} />
     </div>
   );
 };

@@ -43,8 +43,8 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({ activeSection, o
   ];
 
   return (
-    <nav className="w-full bg-[#0B0C0E] border-b border-[#2D2F33] sticky top-23 z-30 overflow-x-auto no-scrollbar">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center gap-1 py-2">
+    <nav className="w-full bg-white border-b border-slate-200 sticky top-23 z-30 overflow-x-auto no-scrollbar shadow-2xs">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center gap-1.5 py-2">
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = activeSection === item.id;
@@ -53,23 +53,23 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({ activeSection, o
               key={item.id}
               id={`nav-tab-${item.id}`}
               onClick={() => onSelectSection(item.id)}
-              className={`flex items-center gap-2 px-3 py-2 rounded text-xs font-semibold whitespace-nowrap transition-all shrink-0 font-mono-code ${
+              className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-semibold whitespace-nowrap transition-all shrink-0 font-mono-code ${
                 isActive
-                  ? 'bg-[#151619] text-[#FFFFFF] border-b-2 border-b-[#00F5FF] border-t border-l border-r border-[#2D2F33] shadow-sm shadow-[#00F5FF]/5'
+                  ? 'bg-blue-50 text-blue-900 border border-blue-200 shadow-2xs font-bold'
                   : item.highlight
-                  ? 'text-[#00F5FF] hover:text-[#FFFFFF] hover:bg-[#151619]/60 border border-[#00F5FF]/20'
-                  : 'text-[#8E9299] hover:text-[#FFFFFF] hover:bg-[#151619]/60 border border-transparent'
+                  ? 'text-blue-700 hover:text-blue-950 hover:bg-blue-50/50 border border-blue-100 bg-blue-50/30'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 border border-transparent'
               }`}
             >
-              <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-[#00F5FF]' : item.highlight ? 'text-[#00F5FF]' : 'text-[#8E9299]'}`} />
-              <span className="tracking-wide font-tech">{item.label}</span>
+              <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-blue-600' : item.highlight ? 'text-blue-600' : 'text-slate-500'}`} />
+              <span className="tracking-wide font-sans">{item.label}</span>
               {item.badge && (
-                <span className={`text-[9px] px-1.5 py-0.2 rounded font-mono-code font-bold uppercase ${
+                <span className={`text-[10px] px-1.5 py-0.5 rounded font-mono-code font-bold uppercase ${
                   isActive 
-                    ? 'bg-[#00F5FF]/15 text-[#00F5FF] border border-[#00F5FF]/30' 
+                    ? 'bg-blue-200/80 text-blue-900' 
                     : item.highlight
-                    ? 'bg-[#00F5FF]/10 text-[#00F5FF] border border-[#00F5FF]/20'
-                    : 'bg-[#151619] text-[#8E9299] border border-[#2D2F33]'
+                    ? 'bg-blue-100 text-blue-800'
+                    : 'bg-slate-100 text-slate-600'
                 }`}>
                   {item.badge}
                 </span>

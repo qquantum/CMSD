@@ -14,7 +14,8 @@ import {
   QrCode,
   Compass,
   Info,
-  FileCode2
+  FileCode2,
+  CheckCircle2
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -61,28 +62,28 @@ export const Navbar: React.FC<NavbarProps> = ({
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full bg-[#0B0C0E] border-b border-[#2D2F33]">
+    <header className="sticky top-0 z-40 w-full bg-white border-b border-slate-200 shadow-2xs">
       {/* Top Demo Data & Regulatory Strip */}
-      <div className="w-full bg-[#0B0C0E] border-b border-[#2D2F33] px-4 py-1 flex items-center justify-between text-[11px] text-[#8E9299]">
+      <div className="w-full bg-slate-50 border-b border-slate-200 px-4 py-1.5 flex items-center justify-between text-xs text-slate-600">
         <div className="flex items-center gap-3">
-          <span className="status-tag tag-verified text-[10px]">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#00F5FF] animate-pulse"></span>
-            MICHELIN GROUP DPP ENTERPRISE v2.4
+          <span className="status-tag tag-verified text-[11px]">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+            MICHELIN GROUP DPP • OFFICIAL REGISTER
           </span>
-          <span className="hidden sm:inline text-[#2D2F33]">|</span>
-          <span className="hidden sm:inline text-[#8E9299]">
-            EU ESPR DPP Registry (2024/1781) • EPREL #1488204 • ISO 14067 EPD
+          <span className="hidden sm:inline text-slate-300">|</span>
+          <span className="hidden sm:inline text-slate-600 font-medium">
+            EU ESPR (2024/1781) • EPREL #1488204 • ISO 14067 LCA Audited
           </span>
         </div>
 
-        <div className="flex items-center gap-3 font-mono-code text-[11px]">
-          <span className="text-[#8E9299] flex items-center gap-1">
-            <span className="text-[#8E9299]">PASSPORT ID:</span> 
-            <strong className="text-[#00F5FF]">{activeTire.passportId}</strong>
+        <div className="flex items-center gap-3 font-mono-code text-xs">
+          <span className="text-slate-500 flex items-center gap-1.5">
+            <span>PASSPORT ID:</span> 
+            <strong className="text-blue-800 font-bold">{activeTire.passportId}</strong>
           </span>
-          <span className="hidden md:inline text-[#2D2F33]">|</span>
-          <span className="hidden md:inline text-[#8E9299]">
-            Plant: <strong className="text-[#FFFFFF]">Clermont-Ferrand (FR)</strong>
+          <span className="hidden md:inline text-slate-300">|</span>
+          <span className="hidden md:inline text-slate-500">
+            Plant: <strong className="text-slate-800 font-medium">Clermont-Ferrand (FR)</strong>
           </span>
         </div>
       </div>
@@ -91,22 +92,22 @@ export const Navbar: React.FC<NavbarProps> = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
         {/* Brand & Identity */}
         <div className="flex items-center gap-3.5 shrink-0">
-          <div className="relative flex items-center justify-center w-9 h-9 rounded-sm bg-white text-black font-black">
-            <div className="w-5 h-5 border-4 border-black rounded-full"></div>
-            <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-[#00FF41] ring-2 ring-[#0B0C0E]"></span>
+          <div className="relative flex items-center justify-center w-9 h-9 rounded-lg bg-[#003087] text-white font-black shadow-xs">
+            <div className="w-5 h-5 border-3 border-white rounded-full"></div>
+            <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-white"></span>
           </div>
 
           <div>
             <div className="flex items-center gap-2">
-              <span className="font-tech text-base sm:text-lg font-bold tracking-tight text-white uppercase">
-                MICHELIN<span className="text-[#00F5FF] font-light">·DPP</span>
+              <span className="text-lg font-black tracking-tight text-[#003087] uppercase">
+                MICHELIN<span className="text-blue-600 font-bold">·DPP</span>
               </span>
               <span className="status-tag tag-verified">
-                <ShieldCheck className="w-3 h-3" />
+                <CheckCircle2 className="w-3 h-3 text-emerald-600" />
                 Passport Verified
               </span>
             </div>
-            <p className="text-[11px] text-[#8E9299] font-mono-code hidden sm:block">
+            <p className="text-xs text-slate-500 font-mono-code hidden sm:block">
               {activeTire.productName} • {activeTire.tireSize}
             </p>
           </div>
@@ -115,20 +116,20 @@ export const Navbar: React.FC<NavbarProps> = ({
         {/* Center Search Input */}
         <div className="hidden lg:flex flex-1 max-w-xs xl:max-w-sm">
           <form onSubmit={handleSearchSubmit} className="relative w-full">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#8E9299]" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
             <input
               id="passport-quick-search-input"
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search serial, VIN, GTIN, or plant..."
-              className="w-full pl-9 pr-8 py-1.5 bg-[#151619] border border-[#2D2F33] rounded text-xs text-[#FFFFFF] placeholder-[#8E9299] focus:outline-none focus:border-[#00F5FF] transition-colors font-mono-code"
+              className="w-full pl-9 pr-8 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:bg-white transition-colors font-mono-code"
             />
             {searchQuery && (
               <button 
                 type="button" 
                 onClick={() => setSearchQuery('')}
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] text-[#8E9299] hover:text-[#FFFFFF]"
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs text-slate-400 hover:text-slate-700"
               >
                 ✕
               </button>
@@ -137,15 +138,15 @@ export const Navbar: React.FC<NavbarProps> = ({
         </div>
 
         {/* Actions & Role Switcher */}
-        <div className="flex items-center gap-2 sm:gap-3">
+        <div className="flex items-center gap-2 sm:gap-2.5">
           {/* 3D Studio Shortcut */}
           {onOpen3DStudio && (
             <button
               onClick={onOpen3DStudio}
               title="Launch 3D WebGL Exploded Twin & Storyboard"
-              className="flex items-center gap-1.5 px-3 py-2 rounded bg-[#00F5FF]/10 hover:bg-[#00F5FF]/20 border border-[#00F5FF]/40 text-[#00F5FF] text-xs font-bold font-mono-code uppercase transition-all"
+              className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-blue-50 hover:bg-blue-100 border border-blue-200 text-blue-700 text-xs font-bold font-mono-code uppercase transition-all shadow-2xs"
             >
-              <Sparkles className="w-3.5 h-3.5" />
+              <Sparkles className="w-3.5 h-3.5 text-blue-600" />
               <span className="hidden sm:inline">3D Twin</span>
             </button>
           )}
@@ -155,9 +156,9 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               onClick={onOpenCodeStudio}
               title="View & Copy Recreation Source Code"
-              className="flex items-center gap-1.5 px-2.5 py-2 rounded bg-[#151619] border border-[#2D2F33] hover:border-[#3D4046] text-[#8E9299] hover:text-[#FFFFFF] text-xs font-bold font-mono-code uppercase transition-colors"
+              className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-700 text-xs font-bold font-mono-code uppercase transition-colors shadow-2xs"
             >
-              <FileCode2 className="w-3.5 h-3.5 text-[#00FF41]" />
+              <FileCode2 className="w-3.5 h-3.5 text-slate-600" />
               <span className="hidden md:inline">Code</span>
             </button>
           )}
@@ -166,11 +167,11 @@ export const Navbar: React.FC<NavbarProps> = ({
           <button
             id="trace-my-tire-btn"
             onClick={onOpenTraceModal}
-            className="relative group flex items-center gap-2 px-3 sm:px-4 py-2 rounded bg-[#00F5FF] hover:bg-[#38f7ff] text-black font-bold text-xs uppercase tracking-wider shadow-lg shadow-[#00F5FF]/10 transition-all active:scale-95"
+            className="relative group flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-lg bg-blue-700 hover:bg-blue-800 text-white font-bold text-xs uppercase tracking-wide shadow-sm transition-all active:scale-95"
           >
-            <Compass className="w-4 h-4 text-black group-hover:rotate-45 transition-transform duration-300" />
+            <Compass className="w-4 h-4 text-blue-100 group-hover:rotate-45 transition-transform duration-300" />
             <span>TRACE</span>
-            <span className="hidden md:inline-block px-1.5 py-0.2 rounded bg-black/15 text-[9px] font-mono-code font-bold">
+            <span className="hidden md:inline-block px-1.5 py-0.2 rounded bg-white/20 text-[10px] font-mono-code font-bold">
               10-STEP
             </span>
           </button>
@@ -180,9 +181,9 @@ export const Navbar: React.FC<NavbarProps> = ({
             id="open-compare-btn"
             onClick={onOpenCompareModal}
             title="Compare with Conventional & Prototype Tires"
-            className="flex items-center gap-1.5 px-2.5 sm:px-3 py-2 rounded bg-[#151619] border border-[#2D2F33] hover:border-[#3D4046] text-[#FFFFFF] text-xs font-semibold transition-colors"
+            className="flex items-center gap-1.5 px-2.5 sm:px-3 py-2 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 text-xs font-semibold transition-colors shadow-2xs"
           >
-            <Layers className="w-4 h-4 text-[#00F5FF]" />
+            <Layers className="w-4 h-4 text-blue-600" />
             <span className="hidden sm:inline">Compare</span>
           </button>
 
@@ -191,9 +192,9 @@ export const Navbar: React.FC<NavbarProps> = ({
             id="open-qr-btn"
             onClick={onOpenQrModal}
             title="View DPP QR / Data Matrix Identifier"
-            className="p-2 rounded bg-[#151619] border border-[#2D2F33] hover:border-[#3D4046] text-[#00F5FF] hover:text-[#FFFFFF] transition-colors"
+            className="p-2 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 transition-colors shadow-2xs"
           >
-            <QrCode className="w-4 h-4" />
+            <QrCode className="w-4 h-4 text-slate-700" />
           </button>
 
           {/* Export Button */}
@@ -201,9 +202,9 @@ export const Navbar: React.FC<NavbarProps> = ({
             id="open-export-btn"
             onClick={onOpenExportModal}
             title="Export Passport as JSON, CSV or PDF"
-            className="flex items-center gap-1.5 px-2.5 sm:px-3 py-2 rounded bg-[#151619] border border-[#2D2F33] hover:border-[#3D4046] text-[#8E9299] hover:text-[#FFFFFF] text-xs font-bold font-mono-code uppercase transition-colors"
+            className="flex items-center gap-1.5 px-2.5 sm:px-3 py-2 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 text-xs font-bold font-mono-code uppercase transition-colors shadow-2xs"
           >
-            <Download className="w-4 h-4 text-[#00FF41]" />
+            <Download className="w-4 h-4 text-emerald-600" />
             <span className="hidden md:inline">Export</span>
           </button>
 
@@ -212,23 +213,23 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               id="role-switcher-toggle"
               onClick={() => setShowRoleMenu(!showRoleMenu)}
-              className="flex items-center gap-2 px-2.5 sm:px-3 py-1.5 rounded bg-[#151619] border border-[#2D2F33] hover:border-[#00F5FF]/60 text-[#FFFFFF] text-xs font-semibold transition-all"
+              className="flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-800 text-xs font-semibold transition-all shadow-2xs"
             >
-              <div className="w-2 h-2 rounded-full bg-[#00FF41]"></div>
-              <span className="capitalize">{currentRole}</span>
-              <span className="text-[10px] text-[#8E9299] uppercase tracking-wider hidden sm:inline">Role</span>
+              <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
+              <span className="capitalize font-bold">{currentRole}</span>
+              <span className="text-[11px] text-slate-400 uppercase tracking-wider hidden sm:inline">Role</span>
             </button>
 
             {showRoleMenu && (
               <div 
                 id="role-dropdown-menu"
-                className="absolute right-0 mt-2 w-72 sm:w-80 bg-[#151619] border border-[#2D2F33] rounded-lg shadow-2xl p-2 z-50 animate-in fade-in zoom-in-95 duration-150"
+                className="absolute right-0 mt-2 w-72 sm:w-80 bg-white border border-slate-200 rounded-xl shadow-xl p-2 z-50 animate-in fade-in zoom-in-95 duration-150"
               >
-                <div className="px-3 py-2 border-b border-[#2D2F33]">
-                  <span className="text-[10px] font-bold text-[#8E9299] uppercase tracking-wider font-mono-code">
+                <div className="px-3 py-2 border-b border-slate-100">
+                  <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider font-mono-code">
                     Select Perspective Role
                   </span>
-                  <p className="text-[11px] text-[#8E9299]">Adapts disclosure depth & technical indicators</p>
+                  <p className="text-xs text-slate-500 mt-0.5">Adapts disclosure depth & technical indicators</p>
                 </div>
                 <div className="space-y-1 mt-1">
                   {roles.map((item) => {
@@ -241,21 +242,21 @@ export const Navbar: React.FC<NavbarProps> = ({
                           onSelectRole(item.role);
                           setShowRoleMenu(false);
                         }}
-                        className={`w-full flex items-start gap-3 p-2.5 rounded text-left transition-colors ${
+                        className={`w-full flex items-start gap-3 p-2.5 rounded-lg text-left transition-colors ${
                           isSelected 
-                            ? 'bg-[#00F5FF]/10 border border-[#00F5FF]/40 text-[#00F5FF]' 
-                            : 'hover:bg-[#1A1C1F] text-[#8E9299] hover:text-[#FFFFFF]'
+                            ? 'bg-blue-50 border border-blue-200 text-blue-900' 
+                            : 'hover:bg-slate-50 text-slate-700'
                         }`}
                       >
-                        <div className={`p-2 rounded mt-0.5 ${isSelected ? 'bg-[#00F5FF]/20 text-[#00F5FF]' : 'bg-[#0B0C0E] text-[#8E9299]'}`}>
+                        <div className={`p-2 rounded-md mt-0.5 ${isSelected ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-600'}`}>
                           <Icon className="w-4 h-4" />
                         </div>
                         <div>
                           <div className="flex items-center justify-between">
-                            <span className="text-xs font-bold font-tech tracking-wide">{item.label}</span>
-                            {isSelected && <span className="text-[9px] font-mono-code text-[#00F5FF] uppercase font-bold">Active</span>}
+                            <span className="text-xs font-bold text-slate-900">{item.label}</span>
+                            {isSelected && <span className="text-[10px] font-mono-code text-blue-700 uppercase font-bold">Active</span>}
                           </div>
-                          <p className="text-[11px] text-[#8E9299] leading-snug mt-0.5">{item.desc}</p>
+                          <p className="text-xs text-slate-500 leading-snug mt-0.5">{item.desc}</p>
                         </div>
                       </button>
                     );

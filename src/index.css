@@ -1,23 +1,34 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #0B0C0E;
-  --surface: #151619;
-  --surface-elevated: #1A1C1F;
-  --surface-glass: rgba(21, 22, 25, 0.75);
-  --accent-teal: #00F5FF;
-  --accent-green: #00FF41;
-  --border: #2D2F33;
-  --border-light: #3D4046;
-  --text-dim: #8E9299;
-  --text-bright: #FFFFFF;
+  --bg: #F8FAFC;
+  --surface: #FFFFFF;
+  --surface-elevated: #F1F5F9;
+  --surface-glass: rgba(255, 255, 255, 0.92);
+  --accent-blue: #003087;
+  --accent-cyan: #0284C7;
+  --accent-green: #059669;
+  --border: #E2E8F0;
+  --border-light: #CBD5E1;
+  --text-main: #0F172A;
+  --text-muted: #475569;
+  --text-dim: #64748B;
 }
 
 @layer base {
   body {
     background-color: var(--bg);
-    color: var(--text-bright);
+    color: var(--text-main);
     font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    letter-spacing: -0.011em;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: #0F172A;
+    letter-spacing: -0.025em;
   }
 
   .font-mono-code {
@@ -25,92 +36,106 @@
   }
 
   .font-tech {
-    font-family: 'Chakra Petch', sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 700;
   }
 }
 
 /* Custom scrollbars */
 ::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #0B0C0E;
+  background: #F1F5F9;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #2D2F33;
-  border-radius: 2px;
+  background: #CBD5E1;
+  border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #00F5FF;
+  background: #94A3B8;
 }
 
-/* Sophisticated Dark dot grid */
+/* Clean technical light dot grid */
 .circular-grid {
-  background-image: radial-gradient(#2D2F33 1px, transparent 1px);
+  background-image: radial-gradient(#CBD5E1 1px, transparent 1px);
   background-size: 20px 20px;
 }
 
 .tech-grid {
   background-size: 24px 24px;
   background-image: 
-    linear-gradient(to right, rgba(45, 47, 51, 0.5) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(45, 47, 51, 0.5) 1px, transparent 1px);
+    linear-gradient(to right, rgba(226, 232, 240, 0.8) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(226, 232, 240, 0.8) 1px, transparent 1px);
 }
 
 .glass {
-  background: rgba(21, 22, 25, 0.75);
+  background: rgba(255, 255, 255, 0.94);
   backdrop-filter: blur(12px);
   border: 1px solid var(--border);
 }
 
-.dark-surface {
-  background-color: #151619;
-  border: 1px solid #2D2F33;
+.light-surface {
+  background-color: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.05);
 }
 
-.dark-subsurface {
-  background-color: #0B0C0E;
-  border: 1px solid #2D2F33;
+.light-subsurface {
+  background-color: #F8FAFC;
+  border: 1px solid #E2E8F0;
 }
 
 .status-tag {
-  font-size: 9px;
-  font-weight: 700;
-  padding: 2px 6px;
-  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 6px;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
   font-family: 'JetBrains Mono', monospace;
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
 }
 
 .tag-verified {
-  background: rgba(0, 245, 255, 0.1);
-  color: var(--accent-teal);
-  border: 1px solid var(--accent-teal);
+  background: #ECFEFF;
+  color: #0E7490;
+  border: 1px solid #A5F3FC;
 }
 
 .tag-green {
-  background: rgba(0, 255, 65, 0.1);
-  color: var(--accent-green);
-  border: 1px solid var(--accent-green);
+  background: #ECFDF5;
+  color: #047857;
+  border: 1px solid #A7F3D0;
 }
 
 .tag-supplier {
-  background: rgba(255, 255, 255, 0.05);
-  color: var(--text-dim);
-  border: 1px solid var(--border);
+  background: #F1F5F9;
+  color: #475569;
+  border: 1px solid #E2E8F0;
+}
+
+.tag-blue {
+  background: #EFF6FF;
+  color: #1D4ED8;
+  border: 1px solid #BFDBFE;
+}
+
+.tag-amber {
+  background: #FFFBEB;
+  color: #B45309;
+  border: 1px solid #FDE68A;
 }
 
 .stat-value {
   font-family: 'JetBrains Mono', monospace;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .radar-sweep {
@@ -125,5 +150,6 @@
     transform: rotate(360deg);
   }
 }
+
 
 

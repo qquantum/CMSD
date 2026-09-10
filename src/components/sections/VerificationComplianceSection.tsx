@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { ComplianceStandard, TraceabilityScores, DataProvenance } from '../../types';
 import { ShieldCheck, FileCheck, CheckCircle2, Award, Download, FileSearch, Lock, Database, FileText, ExternalLink, Sparkles, Activity } from 'lucide-react';
+import { W3CComplianceStampGraphic } from '../graphics/W3CComplianceStampGraphic';
+import { StageNavigationFooter } from '../StageNavigationFooter';
 
 interface VerificationComplianceSectionProps {
   complianceList: ComplianceStandard[];
   scores: TraceabilityScores;
   onOpenProvenance: (prov: DataProvenance) => void;
   onExportAuditReport: () => void;
+  onSelectSection?: (section: any) => void;
 }
 
 export const VerificationComplianceSection: React.FC<VerificationComplianceSectionProps> = ({
@@ -14,6 +17,7 @@ export const VerificationComplianceSection: React.FC<VerificationComplianceSecti
   scores,
   onOpenProvenance,
   onExportAuditReport,
+  onSelectSection,
 }) => {
   const [selectedStandardId, setSelectedStandardId] = useState<string>(complianceList[0].id);
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
@@ -35,7 +39,7 @@ export const VerificationComplianceSection: React.FC<VerificationComplianceSecti
   const cryptographicLedger = [
     {
       action: 'Initial Passport Minting & Merkle Root Anchored',
-      actor: 'AeroCrest Certification Node #1',
+      actor: 'Michelin Certification Node #1',
       role: 'Manufacturer',
       timestamp: '2026-03-14T08:30:00Z',
       sha256Hash: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
@@ -65,116 +69,127 @@ export const VerificationComplianceSection: React.FC<VerificationComplianceSecti
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <span className="status-tag tag-verified">
-              SECTION 13 & 14
+            <span className="status-tag tag-verified text-xs">
+              SECTION 09 • COMPLIANCE
             </span>
-            <h2 className="text-xl sm:text-2xl font-extrabold text-[#FFFFFF] font-tech tracking-wide uppercase">
+            <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
               Regulatory Compliance & Cryptographic Trust Audit
             </h2>
           </div>
-          <p className="text-xs sm:text-sm text-[#8E9299] mt-1.5">
+          <p className="text-sm text-slate-500 mt-1">
             Official conformity assessments for ESPR, EUDR, EPREL, REACH, and CSDDD with third-party auditor signatures.
           </p>
         </div>
 
         <button
           onClick={onExportAuditReport}
-          className="flex items-center gap-1.5 px-3.5 py-2 rounded bg-[#00F5FF]/10 hover:bg-[#00F5FF]/20 border border-[#00F5FF]/40 text-[#00F5FF] text-xs font-mono-code font-bold self-start md:self-auto transition-colors uppercase"
+          className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-blue-700 hover:bg-blue-800 text-white text-xs font-mono-code font-bold self-start md:self-auto transition-colors uppercase shadow-xs"
         >
-          <Download className="w-3.5 h-3.5" />
+          <Download className="w-4 h-4" />
           <span>Export Regulatory Dossier (.JSON)</span>
         </button>
       </div>
 
-      {/* Trust Badges Ribbon */}
-      <div className="bg-[#151619] border border-[#2D2F33] rounded-lg p-5 shadow-xl space-y-3">
-        <span className="text-[10px] font-bold text-[#8E9299] uppercase tracking-wider block font-mono-code">
-          Audited Trust & Verification Marks ({trustBadges.length})
-        </span>
+      {/* Top Banner with W3C Compliance Graphic */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+        <div className="lg:col-span-8 bg-white border border-slate-200 rounded-xl p-6 shadow-xs space-y-3">
+          <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block font-mono-code">
+            Audited Trust & Verification Marks ({trustBadges.length})
+          </span>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-          {trustBadges.map((badge, i) => (
-            <div
-              key={i}
-              className="p-3 bg-[#0B0C0E] rounded border border-[#2D2F33] flex flex-col justify-between space-y-2 hover:border-[#00F5FF]/40 transition-colors"
-            >
-              <div className="flex items-center justify-between">
-                <span className="p-1 rounded bg-[#151619] text-[#00F5FF]">
-                  <Award className="w-3.5 h-3.5" />
-                </span>
-                <span className="w-2 h-2 rounded-full bg-[#00FF41]"></span>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            {trustBadges.map((badge, i) => (
+              <div
+                key={i}
+                className="p-3 bg-slate-50 rounded-xl border border-slate-200 flex flex-col justify-between space-y-2 hover:border-blue-300 transition-colors"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="p-1 rounded-md bg-white text-blue-700 border border-slate-200">
+                    <Award className="w-3.5 h-3.5" />
+                  </span>
+                  <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+                </div>
+                <div>
+                  <span className="text-xs font-bold text-slate-900 block leading-tight">
+                    {badge.title}
+                  </span>
+                  <span className="text-[10px] text-slate-500 font-mono-code mt-0.5 block">
+                    {badge.standard}
+                  </span>
+                  <span className="text-[10px] text-blue-700 font-mono-code block mt-1 font-semibold">
+                    By {badge.auditor}
+                  </span>
+                </div>
               </div>
-              <div>
-                <span className="text-xs font-bold text-[#FFFFFF] font-tech block leading-tight">
-                  {badge.title}
-                </span>
-                <span className="text-[9px] text-[#8E9299] font-mono-code mt-0.5 block">
-                  {badge.standard}
-                </span>
-                <span className="text-[9px] text-[#00F5FF] font-mono-code block mt-1">
-                  By {badge.auditor}
-                </span>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
+        </div>
+
+        <div className="lg:col-span-4 flex justify-center">
+          <W3CComplianceStampGraphic
+            passportId="DPP-MICHELIN-2026-X8842"
+            gtin="03528701234567"
+            manufacturer="Michelin Group (Manufacture Française des Pneumatiques Michelin)"
+            onVerifyHash={() => onOpenProvenance(activeStandard.provenance)}
+          />
         </div>
       </div>
 
       {/* 6-Dimension Data Quality Scorecard */}
-      <div className="bg-[#151619] border border-[#2D2F33] rounded-lg p-6 shadow-xl space-y-4">
+      <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-xs space-y-4">
         <div className="flex items-center justify-between">
-          <h3 className="text-base font-bold font-tech text-[#FFFFFF] flex items-center gap-2 uppercase">
-            <Activity className="w-4 h-4 text-[#00F5FF]" />
+          <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
+            <Activity className="w-4 h-4 text-blue-600" />
             Digital Product Passport Data Completeness & Integrity Matrix
           </h3>
-          <span className="status-tag tag-green">
+          <span className="status-tag tag-green text-xs">
             COMPOSITE INDEX: {scores.overallConfidenceScore}%
           </span>
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 text-xs">
-          <div className="p-3 bg-[#0B0C0E] rounded border border-[#2D2F33] space-y-1">
-            <span className="text-[10px] text-[#8E9299] block font-mono-code uppercase">BOM Completeness</span>
-            <span className="text-xl font-bold font-mono-code text-[#00F5FF]">{scores.productCompleteness}%</span>
+          <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+            <span className="text-[10px] text-slate-500 block font-mono-code uppercase font-semibold">BOM Completeness</span>
+            <span className="text-xl font-bold font-mono-code text-blue-700">{scores.productCompleteness}%</span>
           </div>
 
-          <div className="p-3 bg-[#0B0C0E] rounded border border-[#2D2F33] space-y-1">
-            <span className="text-[10px] text-[#8E9299] block font-mono-code uppercase">Materials Trace</span>
-            <span className="text-xl font-bold font-mono-code text-[#00FF41]">{scores.materialTraceability}%</span>
+          <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+            <span className="text-[10px] text-slate-500 block font-mono-code uppercase font-semibold">Materials Trace</span>
+            <span className="text-xl font-bold font-mono-code text-emerald-700">{scores.materialTraceability}%</span>
           </div>
 
-          <div className="p-3 bg-[#0B0C0E] rounded border border-[#2D2F33] space-y-1">
-            <span className="text-[10px] text-[#8E9299] block font-mono-code uppercase">Suppliers Audited</span>
-            <span className="text-xl font-bold font-mono-code text-[#00F5FF]">{scores.supplierTraceability}%</span>
+          <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+            <span className="text-[10px] text-slate-500 block font-mono-code uppercase font-semibold">Suppliers Audited</span>
+            <span className="text-xl font-bold font-mono-code text-blue-700">{scores.supplierTraceability}%</span>
           </div>
 
-          <div className="p-3 bg-[#0B0C0E] rounded border border-[#2D2F33] space-y-1">
-            <span className="text-[10px] text-[#8E9299] block font-mono-code uppercase">Carbon Data (EPD)</span>
-            <span className="text-xl font-bold font-mono-code text-amber-400">{scores.carbonDataQuality}%</span>
+          <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+            <span className="text-[10px] text-slate-500 block font-mono-code uppercase font-semibold">Carbon Data (EPD)</span>
+            <span className="text-xl font-bold font-mono-code text-amber-600">{scores.carbonDataQuality}%</span>
           </div>
 
-          <div className="p-3 bg-[#0B0C0E] rounded border border-[#2D2F33] space-y-1">
-            <span className="text-[10px] text-[#8E9299] block font-mono-code uppercase">Circularity 10R</span>
-            <span className="text-xl font-bold font-mono-code text-[#00FF41]">{scores.circularityDataQuality}%</span>
+          <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+            <span className="text-[10px] text-slate-500 block font-mono-code uppercase font-semibold">Circularity 10R</span>
+            <span className="text-xl font-bold font-mono-code text-emerald-700">{scores.circularityDataQuality}%</span>
           </div>
 
-          <div className="p-3 bg-[#0B0C0E] rounded border border-[#2D2F33] space-y-1">
-            <span className="text-[10px] text-[#8E9299] block font-mono-code uppercase">End-of-Life Index</span>
-            <span className="text-xl font-bold font-mono-code text-[#00F5FF]">{scores.endOfLifeTraceability}%</span>
+          <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+            <span className="text-[10px] text-slate-500 block font-mono-code uppercase font-semibold">End-of-Life Index</span>
+            <span className="text-xl font-bold font-mono-code text-blue-700">{scores.endOfLifeTraceability}%</span>
           </div>
         </div>
       </div>
 
       {/* Category Filter */}
-      <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar bg-[#151619] border border-[#2D2F33] p-1.5 rounded">
+      <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar bg-white border border-slate-200 p-2 rounded-xl shadow-2xs">
         {categories.map((cat) => (
           <button
             key={cat}
             onClick={() => setSelectedCategory(cat)}
-            className={`px-3 py-1 rounded text-xs font-mono-code font-bold uppercase whitespace-nowrap transition-colors ${
+            className={`px-3 py-1 rounded-lg text-xs font-mono-code font-bold uppercase whitespace-nowrap transition-colors ${
               selectedCategory === cat
-                ? 'bg-[#00F5FF]/15 text-[#00F5FF] border border-[#00F5FF]'
-                : 'bg-[#0B0C0E] text-[#8E9299] hover:text-[#FFFFFF] border border-[#2D2F33]'
+                ? 'bg-blue-600 text-white shadow-2xs'
+                : 'bg-slate-50 text-slate-600 hover:text-slate-900 border border-slate-200'
             }`}
           >
             {cat}
@@ -192,26 +207,26 @@ export const VerificationComplianceSection: React.FC<VerificationComplianceSecti
               <div
                 key={item.id}
                 onClick={() => setSelectedStandardId(item.id)}
-                className={`p-4 rounded border transition-all cursor-pointer ${
+                className={`p-4 rounded-xl border transition-all cursor-pointer ${
                   isSelected
-                    ? 'bg-[#151619] border-[#00F5FF] shadow-lg ring-1 ring-[#00F5FF]/30'
-                    : 'bg-[#0B0C0E] border-[#2D2F33] hover:bg-[#151619] hover:border-[#8E9299]/40'
+                    ? 'bg-blue-50/80 border-blue-500 shadow-xs ring-1 ring-blue-400'
+                    : 'bg-white border-slate-200 hover:bg-slate-50'
                 }`}
               >
                 <div className="flex items-start justify-between">
                   <div>
                     <div className="flex items-center gap-2">
-                      <span className="text-xs font-mono-code font-bold text-[#00F5FF]">
+                      <span className="text-xs font-mono-code font-bold text-blue-700">
                         {item.authority}
                       </span>
-                      <span className="status-tag tag-green">
+                      <span className="status-tag tag-green text-xs">
                         {item.status}
                       </span>
                     </div>
-                    <h4 className="text-sm font-bold text-[#FFFFFF] font-tech mt-1">
+                    <h4 className="text-sm font-bold text-slate-900 mt-1">
                       {item.title}
                     </h4>
-                    <p className="text-xs text-[#8E9299] mt-0.5 line-clamp-1">
+                    <p className="text-xs text-slate-500 mt-0.5 line-clamp-1">
                       {item.notes}
                     </p>
                   </div>
@@ -222,95 +237,98 @@ export const VerificationComplianceSection: React.FC<VerificationComplianceSecti
         </div>
 
         {/* Right: Selected Standard Details */}
-        <div className="lg:col-span-6 bg-[#151619] border border-[#2D2F33] rounded-lg p-6 flex flex-col justify-between shadow-xl">
+        <div className="lg:col-span-6 bg-white border border-slate-200 rounded-xl p-6 flex flex-col justify-between shadow-xs space-y-4">
           <div className="space-y-4">
             <div>
               <div className="flex items-center justify-between">
-                <span className="text-xs font-mono-code text-[#00F5FF] font-bold uppercase tracking-wider">
+                <span className="text-xs font-mono-code text-blue-700 font-bold uppercase tracking-wider">
                   {activeStandard.category}
                 </span>
-                <span className="status-tag tag-green">
+                <span className="status-tag tag-green text-xs">
                   {activeStandard.status}
                 </span>
               </div>
-              <h3 className="text-xl font-bold font-tech text-[#FFFFFF] mt-1">
+              <h3 className="text-xl font-bold text-slate-900 mt-1">
                 {activeStandard.title}
               </h3>
-              <p className="text-xs text-[#8E9299] mt-0.5 font-mono-code">Enforced by: <strong className="text-[#FFFFFF]">{activeStandard.authority}</strong></p>
+              <p className="text-xs text-slate-500 mt-0.5 font-mono-code">Enforced by: <strong className="text-slate-900">{activeStandard.authority}</strong></p>
             </div>
 
-            <div className="bg-[#0B0C0E] border border-[#2D2F33] p-4 rounded space-y-1">
-              <span className="text-[10px] font-bold text-[#8E9299] uppercase tracking-wider block font-mono-code">
+            <div className="bg-slate-50 border border-slate-200 p-4 rounded-lg space-y-1">
+              <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block font-mono-code">
                 Official Compliance Evidence & Audit Record
               </span>
-              <p className="text-xs text-[#FFFFFF] leading-relaxed">
+              <p className="text-sm text-slate-700 leading-relaxed">
                 {activeStandard.notes}
               </p>
             </div>
 
-            <div className="bg-[#0B0C0E] border border-[#2D2F33] p-3.5 rounded space-y-2 text-xs">
+            <div className="bg-slate-50 border border-slate-200 p-4 rounded-lg space-y-2 text-xs">
               <div className="flex items-center justify-between">
-                <span className="text-[#8E9299]">Evidence Certificate:</span>
-                <span className="font-mono-code text-[#00F5FF]">{activeStandard.evidenceDocument}</span>
+                <span className="text-slate-500">Evidence Certificate:</span>
+                <span className="font-mono-code text-blue-700 font-semibold">{activeStandard.evidenceDocument}</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-[#8E9299]">Audit Timestamp:</span>
-                <span className="font-mono-code text-[#00FF41]">{activeStandard.auditDate}</span>
+                <span className="text-slate-500">Audit Timestamp:</span>
+                <span className="font-mono-code text-emerald-700 font-semibold">{activeStandard.auditDate}</span>
               </div>
             </div>
           </div>
 
-          <div className="mt-5 pt-4 border-t border-[#2D2F33] flex items-center justify-between text-xs text-[#8E9299]">
-            <span className="font-mono-code text-[11px]">Verified and cryptographically hashed</span>
-            <span className="font-mono-code text-[#00FF41] font-bold">STATUS: VERIFIED</span>
+          <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+            <span className="font-mono-code text-xs">Verified and cryptographically hashed</span>
+            <span className="font-mono-code text-emerald-700 font-bold">STATUS: VERIFIED</span>
           </div>
         </div>
       </div>
 
       {/* Cryptographic Ledger History */}
-      <div className="bg-[#151619] border border-[#2D2F33] rounded-lg p-6 shadow-xl space-y-4">
+      <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-xs space-y-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Database className="w-5 h-5 text-[#00F5FF]" />
+            <Database className="w-5 h-5 text-blue-600" />
             <div>
-              <h3 className="text-lg font-bold font-tech text-[#FFFFFF] uppercase">
+              <h3 className="text-lg font-bold text-slate-900">
                 EBSI / Gaia-X Distributed DPP Ledger History
               </h3>
-              <p className="text-xs text-[#8E9299]">
+              <p className="text-xs text-slate-500">
                 Each passport lifecycle event is cryptographically hashed with SHA-256 and signed with Ed25519 corporate keys.
               </p>
             </div>
           </div>
-          <span className="status-tag tag-green">
+          <span className="status-tag tag-green text-xs">
             MERKLE ROOT VALIDATED
           </span>
         </div>
 
-        <div className="space-y-2.5 pt-2">
+        <div className="space-y-3 pt-2">
           {cryptographicLedger.map((log, idx) => (
-            <div key={idx} className="p-3.5 bg-[#0B0C0E] rounded border border-[#2D2F33] text-xs space-y-2">
+            <div key={idx} className="p-4 bg-slate-50 rounded-xl border border-slate-200 text-xs space-y-2">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
                 <div className="flex items-center gap-2">
-                  <span className="font-bold text-[#FFFFFF] font-tech">{log.action}</span>
-                  <span className="status-tag tag-supplier">
+                  <span className="font-bold text-slate-900">{log.action}</span>
+                  <span className="status-tag tag-supplier text-xs">
                     By {log.actor} ({log.role})
                   </span>
                 </div>
-                <span className="font-mono-code text-[#8E9299] text-[11px]">{log.timestamp}</span>
+                <span className="font-mono-code text-slate-500 text-xs">{log.timestamp}</span>
               </div>
 
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pt-1 border-t border-[#2D2F33] text-[11px] font-mono-code">
-                <span className="text-[#8E9299] truncate">
-                  HASH: <strong className="text-[#00F5FF] font-normal">{log.sha256Hash}</strong>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pt-2 border-t border-slate-200 text-xs font-mono-code">
+                <span className="text-slate-500 truncate">
+                  HASH: <strong className="text-blue-700 font-normal">{log.sha256Hash}</strong>
                 </span>
-                <span className="text-[#8E9299]">
-                  STATUS: <strong className="text-[#00FF41] font-normal">{log.verificationStatus}</strong>
+                <span className="text-slate-500">
+                  STATUS: <strong className="text-emerald-700 font-semibold">{log.verificationStatus}</strong>
                 </span>
               </div>
             </div>
           ))}
         </div>
       </div>
+
+      {/* Stage Navigation Footer */}
+      <StageNavigationFooter activeSection="compliance" onSelectSection={onSelectSection || (() => {})} />
     </div>
   );
 };

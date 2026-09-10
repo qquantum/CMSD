@@ -88,37 +88,37 @@ export const DataModeHUD: React.FC<DataModeHUDProps> = ({
   };
 
   return (
-    <div className="bg-[#151619] border border-[#2D2F33] rounded-lg p-4 mb-6 shadow-xl transition-all">
+    <div className="bg-white border border-slate-200 rounded-xl p-4 sm:p-5 mb-6 shadow-xs transition-all">
       {/* Mode Switcher Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#2D2F33]">
-        <div className="flex items-center gap-3">
-          <span className="text-xs font-bold font-mono-code text-[#8E9299] uppercase">
-            Passport Data Stream Mode:
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100">
+        <div className="flex flex-wrap items-center gap-3">
+          <span className="text-xs font-bold font-mono-code text-slate-500 uppercase tracking-wider">
+            DATA RECEPTION STREAM:
           </span>
-          <div className="flex items-center bg-[#0B0C0E] p-1 rounded border border-[#2D2F33]">
+          <div className="flex items-center bg-slate-100 p-1 rounded-lg border border-slate-200">
             <button
               onClick={() => onToggleDataMode('live')}
-              className={`flex items-center gap-1.5 px-3 py-1 rounded text-xs font-mono-code uppercase font-bold transition-all ${
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-mono-code uppercase font-bold transition-all ${
                 dataMode === 'live'
-                  ? 'bg-[#00F5FF] text-[#0B0C0E]'
-                  : 'text-[#8E9299] hover:text-[#FFFFFF]'
+                  ? 'bg-blue-600 text-white shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900'
               }`}
             >
-              <span className={`w-2 h-2 rounded-full ${dataMode === 'live' ? 'bg-[#0B0C0E] animate-ping' : 'bg-[#8E9299]'}`} />
+              <span className={`w-2 h-2 rounded-full ${dataMode === 'live' ? 'bg-emerald-300 animate-ping' : 'bg-slate-400'}`} />
               <Activity className="w-3.5 h-3.5" />
               <span>1. Live Telemetry Stream</span>
             </button>
 
             <button
               onClick={() => onToggleDataMode('downloaded')}
-              className={`flex items-center gap-1.5 px-3 py-1 rounded text-xs font-mono-code uppercase font-bold transition-all ${
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-mono-code uppercase font-bold transition-all ${
                 dataMode === 'downloaded'
-                  ? 'bg-[#00FF41] text-[#0B0C0E]'
-                  : 'text-[#8E9299] hover:text-[#FFFFFF]'
+                  ? 'bg-emerald-600 text-white shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900'
               }`}
             >
               <Lock className="w-3.5 h-3.5" />
-              <span>2. Downloaded / Offline Archive</span>
+              <span>2. Downloaded / Offline VC</span>
             </button>
           </div>
         </div>
@@ -127,14 +127,16 @@ export const DataModeHUD: React.FC<DataModeHUDProps> = ({
         <div>
           {dataMode === 'live' ? (
             <div className="flex items-center gap-2">
-              <span className="status-tag tag-verified text-[11px]">
+              <span className="status-tag tag-verified text-xs">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
                 GDSO RFID / MQTT IoT CONNECTED (14ms)
               </span>
             </div>
           ) : (
             <div className="flex items-center gap-2">
-              <span className="status-tag tag-supplier text-[11px]">
-                LOCAL VERIFIABLE CREDENTIAL CACHED (148.5 KB)
+              <span className="status-tag tag-blue text-xs">
+                <Lock className="w-3 h-3 text-blue-600" />
+                OFFLINE VERIFIABLE CREDENTIAL CACHED (148.5 KB)
               </span>
             </div>
           )}
@@ -144,103 +146,115 @@ export const DataModeHUD: React.FC<DataModeHUDProps> = ({
       {/* Mode View 1: LIVE TELEMETRY HUD */}
       {dataMode === 'live' && (
         <div className="pt-3 space-y-3 animate-in fade-in duration-200">
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
             {/* Pressure */}
-            <div className="bg-[#0B0C0E] p-2.5 rounded border border-[#2D2F33]">
-              <div className="flex items-center justify-between text-[#8E9299] text-[10px] font-mono-code uppercase">
+            <div className="bg-slate-50 p-3 rounded-lg border border-slate-200 hover:border-slate-300 transition-colors">
+              <div className="flex items-center justify-between text-slate-500 text-[11px] font-mono-code uppercase font-semibold">
                 <span>Cavity Pressure</span>
-                <Gauge className="w-3.5 h-3.5 text-[#00F5FF]" />
+                <Gauge className="w-4 h-4 text-blue-600" />
               </div>
-              <div className="flex items-baseline gap-1 mt-1">
-                <span className="text-lg font-bold font-mono-code text-[#00F5FF]">
+              <div className="flex items-baseline gap-1 mt-1.5">
+                <span className="text-xl font-bold font-mono-code text-slate-900">
                   {dynamicPressure}
                 </span>
-                <span className="text-[10px] font-mono-code text-[#8E9299]">bar</span>
+                <span className="text-xs font-mono-code text-slate-500 font-semibold">bar</span>
               </div>
-              <span className="text-[9px] font-mono-code text-[#00FF41]">Nominal ±0.02 bar</span>
+              <span className="text-[11px] font-mono-code font-bold text-emerald-700 block mt-0.5">
+                Nominal ±0.02 bar
+              </span>
             </div>
 
             {/* Temperature */}
-            <div className="bg-[#0B0C0E] p-2.5 rounded border border-[#2D2F33]">
-              <div className="flex items-center justify-between text-[#8E9299] text-[10px] font-mono-code uppercase">
+            <div className="bg-slate-50 p-3 rounded-lg border border-slate-200 hover:border-slate-300 transition-colors">
+              <div className="flex items-center justify-between text-slate-500 text-[11px] font-mono-code uppercase font-semibold">
                 <span>Cavity Temp</span>
-                <Thermometer className="w-3.5 h-3.5 text-[#FFA500]" />
+                <Thermometer className="w-4 h-4 text-amber-600" />
               </div>
-              <div className="flex items-baseline gap-1 mt-1">
-                <span className="text-lg font-bold font-mono-code text-[#FFA500]">
+              <div className="flex items-baseline gap-1 mt-1.5">
+                <span className="text-xl font-bold font-mono-code text-amber-700">
                   {dynamicTemp}°
                 </span>
-                <span className="text-[10px] font-mono-code text-[#8E9299]">C</span>
+                <span className="text-xs font-mono-code text-slate-500 font-semibold">C</span>
               </div>
-              <span className="text-[9px] font-mono-code text-[#8E9299]">Thermal Stable</span>
+              <span className="text-[11px] font-mono-code text-slate-600 block mt-0.5 font-medium">
+                Thermal Stable
+              </span>
             </div>
 
             {/* Tread Depth */}
-            <div className="bg-[#0B0C0E] p-2.5 rounded border border-[#2D2F33]">
-              <div className="flex items-center justify-between text-[#8E9299] text-[10px] font-mono-code uppercase">
+            <div className="bg-slate-50 p-3 rounded-lg border border-slate-200 hover:border-slate-300 transition-colors">
+              <div className="flex items-center justify-between text-slate-500 text-[11px] font-mono-code uppercase font-semibold">
                 <span>Tread Depth</span>
-                <Activity className="w-3.5 h-3.5 text-[#00FF41]" />
+                <Activity className="w-4 h-4 text-emerald-600" />
               </div>
-              <div className="flex items-baseline gap-1 mt-1">
-                <span className="text-lg font-bold font-mono-code text-[#00FF41]">
+              <div className="flex items-baseline gap-1 mt-1.5">
+                <span className="text-xl font-bold font-mono-code text-emerald-700">
                   {liveTelemetry.remainingTreadDepthMm}
                 </span>
-                <span className="text-[10px] font-mono-code text-[#8E9299]">/ 7.0 mm</span>
+                <span className="text-xs font-mono-code text-slate-500 font-semibold">/ 7.0 mm</span>
               </div>
-              <span className="text-[9px] font-mono-code text-[#00FF41]">97.1% Life Remaining</span>
+              <span className="text-[11px] font-mono-code font-bold text-emerald-700 block mt-0.5">
+                97.1% Life Remaining
+              </span>
             </div>
 
             {/* Live Odometer */}
-            <div className="bg-[#0B0C0E] p-2.5 rounded border border-[#2D2F33]">
-              <div className="flex items-center justify-between text-[#8E9299] text-[10px] font-mono-code uppercase">
+            <div className="bg-slate-50 p-3 rounded-lg border border-slate-200 hover:border-slate-300 transition-colors">
+              <div className="flex items-center justify-between text-slate-500 text-[11px] font-mono-code uppercase font-semibold">
                 <span>Live Odometer</span>
-                <Radio className="w-3.5 h-3.5 text-[#00F5FF]" />
+                <Radio className="w-4 h-4 text-blue-600" />
               </div>
-              <div className="flex items-baseline gap-1 mt-1">
-                <span className="text-lg font-bold font-mono-code text-[#FFFFFF]">
+              <div className="flex items-baseline gap-1 mt-1.5">
+                <span className="text-xl font-bold font-mono-code text-slate-900">
                   {liveTelemetry.odometerKm.toLocaleString()}
                 </span>
-                <span className="text-[10px] font-mono-code text-[#8E9299]">km</span>
+                <span className="text-xs font-mono-code text-slate-500 font-semibold">km</span>
               </div>
-              <span className="text-[9px] font-mono-code text-[#8E9299]">Target: 65,000 km</span>
+              <span className="text-[11px] font-mono-code text-slate-600 block mt-0.5 font-medium">
+                Target: 65,000 km
+              </span>
             </div>
 
             {/* Live Rolling Resistance */}
-            <div className="bg-[#0B0C0E] p-2.5 rounded border border-[#2D2F33]">
-              <div className="flex items-center justify-between text-[#8E9299] text-[10px] font-mono-code uppercase">
+            <div className="bg-slate-50 p-3 rounded-lg border border-slate-200 hover:border-slate-300 transition-colors">
+              <div className="flex items-center justify-between text-slate-500 text-[11px] font-mono-code uppercase font-semibold">
                 <span>Rolling Loss</span>
-                <Sparkles className="w-3.5 h-3.5 text-[#00F5FF]" />
+                <Sparkles className="w-4 h-4 text-blue-600" />
               </div>
-              <div className="flex items-baseline gap-1 mt-1">
-                <span className="text-lg font-bold font-mono-code text-[#00F5FF]">
+              <div className="flex items-baseline gap-1 mt-1.5">
+                <span className="text-xl font-bold font-mono-code text-blue-700">
                   {liveTelemetry.rollingResistanceLiveKgTonne}
                 </span>
-                <span className="text-[10px] font-mono-code text-[#8E9299]">kg/t</span>
+                <span className="text-xs font-mono-code text-slate-500 font-semibold">kg/t</span>
               </div>
-              <span className="text-[9px] font-mono-code text-[#00FF41]">Class A Efficiency</span>
+              <span className="text-[11px] font-mono-code font-bold text-emerald-700 block mt-0.5">
+                Class A Efficiency
+              </span>
             </div>
 
             {/* Merkle Root Check */}
-            <div className="bg-[#0B0C0E] p-2.5 rounded border border-[#2D2F33]">
-              <div className="flex items-center justify-between text-[#8E9299] text-[10px] font-mono-code uppercase">
+            <div className="bg-slate-50 p-3 rounded-lg border border-slate-200 hover:border-slate-300 transition-colors">
+              <div className="flex items-center justify-between text-slate-500 text-[11px] font-mono-code uppercase font-semibold">
                 <span>Ledger Root</span>
-                <ShieldCheck className="w-3.5 h-3.5 text-[#00FF41]" />
+                <ShieldCheck className="w-4 h-4 text-emerald-600" />
               </div>
-              <div className="mt-1">
-                <span className="text-xs font-mono-code text-[#00FF41] block truncate">
+              <div className="mt-1.5">
+                <span className="text-sm font-mono-code font-bold text-emerald-800 block truncate">
                   0x8f2a...c210b
                 </span>
               </div>
-              <span className="text-[9px] font-mono-code text-[#00FF41]">SHA-256 Synchronized</span>
+              <span className="text-[11px] font-mono-code text-slate-600 block mt-0.5 font-medium">
+                SHA-256 Synchronized
+              </span>
             </div>
           </div>
 
-          <div className="flex items-center justify-between text-[11px] text-[#8E9299] font-mono-code pt-1">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-slate-500 font-mono-code pt-1">
             <span>
-              Gateway Node: <strong className="text-[#FFFFFF]">{liveTelemetry.gatewayNode}</strong>
+              Gateway Node: <strong className="text-slate-800">{liveTelemetry.gatewayNode}</strong>
             </span>
-            <span className="text-[#00FF41]">
-              Live Stream Active • Auto-Refreshing Telemetry Every 2.5s
+            <span className="text-emerald-700 font-semibold flex items-center gap-1">
+              <CheckCircle2 className="w-3.5 h-3.5" /> Live Stream Active • Telemetry Auto-Refreshes Every 2.5s
             </span>
           </div>
         </div>
@@ -251,38 +265,38 @@ export const DataModeHUD: React.FC<DataModeHUDProps> = ({
         <div className="pt-3 space-y-3 animate-in fade-in duration-200">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             {/* Snapshot Identity */}
-            <div className="bg-[#0B0C0E] p-3 rounded border border-[#2D2F33] space-y-1">
-              <span className="text-[10px] font-mono-code text-[#8E9299] uppercase block">
+            <div className="bg-slate-50 p-3 rounded-lg border border-slate-200 space-y-1">
+              <span className="text-[11px] font-mono-code text-slate-500 uppercase font-semibold block">
                 Cached Snapshot Archive
               </span>
-              <span className="text-xs font-bold font-mono-code text-[#00FF41] block">
+              <span className="text-sm font-bold font-mono-code text-slate-900 block">
                 {downloadedSnapshot.snapshotId}
               </span>
-              <span className="text-[10px] font-mono-code text-[#8E9299] block">
+              <span className="text-xs font-mono-code text-slate-600 block">
                 Downloaded: {downloadedSnapshot.downloadDate}
               </span>
             </div>
 
             {/* Signature & Key */}
-            <div className="bg-[#0B0C0E] p-3 rounded border border-[#2D2F33] space-y-1">
-              <span className="text-[10px] font-mono-code text-[#8E9299] uppercase block">
+            <div className="bg-slate-50 p-3 rounded-lg border border-slate-200 space-y-1">
+              <span className="text-[11px] font-mono-code text-slate-500 uppercase font-semibold block">
                 Offline Cryptographic Seal
               </span>
-              <span className="text-xs font-bold font-mono-code text-[#FFFFFF] block truncate">
+              <span className="text-xs font-bold font-mono-code text-slate-800 block truncate">
                 {downloadedSnapshot.cryptographicSignature}
               </span>
-              <span className="text-[10px] font-mono-code text-[#00FF41] block truncate">
+              <span className="text-xs font-mono-code font-bold text-emerald-700 block truncate">
                 Issuer: {downloadedSnapshot.signedBy}
               </span>
             </div>
 
             {/* Offline Actions */}
-            <div className="bg-[#0B0C0E] p-3 rounded border border-[#2D2F33] flex items-center justify-between gap-2">
+            <div className="bg-slate-50 p-3 rounded-lg border border-slate-200 flex items-center justify-between gap-2">
               <div>
-                <span className="text-[10px] font-mono-code text-[#8E9299] uppercase block">
+                <span className="text-[11px] font-mono-code text-slate-500 uppercase font-semibold block">
                   Offline File Size
                 </span>
-                <span className="text-xs font-bold font-mono-code text-[#00F5FF]">
+                <span className="text-sm font-bold font-mono-code text-blue-700">
                   {(downloadedSnapshot.fileSizeBytes / 1024).toFixed(1)} KB (JSON-LD)
                 </span>
               </div>
@@ -291,17 +305,17 @@ export const DataModeHUD: React.FC<DataModeHUDProps> = ({
                 <button
                   onClick={handleVerifyOfflineSignature}
                   disabled={isVerifyingOffline}
-                  className="px-2.5 py-1.5 rounded bg-[#151619] hover:bg-[#1A1C1F] text-[#00FF41] border border-[#00FF41]/40 font-mono-code text-xs uppercase font-bold flex items-center gap-1 transition-colors"
+                  className="px-3 py-1.5 rounded-md bg-white hover:bg-slate-100 text-emerald-700 border border-emerald-300 font-mono-code text-xs uppercase font-bold flex items-center gap-1.5 transition-colors shadow-2xs"
                 >
-                  <ShieldCheck className="w-3.5 h-3.5" />
+                  <ShieldCheck className="w-4 h-4" />
                   <span>{isVerifyingOffline ? 'Verifying...' : 'Verify Hash'}</span>
                 </button>
 
                 <button
                   onClick={handleExportOfflineSnapshot}
-                  className="px-2.5 py-1.5 rounded bg-[#00FF41] hover:bg-[#00FF41]/80 text-[#0B0C0E] font-mono-code text-xs uppercase font-bold flex items-center gap-1 transition-colors"
+                  className="px-3 py-1.5 rounded-md bg-emerald-600 hover:bg-emerald-700 text-white font-mono-code text-xs uppercase font-bold flex items-center gap-1.5 transition-colors shadow-2xs"
                 >
-                  <Download className="w-3.5 h-3.5" />
+                  <Download className="w-4 h-4" />
                   <span>Export JSON</span>
                 </button>
               </div>
@@ -309,8 +323,8 @@ export const DataModeHUD: React.FC<DataModeHUDProps> = ({
           </div>
 
           {offlineVerifiedToast && (
-            <div className="p-2 bg-[#00FF41]/10 border border-[#00FF41]/40 rounded text-xs font-mono-code text-[#00FF41] flex items-center gap-2 animate-in fade-in">
-              <CheckCircle2 className="w-4 h-4" />
+            <div className="p-2.5 bg-emerald-50 border border-emerald-300 rounded-lg text-xs font-mono-code text-emerald-800 flex items-center gap-2 animate-in fade-in">
+              <CheckCircle2 className="w-4 h-4 text-emerald-600" />
               <span>Offline Cryptographic Seal matches Michelin Group Ed25519 Root Certificate! (0 Tampering Detected)</span>
             </div>
           )}

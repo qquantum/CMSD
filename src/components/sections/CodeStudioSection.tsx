@@ -526,39 +526,39 @@ export const CodeStudioSection: React.FC<CodeStudioSectionProps> = ({
   return (
     <div className="space-y-6 animate-in fade-in duration-300">
       {/* Top Banner */}
-      <div className="bg-[#151619] border border-[#2D2F33] p-5 rounded-lg flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
+      <div className="bg-white border border-slate-200 p-5 sm:p-6 rounded-xl flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 shadow-xs">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="status-tag tag-verified">
+            <span className="status-tag tag-verified text-xs">
               DEVELOPER CODE STUDIO & RECREATION BLUEPRINT
             </span>
-            <span className="status-tag tag-supplier">
+            <span className="status-tag tag-supplier text-xs">
               FULL TS & JSON-LD RECREATION SOURCE
             </span>
           </div>
-          <h2 className="text-xl font-bold font-tech text-[#FFFFFF] uppercase">
+          <h2 className="text-xl sm:text-2xl font-bold text-slate-900">
             Digital Product Passport Implementation & Architecture Hub
           </h2>
-          <p className="text-xs text-[#8E9299]">
-            Detailed production-ready source code, W3C JSON-LD Verifiable Credential schemas, Three.js 3D WebGL render engine, and GS1 Digital Link resolvers.
+          <p className="text-sm text-slate-500 mt-0.5">
+            Production-ready source code, W3C JSON-LD Verifiable Credential schemas, Three.js 3D WebGL render engine, and GS1 Digital Link resolvers.
           </p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2.5">
+        <div className="flex flex-wrap items-center gap-2.5 shrink-0">
           <button
             onClick={handleDownloadAllBundle}
-            className="px-3.5 py-1.5 rounded bg-[#00F5FF] hover:bg-[#00F5FF]/80 text-[#0B0C0E] font-mono-code text-xs uppercase font-bold flex items-center gap-1.5 transition-all"
+            className="px-4 py-2 rounded-lg bg-blue-700 hover:bg-blue-800 text-white font-mono-code text-xs uppercase font-bold flex items-center gap-1.5 transition-all shadow-xs"
           >
-            <Download className="w-3.5 h-3.5" />
+            <Download className="w-4 h-4" />
             <span>Download All Code Bundle</span>
           </button>
 
           {onNavigateTo3DStudio && (
             <button
               onClick={onNavigateTo3DStudio}
-              className="px-3.5 py-1.5 rounded bg-[#151619] hover:bg-[#1A1C1F] text-[#00F5FF] border border-[#00F5FF]/40 font-mono-code text-xs uppercase font-bold flex items-center gap-1.5 transition-all"
+              className="px-4 py-2 rounded-lg bg-white hover:bg-slate-50 text-blue-700 border border-blue-200 font-mono-code text-xs uppercase font-bold flex items-center gap-1.5 transition-all shadow-xs"
             >
-              <Sparkles className="w-3.5 h-3.5" />
+              <Sparkles className="w-4 h-4 text-blue-600" />
               <span>Launch 3D WebGL Twin</span>
             </button>
           )}
@@ -568,14 +568,14 @@ export const CodeStudioSection: React.FC<CodeStudioSectionProps> = ({
       {/* Main Studio Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left: File Navigator (4 Cols) */}
-        <div className="lg:col-span-4 space-y-3">
-          <div className="bg-[#151619] border border-[#2D2F33] p-4 rounded-lg space-y-3">
+        <div className="lg:col-span-4 space-y-4">
+          <div className="bg-white border border-slate-200 p-4 rounded-xl space-y-3 shadow-xs">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold font-mono-code text-[#00F5FF] uppercase">
+              <span className="text-xs font-bold font-mono-code text-blue-900 uppercase">
                 Project Files ({CODE_FILES.length})
               </span>
-              <span className="text-[10px] font-mono-code text-[#8E9299]">
-                Ready to Copy
+              <span className="text-xs font-mono-code text-slate-500 font-medium">
+                Click to Inspect & Copy
               </span>
             </div>
 
@@ -584,21 +584,21 @@ export const CodeStudioSection: React.FC<CodeStudioSectionProps> = ({
                 <button
                   key={file.id}
                   onClick={() => setSelectedFileId(file.id)}
-                  className={`w-full p-3 rounded border text-left transition-all ${
+                  className={`w-full p-3 rounded-xl border text-left transition-all ${
                     file.id === selectedFileId
-                      ? 'bg-[#00F5FF]/15 border-[#00F5FF] text-[#00F5FF]'
-                      : 'bg-[#0B0C0E] border-[#2D2F33] text-[#8E9299] hover:text-[#FFFFFF] hover:bg-[#151619]'
+                      ? 'bg-blue-50 border-blue-400 text-blue-900 shadow-2xs'
+                      : 'bg-slate-50 border-slate-200 text-slate-600 hover:text-slate-900 hover:bg-slate-100'
                   }`}
                 >
                   <div className="flex items-center justify-between mb-1">
-                    <span className="font-mono-code text-xs font-bold text-[#FFFFFF] truncate">
+                    <span className="font-mono-code text-xs font-bold text-slate-900 truncate">
                       {file.filename}
                     </span>
-                    <span className="text-[9px] font-mono-code px-1.5 py-0.5 rounded bg-[#151619] border border-[#2D2F33] text-[#00F5FF]">
+                    <span className="text-[10px] font-mono-code px-1.5 py-0.5 rounded bg-white border border-slate-200 text-blue-800 font-bold">
                       {file.category}
                     </span>
                   </div>
-                  <p className="text-[11px] text-[#8E9299] line-clamp-2 leading-relaxed">
+                  <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">
                     {file.description}
                   </p>
                 </button>
@@ -607,30 +607,30 @@ export const CodeStudioSection: React.FC<CodeStudioSectionProps> = ({
           </div>
 
           {/* Standards & Specs Box */}
-          <div className="bg-[#151619] border border-[#2D2F33] p-4 rounded-lg space-y-2.5">
+          <div className="bg-white border border-slate-200 p-4 rounded-xl space-y-3 shadow-xs">
             <div className="flex items-center gap-2">
-              <ShieldCheck className="w-4 h-4 text-[#00FF41]" />
-              <h4 className="text-xs font-bold font-mono-code text-[#FFFFFF] uppercase">
+              <ShieldCheck className="w-4 h-4 text-emerald-600" />
+              <h4 className="text-xs font-bold font-mono-code text-slate-900 uppercase">
                 Regulatory Standards Complied
               </h4>
             </div>
 
-            <div className="space-y-1 text-xs text-[#8E9299] font-mono-code">
-              <div className="p-2 bg-[#0B0C0E] rounded border border-[#2D2F33] flex justify-between">
+            <div className="space-y-1.5 text-xs text-slate-600 font-mono-code">
+              <div className="p-2.5 bg-slate-50 rounded-lg border border-slate-200 flex justify-between">
                 <span>EU ESPR Article 9:</span>
-                <span className="text-[#00FF41]">Compliant</span>
+                <span className="text-emerald-700 font-bold">Compliant</span>
               </div>
-              <div className="p-2 bg-[#0B0C0E] rounded border border-[#2D2F33] flex justify-between">
+              <div className="p-2.5 bg-slate-50 rounded-lg border border-slate-200 flex justify-between">
                 <span>GS1 Digital Link 1.2:</span>
-                <span className="text-[#00FF41]">Compliant</span>
+                <span className="text-emerald-700 font-bold">Compliant</span>
               </div>
-              <div className="p-2 bg-[#0B0C0E] rounded border border-[#2D2F33] flex justify-between">
+              <div className="p-2.5 bg-slate-50 rounded-lg border border-slate-200 flex justify-between">
                 <span>W3C Verifiable Credentials:</span>
-                <span className="text-[#00F5FF]">v2.0 Ed25519</span>
+                <span className="text-blue-700 font-bold">v2.0 Ed25519</span>
               </div>
-              <div className="p-2 bg-[#0B0C0E] rounded border border-[#2D2F33] flex justify-between">
+              <div className="p-2.5 bg-slate-50 rounded-lg border border-slate-200 flex justify-between">
                 <span>CIRPASS DPP Battery & Tire:</span>
-                <span className="text-[#00FF41]">Certified</span>
+                <span className="text-emerald-700 font-bold">Certified</span>
               </div>
             </div>
           </div>
@@ -638,15 +638,15 @@ export const CodeStudioSection: React.FC<CodeStudioSectionProps> = ({
 
         {/* Right: Code Viewer & Editor Studio (8 Cols) */}
         <div className="lg:col-span-8 space-y-4">
-          <div className="bg-[#151619] border border-[#2D2F33] rounded-lg overflow-hidden flex flex-col">
+          <div className="bg-white border border-slate-200 rounded-xl overflow-hidden flex flex-col shadow-xs">
             {/* Code Header Bar */}
-            <div className="p-3 bg-[#0B0C0E] border-b border-[#2D2F33] flex items-center justify-between flex-wrap gap-2">
+            <div className="p-3.5 bg-slate-50 border-b border-slate-200 flex items-center justify-between flex-wrap gap-2">
               <div className="flex items-center gap-2">
-                <FileCode2 className="w-4 h-4 text-[#00F5FF]" />
-                <span className="font-mono-code text-xs font-bold text-[#FFFFFF]">
+                <FileCode2 className="w-4 h-4 text-blue-700" />
+                <span className="font-mono-code text-xs font-bold text-slate-900">
                   {activeFile.filename}
                 </span>
-                <span className="text-[10px] font-mono-code text-[#8E9299] px-2 py-0.5 rounded bg-[#151619] border border-[#2D2F33]">
+                <span className="text-[10px] font-mono-code text-slate-600 font-bold px-2 py-0.5 rounded bg-white border border-slate-200">
                   {activeFile.language.toUpperCase()}
                 </span>
               </div>
@@ -654,15 +654,15 @@ export const CodeStudioSection: React.FC<CodeStudioSectionProps> = ({
               <div className="flex items-center gap-2">
                 <button
                   onClick={handleCopyCode}
-                  className="px-2.5 py-1 rounded bg-[#151619] hover:bg-[#1A1C1F] text-[#8E9299] hover:text-[#FFFFFF] border border-[#2D2F33] text-xs font-mono-code flex items-center gap-1.5 transition-colors"
+                  className="px-3 py-1.5 rounded-lg bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 text-xs font-mono-code font-bold flex items-center gap-1.5 transition-colors shadow-2xs"
                 >
-                  {copied ? <Check className="w-3.5 h-3.5 text-[#00FF41]" /> : <Copy className="w-3.5 h-3.5" />}
+                  {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
                   <span>{copied ? 'COPIED' : 'COPY CODE'}</span>
                 </button>
 
                 <button
                   onClick={handleDownloadFile}
-                  className="px-2.5 py-1 rounded bg-[#00F5FF]/15 hover:bg-[#00F5FF]/25 text-[#00F5FF] border border-[#00F5FF]/40 text-xs font-mono-code flex items-center gap-1.5 transition-colors"
+                  className="px-3 py-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-800 border border-blue-200 text-xs font-mono-code font-bold flex items-center gap-1.5 transition-colors shadow-2xs"
                 >
                   <Download className="w-3.5 h-3.5" />
                   <span>Download</span>
@@ -670,17 +670,17 @@ export const CodeStudioSection: React.FC<CodeStudioSectionProps> = ({
               </div>
             </div>
 
-            {/* Code Content Container */}
-            <div className="p-4 bg-[#0B0C0E] overflow-x-auto max-h-[580px] overflow-y-auto font-mono-code text-xs text-[#00F5FF]">
-              <pre className="text-[#8E9299] whitespace-pre-wrap leading-relaxed">
+            {/* Code Content Container (High-contrast code dark editor) */}
+            <div className="p-5 bg-slate-900 overflow-x-auto max-h-[580px] overflow-y-auto font-mono-code text-xs text-slate-100">
+              <pre className="text-slate-300 whitespace-pre-wrap leading-relaxed">
                 {activeFile.code}
               </pre>
             </div>
 
             {/* Footer Status Bar */}
-            <div className="p-3 bg-[#0B0C0E] border-t border-[#2D2F33] flex items-center justify-between text-xs text-[#8E9299] font-mono-code">
-              <span>Lines: {activeFile.code.split('\n').length} | Encoding: UTF-8</span>
-              <span className="text-[#00FF41]">Verified Production Ready</span>
+            <div className="p-3 bg-slate-50 border-t border-slate-200 flex items-center justify-between text-xs text-slate-500 font-mono-code">
+              <span>Lines: {(activeFile?.code || '').split('\n').length} | Encoding: UTF-8</span>
+              <span className="text-emerald-700 font-bold">Verified Production Ready</span>
             </div>
           </div>
         </div>

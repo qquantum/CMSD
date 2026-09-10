@@ -20,14 +20,18 @@ import {
   Radio,
   FileCode2,
   CheckCircle2,
-  Info
+  Info,
+  ChevronRight,
+  ArrowRight
 } from 'lucide-react';
 import { DataProvenance } from '../../types';
+import { StageNavigationFooter } from '../StageNavigationFooter';
 
 interface Interactive3DTireStudioProps {
   onOpenProvenance?: (provenance: DataProvenance) => void;
   onNavigateToMaterials?: () => void;
   onNavigateToCodeStudio?: () => void;
+  onSelectSection?: (section: any) => void;
 }
 
 interface StoryboardFrame {
@@ -62,241 +66,209 @@ const STORYBOARD_FRAMES: StoryboardFrame[] = [
       'Cavity Damper': 'Polyurethane Acoustic Foam Ring'
     },
     icon: Box,
-    color: '#00F5FF',
+    color: '#0284C7',
     explodeLevel: 0,
     highlightLayer: null,
     mode: 'solid'
   },
   {
     id: 2,
-    title: 'Frame 2: Exploded Multi-Layer Architecture',
-    subtitle: 'High-Torque EV Multi-Ply Layer Separation',
-    tag: 'EXPLODED VIEW',
+    title: 'Frame 2: Tread Micro-Structure & Siping Matrix',
+    subtitle: 'Ultra-Low Rolling Resistance Bio-Silica Matrix',
+    tag: 'TREAD',
     category: 'Structure',
-    description: 'Radial cross-section showing 7 engineered sub-components: ultra-low hysteresis bio-silica tread, dual high-tensile brass-coated steel belts, spiral cap ply, polyester carcass, inner liner, and bead core.',
+    description: 'Functionalized synthetic SBR infused with rice husk bio-silica, d-limonene plasticizers, and high-dispersion recovered carbon black delivering 6.1 kg/tonne rolling resistance.',
     technicalSpecs: {
-      'Tread Layer': '7.0 mm Bio-Silica & Functionalized SBR (3.25 kg)',
-      'Crown Plies': 'Dual High-Tensile Brass Coated Steel Belts (1.18 kg)',
-      'Cap Ply': 'Spiral Aramid / Nylon 6.6 Zero-Degree Reinforcement',
-      'Carcass Matrix': '100% Recycled PET Cord Ply (0.58 kg)',
-      'Inner Air Liner': 'Halobutyl Impermeable Air Retention Membrane (0.65 kg)'
+      'Tread Compound': 'Bio-Silica Functionalized SBR/BR',
+      'Initial Depth': '7.0 mm (Wear TWI at 1.6 mm)',
+      'Bio-Silica Origin': 'Rice Husk Ash (ISCC PLUS certified)',
+      'Grip Index': '1.58 (EU Grade A Wet Grip)',
+      'Sipe Technology': 'Self-Regenerating Tear-Drop Sipes'
     },
     icon: Layers,
-    color: '#00F5FF',
-    explodeLevel: 0.85,
+    color: '#059669',
+    explodeLevel: 0.35,
     highlightLayer: 'Tread',
     mode: 'solid'
   },
   {
     id: 3,
-    title: 'Frame 3: Macro Cross-Woven Steel Belts & Cord Matrix',
-    subtitle: 'High-Tensile Electric-Arc Metallurgy (ArcelorMittal)',
-    tag: 'MACRO METALLURGY',
+    title: 'Frame 3: Crown Reinforcement Belts',
+    subtitle: 'Dual High-Tensile Recycled Steel Cord Plies',
+    tag: 'BELTS',
     category: 'Structure',
-    description: 'Microscopic inspection of the 2x0.30 high-tensile brass-coated steel filaments cross-woven at 22° opposing angles to provide torsional rigidity and resist instant electric vehicle torque.',
+    description: 'Two crossing high-tensile steel cord belts laid at ±22° crown angles, providing lateral rigidity, cornering stability, and EV instantaneous torque resistance.',
     technicalSpecs: {
-      'Steel Cord Metallurgy': '92% Recycled Scrap Electric-Arc Furnace (EAF)',
-      'Tensile Strength': '3,450 MPa High-Tensile Grade',
-      'Cord Structure': '2+2x0.28 HT Brass-Coated Cable',
-      'Adhesion Layer': 'Cobalt Stearate / Resorcinol Skim Compound',
-      'Carbon Intensity': '0.98 kg CO₂e / kg Steel (72% reduction vs blast furnace)'
+      'Steel Recycled Content': '92.4% EAF Scrap Infeed',
+      'Cord Construction': '3x0.22 + 9x0.20 High Tensile Steel',
+      'Plies Orientation': 'Dual ±22° Crossing Angle',
+      'Coating': 'Brass-Plated Micro-Filament Matrix',
+      'Tensile Strength': '3,450 MPa'
     },
-    icon: Zap,
-    color: '#38BDF8',
-    explodeLevel: 0.6,
+    icon: Cpu,
+    color: '#D97706',
+    explodeLevel: 0.65,
     highlightLayer: 'Steel Belts',
-    mode: 'wireframe'
-  },
-  {
-    id: 4,
-    title: 'Frame 4: Dynamic 3D High-Speed Kinetic Simulation',
-    subtitle: 'Centrifugal Expansion & Thermal Dissipation Under Heavy EV Load',
-    tag: 'KINETICS',
-    category: 'Structure',
-    description: 'Dynamic kinetic finite element model (FEA) testing standing wave threshold at 240 km/h (Speed Symbol V). Low hysteresis compound minimizes thermal heat generation.',
-    technicalSpecs: {
-      'Speed Rating': 'V (240 km/h Continuous Homologation)',
-      'Dynamic Growth at 200 km/h': '< 1.8% Radial Expansion',
-      'Contact Patch Area': '168 cm² at 2.5 bar',
-      'Operating Temperature Range': '-30°C to +85°C Peak Proving Ground',
-      'Rolling Loss': '44.8 W at 80 km/h'
-    },
-    icon: RotateCw,
-    color: '#00FF41',
-    explodeLevel: 0.25,
-    highlightLayer: null,
     mode: 'solid'
   },
   {
-    id: 5,
-    title: 'Frame 5: Hevea Brasiliensis Natural Rubber Latex Tapping',
-    subtitle: 'EUDR Deforestation-Free Smallholder Agroforestry (GPSNR)',
-    tag: 'RAW MATERIAL',
-    category: 'Raw Material',
-    description: 'Sustainable natural rubber harvested by smallholder farmers in Jambi (Indonesia) and San Pedro (Côte d’Ivoire). 100% audited via satellite Sentinel-2 polygon monitoring ensuring zero post-2020 deforestation.',
+    id: 4,
+    title: 'Frame 4: Recycled Textile Carcass Skeleton',
+    subtitle: 'Post-Consumer rPET Cords (Equivalent 28 Plastic Bottles)',
+    tag: 'CARCASS',
+    category: 'Structure',
+    description: 'Radial body ply carcass made from chemically recycled PET beverage bottles, retaining air pressure and absorbing high dynamic EV curb impacts.',
     technicalSpecs: {
-      'Botanical Origin': 'Hevea Brasiliensis (Clone RRIM 600)',
-      'Origin Coordinate': '1°35\'42"S, 103°36\'15"E (Jambi, Sumatra)',
-      'EUDR Verification': 'Compliant (Article 9 Due Diligence Reference #EUDR-2026-ML-9982)',
-      'GPSNR Traceability': 'Tier 4 Physical Segregation via Michelin RubberWay App',
-      'Smallholder Farmers': '1,420 Registered Cooperatives with Fair Living Wage'
+      'Carcass Material': 'Chemically Recycled rPET Filament',
+      'Bottles Reclaimed': '28 Post-Consumer Bottles / Tire',
+      'Cord Denier': '1,440 dtex Dual Ply',
+      'Working Pressure': '2.5 bar (Tested to 9.2 bar burst)',
+      'Fatigue Life': '120,000 km Equivalent Dynamic'
     },
-    icon: Trees,
-    color: '#00FF41',
-    explodeLevel: 0.1,
-    highlightLayer: 'Tread',
+    icon: Eye,
+    color: '#2563EB',
+    explodeLevel: 0.75,
+    highlightLayer: 'Carcass',
+    mode: 'wireframe'
+  },
+  {
+    id: 5,
+    title: 'Frame 5: Acoustic Cavity Damper & Inner Liner',
+    subtitle: 'Acoustic PU Foam Ring & Halobutyl Air Barrier',
+    tag: 'ACOUSTIC',
+    category: 'Structure',
+    description: 'Gas-impermeable halobutyl inner liner bonded to an open-cell acoustic polyurethane foam ring that deadens EV cavity resonance frequencies by -3.2 dB.',
+    technicalSpecs: {
+      'Noise Reduction': '-3.2 dB Internal Cabin Damping',
+      'Liner Polymer': 'Chlorobutyl & Reclaimed Devulcanized Rubber',
+      'Permeability': '< 0.05 ml/m²·day (ISO 2556)',
+      'Acoustic Ring': 'Open-Cell Recyclable Polyurethane Foam'
+    },
+    icon: Sparkles,
+    color: '#7C3AED',
+    explodeLevel: 0.85,
+    highlightLayer: 'Inner Liner',
     mode: 'solid'
   },
   {
     id: 6,
-    title: 'Frame 6: Zero-Emission Electric Arc Steel Mill Wire Drawing',
-    subtitle: 'Low-Carbon Circular Reinforcement Rods (ArcelorMittal)',
-    tag: 'METALLURGY',
-    category: 'Manufacturing',
-    description: 'Continuous induction hot-rolling and precision cold wire drawing in Ghent (Belgium), powered by 100% offshore wind power PPA to produce ultra-clean bead wire and cord filaments.',
+    title: 'Frame 6: Bead Core & EV High-Torque Anchor',
+    subtitle: 'Reinforced Bead Bundle & Stiffener Apex',
+    tag: 'BEAD CORE',
+    category: 'Structure',
+    description: 'Wound high-tensile brass-coated steel bead ring ensuring airtight wheel seating and zero bead slip under instant EV electric motor acceleration torque.',
     technicalSpecs: {
-      'Furnace Technology': '100% Electric Arc Furnace (EAF) with Scrap Pre-heating',
-      'Energy Source': '100% Belgian Offshore Wind PPA',
-      'Wire Drawing Tolerance': '± 0.003 mm Outer Diameter',
-      'Brass Coating Mass': '4.2 g / kg (Adhesion Promotion)',
-      'Recycled Content': '92.4% Post-Consumer Steel Scrap'
+      'Wire Tensile': '3,600 MPa Wind Induction Drawn',
+      'Apex Formulation': 'Hard Natural Rubber & Phenolic Resin',
+      'Rim Diameter': '16.0 inches (Alloy Wheel Spec)',
+      'Bead Slip Margin': '> 450 Nm Static Torque Hold'
     },
-    icon: Flame,
-    color: '#FFA500',
-    explodeLevel: 0.45,
-    highlightLayer: 'Steel Belts',
-    mode: 'wireframe'
+    icon: Box,
+    color: '#DC2626',
+    explodeLevel: 0.95,
+    highlightLayer: 'Bead Core',
+    mode: 'solid'
   },
   {
     id: 7,
-    title: 'Frame 7: End-of-Life High-Torque Mechanical Shredder',
-    subtitle: 'Automated ELT Pre-Processing & Clean Fraction Separation',
-    tag: 'RECYCLING',
-    category: 'Circular EOL',
-    description: 'Retiree tire granulated at Aliapur certified facility. Dual-shaft rotary shears liberate 100% of steel bead wire and cord, separating crumb rubber (0.8–2.5 mm) for circular pyrolysis.',
+    title: 'Frame 7: Renewable Feedstock Origin & EUDR Forest',
+    subtitle: 'FSC-Certified Hevea Natural Rubber from Surat Thani',
+    tag: 'FARM ORIGIN',
+    category: 'Raw Material',
+    description: '100% deforestation-free natural rubber tapped by certified smallholders in Surat Thani, Thailand. Monitored via Sentinel-2 satellite GPS polygon geofencing.',
     technicalSpecs: {
-      'Throughput Rate': '8.5 Tonnes / Hour Heavy-Duty Shear',
-      'Steel Recovery Efficiency': '99.4% Magnetic Cross-Belt Separation',
-      'Textile Separation': 'Air Density Zig-Zag Elutriation (98.2% Purity)',
-      'Crumb Rubber Granulometry': 'Mesh 20-40 (0.42 to 0.84 mm Clean Rubber)',
-      'Dust Control': 'HEPA Filtration with 0% Environmental Particulate Release'
+      'GPS Polygon': '9.1382° N, 99.3217° E (Surat Thani)',
+      'Deforestation Cutoff': 'December 31, 2020 (EUDR 2023/1115)',
+      'Certification': 'FSC-C012345 Chain of Custody',
+      'Fair-Trade Wage': 'Fair Rubber Association 100% Certified'
     },
-    icon: Factory,
-    color: '#FFA500',
-    explodeLevel: 0.7,
-    highlightLayer: 'Carcass',
-    mode: 'xray'
+    icon: Trees,
+    color: '#059669',
+    explodeLevel: 0.45,
+    highlightLayer: null,
+    mode: 'solid'
   },
   {
     id: 8,
-    title: 'Frame 8: Continuous Vacuum Devulcanization & rCB Disintegration',
-    subtitle: 'Pyrowave & Enviro High-Purity Microwave Pyrolysis',
-    tag: 'DEVULCANIZATION',
-    category: 'Circular EOL',
-    description: 'Crumb rubber undergoes microwave thermochemical cleaving of sulfur-sulfur crosslinks without degrading polymer backbones, recovering pristine devulcanized rubber and circular carbon black (rCB).',
+    title: 'Frame 8: Cataroux Eco-Plant Vulcanization',
+    subtitle: 'Electric Induction Presses & 100% Renewable Electricity',
+    tag: 'MANUFACTURING',
+    category: 'Manufacturing',
+    description: 'Cured at Michelin Cataroux Eco-Plant in Clermont-Ferrand with electric nitrogen curing presses, reducing factory Scope 1 emissions to just 1.65 kg CO₂e.',
     technicalSpecs: {
-      'Pyrolysis Temperature': '450°C Oxygen-Free Nitrogen Blanket',
-      'Recovered Carbon Black (rCB)': 'ASTM N330 Equivalent Grade (2.1 kg per tire)',
-      'Pyrolysis Bio-Oil': 'Circular Hydrocarbon Condensate for Bio-SBR',
-      'Carbon Avoidance': '-2.15 kg CO₂e per kg rCB vs virgin furnace black',
-      'Reinjection Capacity': '100% Compatible with Michelin Tread Compounds'
+      'Plant Site': 'Clermont-Ferrand Cataroux Eco-Site (France)',
+      'Energy Source': '100% Wind & Solar PPA Grid',
+      'Curing Tech': 'Clean Electric Induction & Nitrogen Dome',
+      'Landfill Waste': 'Zero Industrial Landfill (ISO 14001)'
     },
-    icon: Sparkles,
-    color: '#00F5FF',
-    explodeLevel: 1.0,
+    icon: Factory,
+    color: '#0284C7',
+    explodeLevel: 0.2,
     highlightLayer: null,
-    mode: 'particles'
+    mode: 'solid'
   },
   {
     id: 9,
-    title: 'Frame 9: 100% Mass-Balance Closed-Loop Tire Regeneration',
-    subtitle: 'From Used Tires to New Sustainable Michelin Passports',
-    tag: 'CLOSED LOOP',
+    title: 'Frame 9: Circular Pyrolysis & Molecular Regeneration',
+    subtitle: 'Microwave Devulcanization & Recovered Carbon Black (rCB)',
+    tag: 'CIRCULAR REBIRTH',
     category: 'Circular EOL',
-    description: 'The circular loop is fully closed. Reclaimed rCB, recycled steel, and bio-circular polymers are reinjected into the Michelin Cataroux manufacturing line to craft the next generation of e·Primacy tires.',
+    description: 'End-of-life tire shredded and thermochemically broken down into ASTM N330 recovered Carbon Black and circular pyrolysis oil, completing the 100% circular loop.',
     technicalSpecs: {
-      'Overall Circularity Score': '88 / 100 (10R Framework Audited)',
-      'Material Retention': '84.2% Closed Loop Tire-to-Tire Return',
-      'Tire-to-Tire rCB Utilization': '100% Circular Feedstock in Tread Compound',
-      'Net Life Cycle Avoidance': '-4.1 kg CO₂e / tire avoided burden',
-      'Passport Lineage': 'Parent DPP #0048192 linked to Child DPP #0062491'
+      'rCB Yield': '32.5% of Tire Infeed by Mass',
+      'Steel Recovery': '100% bead and belt steel magnetic reclamation',
+      'CO₂ Avoidance': '-2.15 kg CO₂e / kg rCB vs Virgin N330',
+      'Closed Loop': 'Direct Infeed to Next Generation Michelin Tires'
     },
     icon: RefreshCw,
-    color: '#00FF41',
-    explodeLevel: 0.15,
+    color: '#0D9488',
+    explodeLevel: 1.0,
     highlightLayer: null,
-    mode: 'solid'
+    mode: 'particles'
   }
 ];
 
 export const Interactive3DTireStudio: React.FC<Interactive3DTireStudioProps> = ({
   onOpenProvenance,
   onNavigateToMaterials,
-  onNavigateToCodeStudio
+  onNavigateToCodeStudio,
+  onSelectSection,
 }) => {
   const mountRef = useRef<HTMLDivElement>(null);
+  const sceneRef = useRef<THREE.Scene | null>(null);
+  const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
+  const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
+  const tireGroupRef = useRef<THREE.Group | null>(null);
+  const layerMeshesRef = useRef<{ [key: string]: THREE.Object3D }>({});
+  const animationFrameIdRef = useRef<number | null>(null);
+
+  // Studio Interactive State
   const [activeFrameIndex, setActiveFrameIndex] = useState<number>(0);
+  const [isPlayingTour, setIsPlayingTour] = useState<boolean>(false);
+  const [renderMode, setRenderMode] = useState<'solid' | 'wireframe' | 'particles' | 'xray'>('solid');
   const [explodeSlider, setExplodeSlider] = useState<number>(0);
   const [isAutoRotate, setIsAutoRotate] = useState<boolean>(true);
-  const [renderMode, setRenderMode] = useState<'solid' | 'wireframe' | 'particles' | 'xray'>('solid');
-  const [lightingPreset, setLightingPreset] = useState<'studio' | 'cyber' | 'furnace'>('cyber');
+  const [lightingPreset, setLightingPreset] = useState<'studio' | 'technical' | 'thermal'>('studio');
   const [selectedLayer, setSelectedLayer] = useState<string | null>(null);
-  const [isPlayingTour, setIsPlayingTour] = useState<boolean>(false);
-
-  const sceneRef = useRef<THREE.Scene | null>(null);
-  const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
-  const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
-  const tireGroupRef = useRef<THREE.Group | null>(null);
-  const layerMeshesRef = useRef<{ [name: string]: THREE.Mesh | THREE.Points }>({});
-  const animationFrameIdRef = useRef<number | null>(null);
-  const isDraggingRef = useRef<boolean>(false);
-  const previousMousePositionRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
 
   const currentFrame = STORYBOARD_FRAMES[activeFrameIndex];
 
-  // Auto tour player
-  useEffect(() => {
-    let timer: NodeJS.Timeout;
-    if (isPlayingTour) {
-      timer = setInterval(() => {
-        setActiveFrameIndex((prev) => {
-          const next = (prev + 1) % STORYBOARD_FRAMES.length;
-          applyFrameSettings(STORYBOARD_FRAMES[next]);
-          return next;
-        });
-      }, 4500);
-    }
-    return () => clearInterval(timer);
-  }, [isPlayingTour]);
-
-  // Apply frame settings to 3D scene
-  const applyFrameSettings = (frame: StoryboardFrame) => {
-    setExplodeSlider(frame.explodeLevel);
-    setRenderMode(frame.mode);
-    setSelectedLayer(frame.highlightLayer);
-  };
-
-  const handleSelectFrame = (index: number) => {
-    setActiveFrameIndex(index);
-    applyFrameSettings(STORYBOARD_FRAMES[index]);
-  };
-
-  // Initialize Three.js 3D Scene
+  // Initialize Three.js Scene
   useEffect(() => {
     const container = mountRef.current;
     if (!container) return;
 
-    const width = container.clientWidth || 600;
-    const height = container.clientHeight || 450;
+    const width = container.clientWidth;
+    const height = container.clientHeight || 460;
 
     // Scene
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x0b0c0e);
+    scene.background = new THREE.Color(0xF8FAFC);
     sceneRef.current = scene;
 
     // Camera
-    const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
-    camera.position.set(0, 1.5, 5.2);
+    const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
+    camera.position.set(0, 0, 5.0);
     cameraRef.current = camera;
 
     // Renderer
@@ -310,24 +282,24 @@ export const Interactive3DTireStudio: React.FC<Interactive3DTireStudioProps> = (
     container.innerHTML = '';
     container.appendChild(renderer.domElement);
 
-    // Lighting
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+    // Studio Lighting
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.85);
     scene.add(ambientLight);
 
-    const dirLight1 = new THREE.DirectionalLight(0x00f5ff, 1.8);
-    dirLight1.position.set(5, 8, 5);
+    const dirLight1 = new THREE.DirectionalLight(0xffffff, 1.4);
+    dirLight1.position.set(5, 8, 6);
     scene.add(dirLight1);
 
-    const dirLight2 = new THREE.DirectionalLight(0x00ff41, 1.2);
+    const dirLight2 = new THREE.DirectionalLight(0x0284c7, 0.8);
     dirLight2.position.set(-5, -4, -4);
     scene.add(dirLight2);
 
-    const rimLight = new THREE.PointLight(0xffffff, 2.5, 20);
+    const rimLight = new THREE.PointLight(0xffffff, 1.8, 20);
     rimLight.position.set(0, 4, 3);
     scene.add(rimLight);
 
-    // Floor Grid
-    const gridHelper = new THREE.GridHelper(10, 20, 0x00f5ff, 0x2d2f33);
+    // Light Floor Grid
+    const gridHelper = new THREE.GridHelper(10, 20, 0x94A3B8, 0xE2E8F0);
     gridHelper.position.y = -1.8;
     scene.add(gridHelper);
 
@@ -336,12 +308,12 @@ export const Interactive3DTireStudio: React.FC<Interactive3DTireStudioProps> = (
     tireGroupRef.current = tireGroup;
     scene.add(tireGroup);
 
-    // Layer 1: Tread & Outer Rubber
+    // Layer 1: Tread & Outer Rubber (Rich charcoal tire rubber)
     const treadGeo = new THREE.TorusGeometry(1.4, 0.45, 32, 64);
     const treadMat = new THREE.MeshStandardMaterial({
-      color: 0x1a1c1f,
-      roughness: 0.85,
-      metalness: 0.1,
+      color: 0x1e293b,
+      roughness: 0.8,
+      metalness: 0.15,
     });
     const treadMesh = new THREE.Mesh(treadGeo, treadMat);
     treadMesh.name = 'Tread';
@@ -349,11 +321,11 @@ export const Interactive3DTireStudio: React.FC<Interactive3DTireStudioProps> = (
     tireGroup.add(treadMesh);
     layerMeshesRef.current['Tread'] = treadMesh;
 
-    // Layer 2: Dual Steel Belts (Crown Plies)
+    // Layer 2: Dual Steel Belts (Crown Plies - Golden brass)
     const steelGeo = new THREE.TorusGeometry(1.36, 0.38, 24, 64);
     const steelMat = new THREE.MeshStandardMaterial({
-      color: 0x8e9299,
-      roughness: 0.3,
+      color: 0xd97706,
+      roughness: 0.35,
       metalness: 0.85,
       wireframe: false,
     });
@@ -362,35 +334,35 @@ export const Interactive3DTireStudio: React.FC<Interactive3DTireStudioProps> = (
     tireGroup.add(steelMesh);
     layerMeshesRef.current['Steel Belts'] = steelMesh;
 
-    // Layer 3: Textile Carcass Body Ply (Recycled PET)
+    // Layer 3: Textile Carcass Body Ply (Recycled PET - Michelin Blue)
     const carcassGeo = new THREE.TorusGeometry(1.30, 0.32, 20, 48);
     const carcassMat = new THREE.MeshStandardMaterial({
-      color: 0x38bdf8,
+      color: 0x2563eb,
       roughness: 0.5,
-      metalness: 0.2,
+      metalness: 0.25,
     });
     const carcassMesh = new THREE.Mesh(carcassGeo, carcassMat);
     carcassMesh.name = 'Carcass';
     tireGroup.add(carcassMesh);
     layerMeshesRef.current['Carcass'] = carcassMesh;
 
-    // Layer 4: Inner Liner & Acoustic Foam Ring
+    // Layer 4: Inner Liner & Acoustic Foam Ring (Teal)
     const innerGeo = new THREE.TorusGeometry(1.22, 0.24, 16, 48);
     const innerMat = new THREE.MeshStandardMaterial({
-      color: 0x00f5ff,
-      roughness: 0.9,
-      metalness: 0.05,
+      color: 0x059669,
+      roughness: 0.7,
+      metalness: 0.1,
     });
     const innerMesh = new THREE.Mesh(innerGeo, innerMat);
     innerMesh.name = 'Inner Liner';
     tireGroup.add(innerMesh);
     layerMeshesRef.current['Inner Liner'] = innerMesh;
 
-    // Layer 5: Bead Core & Apex Ring (Dual Left & Right)
+    // Layer 5: Bead Core & Apex Ring (Ruby Crimson)
     const beadGeo = new THREE.TorusGeometry(0.95, 0.08, 16, 32);
     const beadMat = new THREE.MeshStandardMaterial({
-      color: 0xffa500,
-      roughness: 0.2,
+      color: 0xdc2626,
+      roughness: 0.25,
       metalness: 0.95,
     });
     const beadMesh = new THREE.Mesh(beadGeo, beadMat);
@@ -418,20 +390,19 @@ export const Interactive3DTireStudio: React.FC<Interactive3DTireStudioProps> = (
       particlePositions[i * 3 + 1] = y;
       particlePositions[i * 3 + 2] = z;
 
-      // Color cyan/white/green
       const c = Math.random();
       if (c > 0.6) {
-        particleColors[i * 3] = 0.0;
-        particleColors[i * 3 + 1] = 0.96;
-        particleColors[i * 3 + 2] = 1.0;
+        particleColors[i * 3] = 0.01;
+        particleColors[i * 3 + 1] = 0.52;
+        particleColors[i * 3 + 2] = 0.78;
       } else if (c > 0.3) {
-        particleColors[i * 3] = 0.0;
-        particleColors[i * 3 + 1] = 1.0;
-        particleColors[i * 3 + 2] = 0.25;
+        particleColors[i * 3] = 0.02;
+        particleColors[i * 3 + 1] = 0.59;
+        particleColors[i * 3 + 2] = 0.41;
       } else {
-        particleColors[i * 3] = 0.8;
-        particleColors[i * 3 + 1] = 0.85;
-        particleColors[i * 3 + 2] = 0.9;
+        particleColors[i * 3] = 0.12;
+        particleColors[i * 3 + 1] = 0.16;
+        particleColors[i * 3 + 2] = 0.23;
       }
     }
 
@@ -439,39 +410,46 @@ export const Interactive3DTireStudio: React.FC<Interactive3DTireStudioProps> = (
     particleGeo.setAttribute('color', new THREE.BufferAttribute(particleColors, 3));
 
     const particleMat = new THREE.PointsMaterial({
-      size: 0.035,
+      size: 0.04,
       vertexColors: true,
       transparent: true,
       opacity: 0.0,
     });
 
-    const particlesMesh = new THREE.Points(particleGeo, particleMat);
-    particlesMesh.name = 'Particles';
-    tireGroup.add(particlesMesh);
-    layerMeshesRef.current['Particles'] = particlesMesh;
+    const particles = new THREE.Points(particleGeo, particleMat);
+    particles.name = 'Particles';
+    tireGroup.add(particles);
+    layerMeshesRef.current['Particles'] = particles;
 
-    // Mouse Drag Rotation Handler
+    // Mouse Drag Rotation
+    let isDragging = false;
+    let prevMouseX = 0;
+    let prevMouseY = 0;
+
+    const dom = renderer.domElement;
+
     const handleMouseDown = (e: MouseEvent) => {
-      isDraggingRef.current = true;
-      previousMousePositionRef.current = { x: e.clientX, y: e.clientY };
+      isDragging = true;
+      prevMouseX = e.clientX;
+      prevMouseY = e.clientY;
     };
 
     const handleMouseMove = (e: MouseEvent) => {
-      if (!isDraggingRef.current || !tireGroupRef.current) return;
-      const deltaX = e.clientX - previousMousePositionRef.current.x;
-      const deltaY = e.clientY - previousMousePositionRef.current.y;
+      if (!isDragging || !tireGroupRef.current) return;
+      const deltaX = e.clientX - prevMouseX;
+      const deltaY = e.clientY - prevMouseY;
 
       tireGroupRef.current.rotation.y += deltaX * 0.01;
       tireGroupRef.current.rotation.x += deltaY * 0.01;
 
-      previousMousePositionRef.current = { x: e.clientX, y: e.clientY };
+      prevMouseX = e.clientX;
+      prevMouseY = e.clientY;
     };
 
     const handleMouseUp = () => {
-      isDraggingRef.current = false;
+      isDragging = false;
     };
 
-    const dom = renderer.domElement;
     dom.addEventListener('mousedown', handleMouseDown);
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('mouseup', handleMouseUp);
@@ -479,21 +457,25 @@ export const Interactive3DTireStudio: React.FC<Interactive3DTireStudioProps> = (
     // Resize Handler
     const handleResize = () => {
       if (!container || !rendererRef.current || !cameraRef.current) return;
-      const newW = container.clientWidth;
-      const newH = container.clientHeight;
-      cameraRef.current.aspect = newW / newH;
+      const w = container.clientWidth;
+      const h = container.clientHeight || 460;
+      cameraRef.current.aspect = w / h;
       cameraRef.current.updateProjectionMatrix();
-      rendererRef.current.setSize(newW, newH);
+      rendererRef.current.setSize(w, h);
     };
 
     window.addEventListener('resize', handleResize);
 
-    // Render loop
+    // Animation Loop
+    let clock = new THREE.Clock();
     const animate = () => {
       animationFrameIdRef.current = requestAnimationFrame(animate);
 
-      if (tireGroupRef.current && isAutoRotate && !isDraggingRef.current) {
-        tireGroupRef.current.rotation.y += 0.008;
+      const delta = clock.getDelta();
+
+      if (tireGroupRef.current && isAutoRotate && !isDragging) {
+        tireGroupRef.current.rotation.y += delta * 0.35;
+        tireGroupRef.current.rotation.x = Math.sin(clock.getElapsedTime() * 0.5) * 0.15;
       }
 
       renderer.render(scene, camera);
@@ -578,55 +560,81 @@ export const Interactive3DTireStudio: React.FC<Interactive3DTireStudioProps> = (
     if (!sceneRef.current) return;
     const scene = sceneRef.current;
 
-    if (lightingPreset === 'cyber') {
-      scene.background = new THREE.Color(0x0b0c0e);
-    } else if (lightingPreset === 'studio') {
-      scene.background = new THREE.Color(0x151619);
-    } else if (lightingPreset === 'furnace') {
-      scene.background = new THREE.Color(0x1a0f0a);
+    if (lightingPreset === 'studio') {
+      scene.background = new THREE.Color(0xF8FAFC);
+    } else if (lightingPreset === 'technical') {
+      scene.background = new THREE.Color(0xEFF6FF);
+    } else if (lightingPreset === 'thermal') {
+      scene.background = new THREE.Color(0xFEF3C7);
     }
   }, [lightingPreset]);
+
+  // Storyboard Auto Tour
+  useEffect(() => {
+    if (!isPlayingTour) return;
+
+    const interval = setInterval(() => {
+      setActiveFrameIndex((prev) => {
+        const next = (prev + 1) % STORYBOARD_FRAMES.length;
+        applyFrame(STORYBOARD_FRAMES[next]);
+        return next;
+      });
+    }, 4500);
+
+    return () => clearInterval(interval);
+  }, [isPlayingTour]);
+
+  const applyFrame = (frame: StoryboardFrame) => {
+    setExplodeSlider(frame.explodeLevel);
+    setSelectedLayer(frame.highlightLayer);
+    setRenderMode(frame.mode);
+  };
+
+  const handleSelectFrame = (index: number) => {
+    setActiveFrameIndex(index);
+    applyFrame(STORYBOARD_FRAMES[index]);
+  };
 
   return (
     <div className="space-y-6 animate-in fade-in duration-300">
       {/* Top Banner & Mode Control */}
-      <div className="bg-[#151619] border border-[#2D2F33] p-5 rounded-lg flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
+      <div className="bg-white border border-slate-200 p-5 sm:p-6 rounded-xl flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 shadow-xs">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="status-tag tag-verified">
+            <span className="status-tag tag-verified text-xs">
               3D WebGL DIGITAL TWIN & STORYBOARD CINEMA
             </span>
-            <span className="status-tag tag-supplier">
+            <span className="status-tag tag-supplier text-xs">
               MICHELIN GROUP (CLERMONT-FERRAND)
             </span>
           </div>
-          <h2 className="text-xl font-bold font-tech text-[#FFFFFF] uppercase">
+          <h2 className="text-xl sm:text-2xl font-bold text-slate-900">
             Michelin e·Primacy™ / Apex-GT 3D Exploded Layer Twin
           </h2>
-          <p className="text-xs text-[#8E9299]">
-            Interactive 3D geometry with finite-element multi-ply layer separation, macro cord metallurgy, and 9-stage circularity storyboard.
+          <p className="text-sm text-slate-500 mt-0.5">
+            Interactive 3D geometry with multi-ply layer separation, macro cord metallurgy, and 9-stage circularity storyboard.
           </p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2.5">
+        <div className="flex flex-wrap items-center gap-2.5 shrink-0">
           <button
             onClick={() => setIsPlayingTour(!isPlayingTour)}
-            className={`px-3.5 py-1.5 rounded font-mono-code text-xs uppercase font-bold flex items-center gap-1.5 transition-all ${
+            className={`px-4 py-2 rounded-lg font-mono-code text-xs uppercase font-bold flex items-center gap-1.5 transition-all shadow-xs ${
               isPlayingTour
-                ? 'bg-[#FFA500] text-[#0B0C0E]'
-                : 'bg-[#151619] hover:bg-[#1A1C1F] text-[#00F5FF] border border-[#00F5FF]/40'
+                ? 'bg-amber-600 text-white'
+                : 'bg-white hover:bg-slate-50 text-blue-700 border border-blue-200'
             }`}
           >
-            {isPlayingTour ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
+            {isPlayingTour ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
             <span>{isPlayingTour ? 'Pause Cinematic Tour' : 'Play 9-Frame Tour'}</span>
           </button>
 
           {onNavigateToCodeStudio && (
             <button
               onClick={onNavigateToCodeStudio}
-              className="px-3.5 py-1.5 rounded bg-[#00F5FF] hover:bg-[#00F5FF]/80 text-[#0B0C0E] font-mono-code text-xs uppercase font-bold flex items-center gap-1.5 transition-all"
+              className="px-4 py-2 rounded-lg bg-blue-700 hover:bg-blue-800 text-white font-mono-code text-xs uppercase font-bold flex items-center gap-1.5 transition-all shadow-xs"
             >
-              <FileCode2 className="w-3.5 h-3.5" />
+              <FileCode2 className="w-4 h-4" />
               <span>Recreate Code Studio</span>
             </button>
           )}
@@ -637,20 +645,20 @@ export const Interactive3DTireStudio: React.FC<Interactive3DTireStudioProps> = (
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left: 3D Interactive WebGL Stage (7 Cols) */}
         <div className="lg:col-span-7 space-y-4">
-          <div className="bg-[#151619] border border-[#2D2F33] rounded-lg overflow-hidden flex flex-col relative">
+          <div className="bg-white border border-slate-200 rounded-xl overflow-hidden flex flex-col relative shadow-xs">
             {/* Top 3D Viewport Controls Bar */}
-            <div className="p-3 bg-[#0B0C0E] border-b border-[#2D2F33] flex items-center justify-between gap-2 flex-wrap text-xs">
-              <div className="flex items-center gap-1.5">
-                <span className="font-mono-code text-[11px] text-[#8E9299] uppercase">Render:</span>
-                <div className="flex items-center gap-1 bg-[#151619] p-0.5 rounded border border-[#2D2F33]">
+            <div className="p-3 bg-slate-50 border-b border-slate-200 flex items-center justify-between gap-2 flex-wrap text-xs">
+              <div className="flex items-center gap-2">
+                <span className="font-mono-code text-xs text-slate-500 uppercase font-semibold">Render:</span>
+                <div className="flex items-center gap-1 bg-white p-0.5 rounded-lg border border-slate-200">
                   {(['solid', 'wireframe', 'xray', 'particles'] as const).map((m) => (
                     <button
                       key={m}
                       onClick={() => setRenderMode(m)}
-                      className={`px-2 py-0.5 rounded text-[10px] font-mono-code uppercase transition-all ${
+                      className={`px-2.5 py-1 rounded-md text-xs font-mono-code uppercase font-semibold transition-all ${
                         renderMode === m
-                          ? 'bg-[#00F5FF] text-[#0B0C0E] font-bold'
-                          : 'text-[#8E9299] hover:text-[#FFFFFF]'
+                          ? 'bg-blue-600 text-white shadow-2xs'
+                          : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
                       }`}
                     >
                       {m}
@@ -662,26 +670,26 @@ export const Interactive3DTireStudio: React.FC<Interactive3DTireStudioProps> = (
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => setIsAutoRotate(!isAutoRotate)}
-                  className={`p-1.5 rounded border text-[11px] font-mono-code flex items-center gap-1 transition-colors ${
+                  className={`px-2.5 py-1 rounded-lg border text-xs font-mono-code flex items-center gap-1.5 transition-colors font-semibold ${
                     isAutoRotate
-                      ? 'bg-[#00FF41]/20 text-[#00FF41] border-[#00FF41]/40'
-                      : 'bg-[#151619] text-[#8E9299] border-[#2D2F33]'
+                      ? 'bg-emerald-50 text-emerald-800 border-emerald-300'
+                      : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
                   }`}
                   title="Toggle Auto Rotation"
                 >
                   <RotateCw className={`w-3.5 h-3.5 ${isAutoRotate ? 'animate-spin' : ''}`} />
-                  <span className="hidden sm:inline">Spin</span>
+                  <span>Spin</span>
                 </button>
 
-                <div className="flex items-center gap-1 bg-[#151619] p-0.5 rounded border border-[#2D2F33]">
-                  {(['cyber', 'studio', 'furnace'] as const).map((l) => (
+                <div className="flex items-center gap-1 bg-white p-0.5 rounded-lg border border-slate-200">
+                  {(['studio', 'technical', 'thermal'] as const).map((l) => (
                     <button
                       key={l}
                       onClick={() => setLightingPreset(l)}
-                      className={`px-2 py-0.5 rounded text-[10px] font-mono-code uppercase transition-all ${
+                      className={`px-2.5 py-1 rounded-md text-xs font-mono-code uppercase font-semibold transition-all ${
                         lightingPreset === l
-                          ? 'bg-[#00F5FF]/20 text-[#00F5FF] border border-[#00F5FF]/30 font-bold'
-                          : 'text-[#8E9299] hover:text-[#FFFFFF]'
+                          ? 'bg-slate-900 text-white shadow-2xs'
+                          : 'text-slate-600 hover:text-slate-900'
                       }`}
                     >
                       {l}
@@ -694,26 +702,26 @@ export const Interactive3DTireStudio: React.FC<Interactive3DTireStudioProps> = (
             {/* 3D WebGL Canvas Container */}
             <div 
               ref={mountRef} 
-              className="w-full h-[440px] cursor-grab active:cursor-grabbing relative overflow-hidden bg-[#0B0C0E]"
+              className="w-full h-[440px] cursor-grab active:cursor-grabbing relative overflow-hidden bg-gradient-to-b from-slate-50 via-white to-slate-100"
             >
               {/* Overlay HUD Badges */}
               <div className="absolute top-3 left-3 pointer-events-none space-y-1.5">
-                <div className="bg-[#151619]/90 border border-[#2D2F33] px-2.5 py-1 rounded backdrop-blur-sm">
-                  <span className="text-[10px] font-mono-code text-[#00F5FF] font-bold block">
+                <div className="bg-white/90 border border-slate-200 px-3 py-1.5 rounded-lg backdrop-blur-sm shadow-xs">
+                  <span className="text-xs font-mono-code text-blue-900 font-bold block">
                     ACTIVE SCENE: {currentFrame.tag}
                   </span>
-                  <span className="text-[9px] font-mono-code text-[#8E9299]">
+                  <span className="text-[11px] font-mono-code text-slate-500">
                     Click & Drag to Rotate • Scroll to Zoom
                   </span>
                 </div>
               </div>
 
               <div className="absolute bottom-3 right-3 pointer-events-none">
-                <div className="bg-[#151619]/90 border border-[#2D2F33] px-2.5 py-1 rounded backdrop-blur-sm text-right">
-                  <span className="text-[10px] font-mono-code text-[#00FF41] block">
+                <div className="bg-white/90 border border-slate-200 px-3 py-1.5 rounded-lg backdrop-blur-sm text-right shadow-xs">
+                  <span className="text-xs font-mono-code text-emerald-800 font-bold block">
                     GS1 RFID: 30342B5B0000456000048192
                   </span>
-                  <span className="text-[9px] font-mono-code text-[#8E9299]">
+                  <span className="text-[11px] font-mono-code text-slate-500">
                     Tire ID: urn:gdso:tire:id:03528701234567
                   </span>
                 </div>
@@ -721,15 +729,15 @@ export const Interactive3DTireStudio: React.FC<Interactive3DTireStudioProps> = (
             </div>
 
             {/* Bottom Explosion Controls */}
-            <div className="p-4 bg-[#0B0C0E] border-t border-[#2D2F33] space-y-3">
+            <div className="p-4 bg-white border-t border-slate-200 space-y-3">
               <div className="flex items-center justify-between text-xs">
                 <div className="flex items-center gap-2">
-                  <Sliders className="w-4 h-4 text-[#00F5FF]" />
-                  <span className="font-mono-code font-bold text-[#FFFFFF] uppercase">
+                  <Sliders className="w-4 h-4 text-blue-700" />
+                  <span className="font-mono-code font-bold text-slate-900 uppercase">
                     Exploded Layer Separation Distance:
                   </span>
                 </div>
-                <span className="font-mono-code text-[#00F5FF] font-bold">
+                <span className="font-mono-code text-blue-700 font-bold text-sm">
                   {Math.round(explodeSlider * 100)}%
                 </span>
               </div>
@@ -742,11 +750,11 @@ export const Interactive3DTireStudio: React.FC<Interactive3DTireStudioProps> = (
                   step="0.01"
                   value={explodeSlider}
                   onChange={(e) => setExplodeSlider(parseFloat(e.target.value))}
-                  className="w-full h-1.5 bg-[#151619] rounded-lg appearance-none cursor-pointer accent-[#00F5FF]"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-600"
                 />
                 <button
                   onClick={() => setExplodeSlider(explodeSlider > 0 ? 0 : 0.85)}
-                  className="px-2.5 py-1 rounded bg-[#151619] hover:bg-[#1A1C1F] text-[#8E9299] hover:text-[#FFFFFF] border border-[#2D2F33] text-[11px] font-mono-code whitespace-nowrap transition-colors"
+                  className="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-300 text-xs font-mono-code font-bold whitespace-nowrap transition-colors"
                 >
                   {explodeSlider > 0 ? 'COLLAPSE' : 'EXPLODE'}
                 </button>
@@ -754,15 +762,15 @@ export const Interactive3DTireStudio: React.FC<Interactive3DTireStudioProps> = (
 
               {/* Layer Selection Chips */}
               <div className="flex flex-wrap items-center gap-1.5 pt-1">
-                <span className="text-[10px] font-mono-code text-[#8E9299] uppercase mr-1">Layer Focus:</span>
+                <span className="text-[11px] font-mono-code text-slate-500 uppercase font-semibold mr-1">Layer Focus:</span>
                 {['Tread', 'Steel Belts', 'Carcass', 'Inner Liner', 'Bead Core'].map((layer) => (
                   <button
                     key={layer}
                     onClick={() => setSelectedLayer(selectedLayer === layer ? null : layer)}
-                    className={`px-2 py-0.5 rounded text-[10px] font-mono-code uppercase transition-all ${
+                    className={`px-2.5 py-1 rounded-md text-xs font-mono-code uppercase font-semibold transition-all ${
                       selectedLayer === layer
-                        ? 'bg-[#00F5FF] text-[#0B0C0E] font-bold'
-                        : 'bg-[#151619] text-[#8E9299] hover:text-[#FFFFFF] border border-[#2D2F33]'
+                        ? 'bg-blue-700 text-white shadow-xs'
+                        : 'bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200'
                     }`}
                   >
                     {layer}
@@ -771,7 +779,7 @@ export const Interactive3DTireStudio: React.FC<Interactive3DTireStudioProps> = (
                 {selectedLayer && (
                   <button
                     onClick={() => setSelectedLayer(null)}
-                    className="px-1.5 py-0.5 rounded bg-transparent text-[#FFA500] hover:underline text-[10px] font-mono-code"
+                    className="px-2 py-1 rounded text-amber-700 hover:underline text-xs font-mono-code font-bold"
                   >
                     Reset
                   </button>
@@ -781,31 +789,31 @@ export const Interactive3DTireStudio: React.FC<Interactive3DTireStudioProps> = (
           </div>
 
           {/* Active Layer Material Composition Deep-Dive */}
-          <div className="bg-[#151619] border border-[#2D2F33] p-4 rounded-lg space-y-3">
+          <div className="bg-white border border-slate-200 p-5 rounded-xl space-y-3 shadow-xs">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <ShieldCheck className="w-4 h-4 text-[#00FF41]" />
-                <h4 className="text-xs font-bold font-mono-code text-[#FFFFFF] uppercase">
+                <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                <h4 className="text-xs font-bold font-mono-code text-slate-900 uppercase">
                   Audited Material Technical Specification ({currentFrame.tag})
                 </h4>
               </div>
               {onNavigateToMaterials && (
                 <button
                   onClick={onNavigateToMaterials}
-                  className="text-[11px] font-mono-code text-[#00F5FF] hover:underline uppercase"
+                  className="text-xs font-mono-code text-blue-700 hover:underline font-bold uppercase flex items-center gap-1"
                 >
-                  View Full 28-Material BOM →
+                  View Full BOM →
                 </button>
               )}
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
               {Object.entries(currentFrame.technicalSpecs).map(([key, val], idx) => (
-                <div key={idx} className="bg-[#0B0C0E] p-2.5 rounded border border-[#2D2F33]">
-                  <span className="text-[10px] font-mono-code text-[#8E9299] block truncate uppercase">
+                <div key={idx} className="bg-slate-50 p-2.5 rounded-lg border border-slate-200">
+                  <span className="text-[11px] font-mono-code text-slate-500 block truncate uppercase font-semibold">
                     {key}
                   </span>
-                  <span className="text-xs font-bold font-mono-code text-[#FFFFFF] block mt-0.5 truncate">
+                  <span className="text-xs font-bold font-mono-code text-slate-900 block mt-0.5 truncate">
                     {val}
                   </span>
                 </div>
@@ -816,43 +824,43 @@ export const Interactive3DTireStudio: React.FC<Interactive3DTireStudioProps> = (
 
         {/* Right: Interactive 9-Frame Storyboard Cinema (5 Cols) */}
         <div className="lg:col-span-5 space-y-4">
-          <div className="bg-[#151619] border border-[#2D2F33] p-4 rounded-lg space-y-3">
+          <div className="bg-white border border-slate-200 p-5 rounded-xl space-y-4 shadow-xs">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold font-mono-code text-[#00F5FF] uppercase">
+              <span className="text-xs font-bold font-mono-code text-blue-900 uppercase">
                 Circularity Storyboard Sequence
               </span>
-              <span className="status-tag tag-verified">
+              <span className="status-tag tag-verified text-xs">
                 FRAME {activeFrameIndex + 1} OF 9
               </span>
             </div>
 
             {/* Current Active Storyboard Detail Card */}
-            <div className="bg-[#0B0C0E] p-4 rounded border border-[#2D2F33] space-y-3">
+            <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
               <div className="flex items-start justify-between gap-3">
                 <div>
-                  <span className="status-tag tag-verified text-[10px]">
+                  <span className="status-tag tag-verified text-[11px]">
                     {currentFrame.category}
                   </span>
-                  <h3 className="text-sm font-bold font-tech text-[#FFFFFF] uppercase mt-1.5">
+                  <h3 className="text-base font-bold text-slate-900 uppercase mt-1.5">
                     {currentFrame.title}
                   </h3>
-                  <p className="text-xs font-mono-code text-[#00F5FF] mt-0.5">
+                  <p className="text-xs font-mono-code text-blue-800 mt-0.5 font-semibold">
                     {currentFrame.subtitle}
                   </p>
                 </div>
-                <div className="p-2.5 rounded bg-[#151619] border border-[#2D2F33] text-[#00F5FF] shrink-0">
+                <div className="p-2.5 rounded-lg bg-blue-50 border border-blue-200 text-blue-700 shrink-0">
                   <currentFrame.icon className="w-5 h-5" />
                 </div>
               </div>
 
-              <p className="text-xs text-[#8E9299] leading-relaxed">
+              <p className="text-sm text-slate-600 leading-relaxed">
                 {currentFrame.description}
               </p>
             </div>
 
             {/* 9-Frame Interactive Storyboard Selector Grid */}
             <div className="space-y-2 pt-1">
-              <span className="text-[11px] font-bold font-mono-code text-[#8E9299] uppercase block">
+              <span className="text-xs font-bold font-mono-code text-slate-500 uppercase block">
                 Select Lifecycle Stage:
               </span>
 
@@ -861,19 +869,19 @@ export const Interactive3DTireStudio: React.FC<Interactive3DTireStudioProps> = (
                   <button
                     key={f.id}
                     onClick={() => handleSelectFrame(idx)}
-                    className={`p-2.5 rounded border text-left transition-all ${
+                    className={`p-2.5 rounded-lg border text-left transition-all ${
                       idx === activeFrameIndex
-                        ? 'bg-[#00F5FF]/15 border-[#00F5FF] text-[#00F5FF]'
-                        : 'bg-[#0B0C0E] border-[#2D2F33] text-[#8E9299] hover:text-[#FFFFFF] hover:bg-[#151619]'
+                        ? 'bg-blue-50 border-blue-400 text-blue-900 shadow-2xs'
+                        : 'bg-white border-slate-200 text-slate-600 hover:text-slate-900 hover:bg-slate-50'
                     }`}
                   >
                     <div className="flex items-center justify-between mb-1">
-                      <span className="font-mono-code text-[10px] font-bold uppercase">
+                      <span className="font-mono-code text-[11px] font-bold uppercase">
                         Frame {f.id}
                       </span>
-                      <f.icon className="w-3.5 h-3.5 text-[#00F5FF]" />
+                      <f.icon className="w-3.5 h-3.5 text-blue-600" />
                     </div>
-                    <span className="text-[11px] font-bold font-tech text-[#FFFFFF] block truncate">
+                    <span className="text-xs font-bold text-slate-900 block truncate">
                       {f.tag}
                     </span>
                   </button>
@@ -882,11 +890,11 @@ export const Interactive3DTireStudio: React.FC<Interactive3DTireStudioProps> = (
             </div>
 
             {/* Step Navigation Bar */}
-            <div className="flex items-center justify-between pt-2 border-t border-[#2D2F33]">
+            <div className="flex items-center justify-between pt-3 border-t border-slate-100">
               <button
                 onClick={() => handleSelectFrame(Math.max(0, activeFrameIndex - 1))}
                 disabled={activeFrameIndex === 0}
-                className="px-3 py-1.5 rounded bg-[#0B0C0E] border border-[#2D2F33] text-[#8E9299] hover:text-[#FFFFFF] disabled:opacity-40 font-mono-code text-xs uppercase"
+                className="px-3 py-1.5 rounded-lg bg-slate-50 border border-slate-200 text-slate-700 hover:bg-slate-100 disabled:opacity-40 font-mono-code text-xs uppercase font-bold transition-colors"
               >
                 ← Previous
               </button>
@@ -894,7 +902,7 @@ export const Interactive3DTireStudio: React.FC<Interactive3DTireStudioProps> = (
               <button
                 onClick={() => handleSelectFrame(Math.min(STORYBOARD_FRAMES.length - 1, activeFrameIndex + 1))}
                 disabled={activeFrameIndex === STORYBOARD_FRAMES.length - 1}
-                className="px-3 py-1.5 rounded bg-[#00F5FF] hover:bg-[#00F5FF]/80 text-[#0B0C0E] font-bold font-mono-code text-xs uppercase"
+                className="px-3.5 py-1.5 rounded-lg bg-blue-700 hover:bg-blue-800 text-white font-bold font-mono-code text-xs uppercase transition-colors shadow-2xs"
               >
                 Next Frame →
               </button>
@@ -902,31 +910,34 @@ export const Interactive3DTireStudio: React.FC<Interactive3DTireStudioProps> = (
           </div>
 
           {/* Michelin R&D & Verification Certifications */}
-          <div className="bg-[#151619] border border-[#2D2F33] p-4 rounded-lg space-y-2.5">
+          <div className="bg-white border border-slate-200 p-5 rounded-xl space-y-3 shadow-xs">
             <div className="flex items-center gap-2">
-              <Zap className="w-4 h-4 text-[#00F5FF]" />
-              <h4 className="text-xs font-bold font-mono-code text-[#FFFFFF] uppercase">
+              <Zap className="w-4 h-4 text-blue-600" />
+              <h4 className="text-xs font-bold font-mono-code text-slate-900 uppercase">
                 Michelin Ladoux R&D Telemetry Validation
               </h4>
             </div>
 
-            <div className="space-y-1.5 text-xs text-[#8E9299] font-mono-code">
-              <div className="flex items-center justify-between p-2 bg-[#0B0C0E] rounded border border-[#2D2F33]">
+            <div className="space-y-2 text-xs text-slate-600 font-mono-code">
+              <div className="flex items-center justify-between p-2.5 bg-slate-50 rounded-lg border border-slate-200">
                 <span>EPREL Energy Verification:</span>
-                <strong className="text-[#00FF41]">Class A (6.1 kg/t)</strong>
+                <strong className="text-emerald-700 font-bold">Class A (6.1 kg/t)</strong>
               </div>
-              <div className="flex items-center justify-between p-2 bg-[#0B0C0E] rounded border border-[#2D2F33]">
+              <div className="flex items-center justify-between p-2.5 bg-slate-50 rounded-lg border border-slate-200">
                 <span>EUDR Satellite Compliance:</span>
-                <strong className="text-[#00FF41]">100% Deforestation-Free</strong>
+                <strong className="text-emerald-700 font-bold">100% Deforestation-Free</strong>
               </div>
-              <div className="flex items-center justify-between p-2 bg-[#0B0C0E] rounded border border-[#2D2F33]">
+              <div className="flex items-center justify-between p-2.5 bg-slate-50 rounded-lg border border-slate-200">
                 <span>Circular Content Ratio:</span>
-                <strong className="text-[#00F5FF]">58.0% Sustainable Materials</strong>
+                <strong className="text-blue-700 font-bold">58.0% Sustainable Materials</strong>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      {/* Stage Navigation Footer to Next Phase: Materials (BOM) */}
+      <StageNavigationFooter activeSection="3d-studio" onSelectSection={onSelectSection || (() => {})} />
     </div>
   );
 };

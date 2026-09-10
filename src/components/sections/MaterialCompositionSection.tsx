@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import { MaterialItem, DataProvenance } from '../../types';
 import { FlaskConical, Filter, ShieldCheck, MapPin, Truck, Leaf, Award, FileSearch, Sparkles, ExternalLink } from 'lucide-react';
+import { StageNavigationFooter } from '../StageNavigationFooter';
 
 interface MaterialCompositionSectionProps {
   materials: MaterialItem[];
   onOpenProvenance: (prov: DataProvenance) => void;
+  onSelectSection?: (section: any) => void;
 }
 
 export const MaterialCompositionSection: React.FC<MaterialCompositionSectionProps> = ({
   materials,
   onOpenProvenance,
+  onSelectSection,
 }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [selectedFeedstock, setSelectedFeedstock] = useState<string>('All');
@@ -26,7 +29,6 @@ export const MaterialCompositionSection: React.FC<MaterialCompositionSectionProp
 
   const activeMaterial = materials.find((m) => m.id === selectedMaterialId) || filteredMaterials[0] || materials[0];
 
-  // Feedstock badge colors
   const getOriginBadge = (origin: string) => {
     switch (origin) {
       case 'Renewable Bio':
@@ -48,46 +50,46 @@ export const MaterialCompositionSection: React.FC<MaterialCompositionSectionProp
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <span className="status-tag tag-verified">
-              SECTION 03
+            <span className="status-tag tag-verified text-xs">
+              SECTION 03 • BOM
             </span>
-            <h2 className="text-xl sm:text-2xl font-extrabold text-[#FFFFFF] font-tech tracking-wide uppercase">
+            <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
               Material Composition & Chemical Transparency
             </h2>
           </div>
-          <p className="text-xs sm:text-sm text-[#8E9299] mt-1.5">
+          <p className="text-sm text-slate-500 mt-1">
             Complete Bill of Materials (BOM) with CAS chemical designations, mass-balance certificates, and REACH compliance.
           </p>
         </div>
 
         {/* Global Summary Pill */}
-        <div className="flex items-center gap-3 bg-[#151619] border border-[#2D2F33] px-4 py-2 rounded">
+        <div className="flex items-center gap-3 bg-white border border-slate-200 px-4 py-2 rounded-xl shadow-xs">
           <div className="text-right">
-            <span className="text-[10px] text-[#8E9299] font-mono-code uppercase block font-medium">BOM Verification</span>
-            <span className="text-xs font-mono-code font-bold text-[#00FF41]">100% Mass Accounted</span>
+            <span className="text-[11px] text-slate-500 font-mono-code uppercase block font-semibold">BOM Verification</span>
+            <span className="text-xs font-mono-code font-bold text-emerald-700">100% Mass Accounted</span>
           </div>
-          <div className="w-9 h-9 rounded bg-[#00F5FF]/10 border border-[#00F5FF]/30 flex items-center justify-center text-[#00F5FF] font-mono-code font-bold text-xs">
+          <div className="w-10 h-10 rounded-lg bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-700 font-mono-code font-bold text-xs">
             8.45kg
           </div>
         </div>
       </div>
 
       {/* Filter Bars */}
-      <div className="flex flex-wrap items-center justify-between gap-3 bg-[#151619] border border-[#2D2F33] p-3 rounded">
+      <div className="flex flex-wrap items-center justify-between gap-3 bg-white border border-slate-200 p-3.5 rounded-xl shadow-xs">
         {/* Category Filters */}
         <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar">
-          <span className="text-xs text-[#8E9299] font-mono-code mr-1 flex items-center gap-1">
-            <Filter className="w-3.5 h-3.5" /> Category:
+          <span className="text-xs text-slate-500 font-mono-code mr-1 flex items-center gap-1 font-semibold">
+            <Filter className="w-3.5 h-3.5 text-slate-400" /> Category:
           </span>
           {categories.map((cat) => (
             <button
               key={cat}
               id={`filter-cat-${cat.toLowerCase()}`}
               onClick={() => setSelectedCategory(cat)}
-              className={`px-2.5 py-1 rounded text-xs font-mono-code font-bold uppercase whitespace-nowrap transition-colors ${
+              className={`px-3 py-1 rounded-lg text-xs font-mono-code font-semibold uppercase whitespace-nowrap transition-colors ${
                 selectedCategory === cat
-                  ? 'bg-[#00F5FF]/15 text-[#00F5FF] border border-[#00F5FF]'
-                  : 'bg-[#0B0C0E] text-[#8E9299] hover:text-[#FFFFFF] border border-[#2D2F33]'
+                  ? 'bg-blue-700 text-white shadow-2xs'
+                  : 'bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200'
               }`}
             >
               {cat}
@@ -97,16 +99,16 @@ export const MaterialCompositionSection: React.FC<MaterialCompositionSectionProp
 
         {/* Feedstock Type Filters */}
         <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar">
-          <span className="text-xs text-[#8E9299] font-mono-code mr-1">Origin:</span>
+          <span className="text-xs text-slate-500 font-mono-code mr-1 font-semibold">Origin:</span>
           {feedstocks.map((feed) => (
             <button
               key={feed}
               id={`filter-feed-${feed.toLowerCase().replace(/\s+/g, '-')}`}
               onClick={() => setSelectedFeedstock(feed)}
-              className={`px-2.5 py-1 rounded text-xs font-mono-code font-bold uppercase whitespace-nowrap transition-colors ${
+              className={`px-3 py-1 rounded-lg text-xs font-mono-code font-semibold uppercase whitespace-nowrap transition-colors ${
                 selectedFeedstock === feed
-                  ? 'bg-[#00FF41]/15 text-[#00FF41] border border-[#00FF41]'
-                  : 'bg-[#0B0C0E] text-[#8E9299] hover:text-[#FFFFFF] border border-[#2D2F33]'
+                  ? 'bg-emerald-700 text-white shadow-2xs'
+                  : 'bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200'
               }`}
             >
               {feed}
@@ -126,36 +128,36 @@ export const MaterialCompositionSection: React.FC<MaterialCompositionSectionProp
                 key={mat.id}
                 id={`material-card-${mat.id}`}
                 onClick={() => setSelectedMaterialId(mat.id)}
-                className={`p-4 rounded border transition-all cursor-pointer ${
+                className={`p-4 rounded-xl border transition-all cursor-pointer ${
                   isSelected
-                    ? 'bg-[#1A1C1F] border-[#00F5FF] shadow-lg shadow-[#00F5FF]/5'
-                    : 'bg-[#151619] border-[#2D2F33] hover:bg-[#1A1C1F] hover:border-[#3D4046]'
+                    ? 'bg-blue-50/60 border-blue-500 shadow-xs ring-1 ring-blue-400/50'
+                    : 'bg-white border-slate-200 hover:bg-slate-50 hover:border-slate-300 shadow-2xs'
                 }`}
               >
                 <div className="flex items-start justify-between gap-3">
                   <div className="space-y-1 flex-1">
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="text-sm font-bold text-[#FFFFFF] font-tech">
+                      <span className="text-sm font-bold text-slate-900">
                         {mat.name}
                       </span>
-                      <span className={`status-tag ${getOriginBadge(mat.originType)}`}>
+                      <span className={`status-tag ${getOriginBadge(mat.originType)} text-[11px]`}>
                         {mat.originType}
                       </span>
-                      <span className="status-tag tag-supplier">
+                      <span className="status-tag tag-supplier text-[11px]">
                         {mat.category}
                       </span>
                     </div>
 
-                    <p className="text-xs text-[#8E9299] italic">
+                    <p className="text-xs text-slate-500 italic">
                       {mat.chemicalName || mat.function}
                     </p>
 
-                    <div className="flex flex-wrap items-center gap-3 text-xs text-[#8E9299] pt-1">
+                    <div className="flex flex-wrap items-center gap-3 text-xs text-slate-500 pt-1">
                       <span className="flex items-center gap-1">
-                        <Truck className="w-3 h-3 text-[#00F5FF]" /> {mat.supplierName} ({mat.supplierCountry})
+                        <Truck className="w-3.5 h-3.5 text-blue-600" /> {mat.supplierName} ({mat.supplierCountry})
                       </span>
-                      <span className="text-[#2D2F33]">•</span>
-                      <span className="font-mono-code text-[#00F5FF]">
+                      <span className="text-slate-300">•</span>
+                      <span className="font-mono-code text-blue-700 font-medium">
                         {mat.carbonIntensityKgCO2ePerKg} kg CO₂e/kg
                       </span>
                     </div>
@@ -163,19 +165,19 @@ export const MaterialCompositionSection: React.FC<MaterialCompositionSectionProp
 
                   {/* Mass & Percentage Pill */}
                   <div className="text-right shrink-0">
-                    <div className="text-lg font-bold font-mono-code text-[#00F5FF]">
+                    <div className="text-xl font-bold font-mono-code text-blue-700">
                       {mat.percentage}%
                     </div>
-                    <span className="text-xs font-mono-code text-[#8E9299]">
+                    <span className="text-xs font-mono-code text-slate-500 font-medium">
                       {mat.massKg.toFixed(2)} kg
                     </span>
                   </div>
                 </div>
 
                 {/* Progress bar visual for mass contribution */}
-                <div className="w-full bg-[#0B0C0E] rounded-full h-1 mt-3 overflow-hidden border border-[#2D2F33]">
+                <div className="w-full bg-slate-100 rounded-full h-1.5 mt-3 overflow-hidden border border-slate-200">
                   <div
-                    className="bg-[#00F5FF] h-full"
+                    className="bg-blue-600 h-full rounded-full"
                     style={{ width: `${mat.percentage * 3.5}%` }}
                   ></div>
                 </div>
@@ -184,69 +186,69 @@ export const MaterialCompositionSection: React.FC<MaterialCompositionSectionProp
           })}
 
           {filteredMaterials.length === 0 && (
-            <div className="p-8 text-center bg-[#151619] border border-[#2D2F33] rounded text-[#8E9299] font-mono-code text-xs">
+            <div className="p-8 text-center bg-white border border-slate-200 rounded-xl text-slate-500 font-mono-code text-xs shadow-xs">
               No materials match the selected filters.
             </div>
           )}
         </div>
 
         {/* Right: Selected Material Detailed Dossier */}
-        <div className="lg:col-span-5 bg-[#151619] border border-[#2D2F33] rounded-lg p-6 flex flex-col justify-between shadow-xl">
+        <div className="lg:col-span-5 bg-white border border-slate-200 rounded-xl p-6 flex flex-col justify-between shadow-xs space-y-4">
           <div className="space-y-4">
             {/* Header info */}
             <div>
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-mono-code text-[#00F5FF] font-bold uppercase tracking-wider">
+                <span className="text-[11px] font-mono-code text-blue-700 font-bold uppercase tracking-wider">
                   MATERIAL DOSSIER
                 </span>
-                <span className={`status-tag ${getOriginBadge(activeMaterial.originType)}`}>
+                <span className={`status-tag ${getOriginBadge(activeMaterial.originType)} text-xs`}>
                   {activeMaterial.originType}
                 </span>
               </div>
-              <h3 className="text-xl font-bold font-tech text-[#FFFFFF] mt-1">
+              <h3 className="text-xl font-bold text-slate-900 mt-1">
                 {activeMaterial.name}
               </h3>
-              <p className="text-xs text-[#8E9299] font-mono-code mt-0.5">
+              <p className="text-xs text-slate-500 font-mono-code mt-0.5">
                 CAS / Formula: {activeMaterial.chemicalName || 'Confidential Polymeric Blend'}
               </p>
             </div>
 
             {/* Function & Role in Tire */}
-            <div className="bg-[#0B0C0E] border border-[#2D2F33] p-3.5 rounded space-y-1">
-              <span className="text-[10px] font-bold text-[#8E9299] uppercase tracking-wider block font-mono-code">
+            <div className="bg-slate-50 border border-slate-200 p-4 rounded-lg space-y-1.5">
+              <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block font-mono-code">
                 Technical Purpose & Dynamic Function
               </span>
-              <p className="text-xs text-[#FFFFFF] leading-relaxed">
+              <p className="text-sm text-slate-700 leading-relaxed">
                 {activeMaterial.function}
               </p>
-              <div className="pt-2 flex items-center justify-between text-xs text-[#8E9299] border-t border-[#2D2F33]">
-                <span>Location: <strong className="text-[#FFFFFF]">{activeMaterial.componentLocation} Layer</strong></span>
-                <span>REACH: <strong className="text-[#00FF41]">{activeMaterial.reachStatus}</strong></span>
+              <div className="pt-2.5 flex items-center justify-between text-xs text-slate-600 border-t border-slate-200">
+                <span>Location: <strong className="text-slate-900">{activeMaterial.componentLocation} Layer</strong></span>
+                <span>REACH: <strong className="text-emerald-700 font-semibold">{activeMaterial.reachStatus}</strong></span>
               </div>
             </div>
 
             {/* Sourcing & Chain of Custody */}
             <div className="space-y-2">
-              <span className="text-[10px] font-bold text-[#8E9299] uppercase tracking-wider block font-mono-code">
+              <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block font-mono-code">
                 Supply Chain & Traceability Standard
               </span>
 
-              <div className="bg-[#0B0C0E] border border-[#2D2F33] p-3 rounded space-y-1.5 text-xs">
+              <div className="bg-slate-50 border border-slate-200 p-3.5 rounded-lg space-y-2 text-xs">
                 <div className="flex items-start justify-between">
-                  <span className="text-[#8E9299]">Supplier:</span>
-                  <span className="font-semibold text-[#FFFFFF] text-right">{activeMaterial.supplierName}</span>
+                  <span className="text-slate-500">Supplier:</span>
+                  <span className="font-semibold text-slate-900 text-right">{activeMaterial.supplierName}</span>
                 </div>
                 <div className="flex items-start justify-between">
-                  <span className="text-[#8E9299]">Facility:</span>
-                  <span className="text-[#8E9299] text-right">{activeMaterial.supplierFacility}</span>
+                  <span className="text-slate-500">Facility:</span>
+                  <span className="text-slate-700 text-right">{activeMaterial.supplierFacility}</span>
                 </div>
                 <div className="flex items-start justify-between">
-                  <span className="text-[#8E9299]">Processing Location:</span>
-                  <span className="text-[#8E9299] text-right">{activeMaterial.processingLocation}</span>
+                  <span className="text-slate-500">Processing Location:</span>
+                  <span className="text-slate-700 text-right">{activeMaterial.processingLocation}</span>
                 </div>
                 <div className="flex items-start justify-between">
-                  <span className="text-[#8E9299]">Traceability Model:</span>
-                  <span className="font-mono-code text-[#00F5FF] font-semibold text-right">
+                  <span className="text-slate-500">Traceability Model:</span>
+                  <span className="font-mono-code text-blue-700 font-semibold text-right">
                     {activeMaterial.traceabilityLevel}
                   </span>
                 </div>
@@ -255,16 +257,16 @@ export const MaterialCompositionSection: React.FC<MaterialCompositionSectionProp
 
             {/* Certifications Badges */}
             <div>
-              <span className="text-[10px] font-bold text-[#8E9299] uppercase tracking-wider block mb-1.5 font-mono-code">
+              <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-1.5 font-mono-code">
                 Audited Standards & Certifications
               </span>
               <div className="flex flex-wrap gap-1.5">
                 {activeMaterial.certifications.map((cert, i) => (
                   <span
                     key={i}
-                    className="status-tag tag-green"
+                    className="status-tag tag-green text-xs"
                   >
-                    <Award className="w-3 h-3" />
+                    <Award className="w-3.5 h-3.5" />
                     {cert}
                   </span>
                 ))}
@@ -272,16 +274,16 @@ export const MaterialCompositionSection: React.FC<MaterialCompositionSectionProp
             </div>
 
             {/* Carbon & Environmental Profile */}
-            <div className="bg-[#0B0C0E] border border-[#2D2F33] p-3.5 rounded flex items-center justify-between">
+            <div className="bg-slate-50 border border-slate-200 p-4 rounded-lg flex items-center justify-between">
               <div>
-                <span className="text-[10px] text-[#8E9299] uppercase font-mono-code block">Carbon Intensity (EPD)</span>
-                <span className="text-lg font-bold font-mono-code text-[#00F5FF]">
+                <span className="text-[11px] text-slate-500 uppercase font-mono-code block font-semibold">Carbon Intensity (EPD)</span>
+                <span className="text-xl font-bold font-mono-code text-blue-700">
                   {activeMaterial.carbonIntensityKgCO2ePerKg} kg CO₂e / kg
                 </span>
               </div>
               <div className="text-right">
-                <span className="text-[10px] text-[#8E9299] uppercase font-mono-code block">Total Material Load</span>
-                <span className="text-lg font-bold font-mono-code text-[#FFFFFF]">
+                <span className="text-[11px] text-slate-500 uppercase font-mono-code block font-semibold">Total Material Load</span>
+                <span className="text-xl font-bold font-mono-code text-slate-900">
                   {(activeMaterial.massKg * activeMaterial.carbonIntensityKgCO2ePerKg).toFixed(2)} kg CO₂e
                 </span>
               </div>
@@ -289,19 +291,22 @@ export const MaterialCompositionSection: React.FC<MaterialCompositionSectionProp
           </div>
 
           {/* Provenance Trigger Button */}
-          <div className="mt-5 pt-3 border-t border-[#2D2F33] flex items-center justify-between">
-            <span className="text-xs text-[#8E9299] font-mono-code text-[11px]">Primary verified record</span>
+          <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
+            <span className="text-xs text-slate-500 font-mono-code">Primary verified record</span>
             <button
               id={`btn-provenance-${activeMaterial.id}`}
               onClick={() => onOpenProvenance(activeMaterial.provenance)}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded bg-[#0B0C0E] hover:bg-[#1A1C1F] border border-[#2D2F33] text-[#00F5FF] text-xs font-mono-code font-bold uppercase transition-colors"
+              className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-xs font-mono-code font-bold uppercase transition-colors shadow-xs"
             >
-              <FileSearch className="w-3.5 h-3.5" />
-              [SOURCE: {activeMaterial.provenance.sourceOrg}]
+              <FileSearch className="w-3.5 h-3.5 text-cyan-400" />
+              <span>SOURCE: {activeMaterial.provenance.sourceOrg}</span>
             </button>
           </div>
         </div>
       </div>
+
+      {/* Stage Navigation Footer to Next Phase: Origin Map & Traceability */}
+      <StageNavigationFooter activeSection="materials" onSelectSection={onSelectSection || (() => {})} />
     </div>
   );
 };

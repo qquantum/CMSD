@@ -52,8 +52,8 @@ export const TraceTourModal: React.FC<TraceTourModalProps> = ({
     },
     {
       step: 4,
-      title: 'Step 4: Clean Factory Manufacturing',
-      location: 'Clermont Eco-Plant #4, France',
+      title: 'Step 4: Michelin Clean Factory Manufacturing',
+      location: 'Michelin Plant #4, Clermont-Ferrand, France',
       sectionId: 'manufacturing' as SectionId,
       icon: Factory,
       tag: 'Eco-Production',
@@ -63,21 +63,21 @@ export const TraceTourModal: React.FC<TraceTourModalProps> = ({
     {
       step: 5,
       title: 'Step 5: Physical-to-Digital Identity Molded',
-      location: 'Clermont Finishing Line',
+      location: 'Michelin Clermont Finishing Line',
       sectionId: 'passport' as SectionId,
       icon: Compass,
       tag: 'DPP Digital Identity',
-      desc: 'A RAIN RFID chip is vulcanized inside the bead apex, and an ISO/IEC 15418 2D Data Matrix and human-readable serial (SN-FR-2026-0314-8842A) are laser-etched onto the outer sidewall, generating the immutable Digital Product Passport.',
+      desc: 'A RAIN RFID chip is vulcanized inside the bead apex, and an ISO/IEC 15418 2D Data Matrix and human-readable serial (SN-FR-ML-2026-0314-8842A) are laser-etched onto the outer sidewall, generating the immutable Digital Product Passport.',
       metric: 'GS1 Digital Link URI Anchored',
     },
     {
       step: 6,
       title: 'Step 6: Green Logistics & OEM Vehicle Fitment',
-      location: 'Distribution to EV Assembly',
-      sectionId: 'lifecycle' as SectionId,
+      location: 'Distribution to European EV Assembly',
+      sectionId: 'performance' as SectionId,
       icon: Truck,
       tag: 'Electric Mobility',
-      desc: 'Shipped via electric freight rail to vehicle assembly lines for factory installation on premium electric vehicles. Acoustic foam inner rings dampen interior cabin resonance by -3.2 dB.',
+      desc: 'Shipped via electric freight rail to vehicle assembly lines for factory installation on premium electric vehicles. Michelin Acoustic™ foam inner rings dampen interior cabin resonance by -3.2 dB.',
       metric: 'EV Ultra-Efficient Class A/A',
     },
     {
@@ -93,8 +93,8 @@ export const TraceTourModal: React.FC<TraceTourModalProps> = ({
     {
       step: 8,
       title: 'Step 8: RFID Maintenance & Wear Telemetry',
-      location: 'Authorized Tire Service Hubs',
-      sectionId: 'lifecycle' as SectionId,
+      location: 'Authorized Michelin Service Centers',
+      sectionId: 'explorer' as SectionId,
       icon: RotateCcw,
       tag: 'Proactive Care',
       desc: 'Fleet service scanners read the embedded RFID during seasonal rotations, logging real-time tread depth (5.8 mm remaining at 32,000 km) directly into the cryptographically verifiable digital service record.',
@@ -103,7 +103,7 @@ export const TraceTourModal: React.FC<TraceTourModalProps> = ({
     {
       step: 9,
       title: 'Step 9: First-Life Collection & Retreading (R7)',
-      location: 'Mulhouse EcoTread Facility, France',
+      location: 'Michelin Remix® Retread Hub, France',
       sectionId: 'circularity' as SectionId,
       icon: RotateCcw,
       tag: 'Second Life (10R)',
@@ -126,32 +126,32 @@ export const TraceTourModal: React.FC<TraceTourModalProps> = ({
   const StepIcon = current.icon;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#0B0C0E]/80 backdrop-blur-md animate-in fade-in duration-200">
-      <div className="bg-[#151619] border border-[#2D2F33] rounded-lg w-full max-w-3xl overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in duration-200">
+      <div className="bg-white border border-slate-200 rounded-2xl w-full max-w-3xl overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
         {/* Header */}
-        <div className="p-5 border-b border-[#2D2F33] flex items-center justify-between">
+        <div className="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50">
           <div className="flex items-center gap-3">
-            <div className="p-2 rounded bg-[#0B0C0E] border border-[#2D2F33] text-[#00F5FF]">
+            <div className="p-2.5 rounded-xl bg-blue-100 text-blue-700 shadow-2xs">
               <Compass className="w-5 h-5" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-[10px] font-mono-code text-[#00F5FF] font-bold uppercase tracking-wider">
+                <span className="text-xs font-mono-code text-blue-700 font-bold uppercase tracking-wider">
                   Interactive Trace Journey
                 </span>
-                <span className="status-tag tag-verified">
+                <span className="status-tag tag-verified text-xs">
                   STEP {currentStep + 1} OF {tourSteps.length}
                 </span>
               </div>
-              <h3 className="text-base font-bold font-tech text-[#FFFFFF] uppercase mt-0.5">
-                Trace My Tire: From Forest Smallholders to Circular Pyrolysis
+              <h3 className="text-base font-bold text-slate-900 mt-0.5">
+                Trace My Michelin Tire: From Forest Smallholders to Circular Pyrolysis
               </h3>
             </div>
           </div>
 
           <button
             onClick={onClose}
-            className="p-1.5 rounded text-[#8E9299] hover:text-[#FFFFFF] hover:bg-[#0B0C0E] transition-colors"
+            className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-200 transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -160,41 +160,41 @@ export const TraceTourModal: React.FC<TraceTourModalProps> = ({
         {/* Content Body */}
         <div className="p-6 space-y-6 overflow-y-auto">
           {/* Progress Bar */}
-          <div className="w-full bg-[#0B0C0E] h-1.5 rounded overflow-hidden border border-[#2D2F33]">
+          <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden border border-slate-200">
             <div
-              className="bg-[#00F5FF] h-full transition-all duration-300"
+              className="bg-blue-600 h-full rounded-full transition-all duration-300"
               style={{ width: `${((currentStep + 1) / tourSteps.length) * 100}%` }}
             ></div>
           </div>
 
           {/* Active Card Details */}
-          <div className="bg-[#0B0C0E] rounded border border-[#2D2F33] p-6 space-y-4">
+          <div className="bg-slate-50 rounded-2xl border border-slate-200 p-6 space-y-4">
             <div className="flex items-start justify-between gap-4">
               <div className="space-y-1">
-                <span className="status-tag tag-verified">
+                <span className="status-tag tag-verified text-xs">
                   {current.tag}
                 </span>
-                <h4 className="text-xl font-bold font-tech text-[#FFFFFF] mt-2">
+                <h4 className="text-xl font-bold text-slate-900 mt-2">
                   {current.title}
                 </h4>
-                <div className="flex items-center gap-1.5 text-xs text-[#8E9299] pt-1 font-mono-code">
-                  <MapPin className="w-3.5 h-3.5 text-rose-400 shrink-0" />
+                <div className="flex items-center gap-1.5 text-xs text-slate-500 pt-1 font-mono-code">
+                  <MapPin className="w-3.5 h-3.5 text-rose-500 shrink-0" />
                   <span>{current.location}</span>
                 </div>
               </div>
 
-              <div className="p-3 rounded bg-[#151619] border border-[#2D2F33] text-[#00F5FF] shrink-0">
+              <div className="p-3.5 rounded-xl bg-white border border-slate-200 text-blue-700 shrink-0 shadow-xs">
                 <StepIcon className="w-8 h-8" />
               </div>
             </div>
 
-            <p className="text-sm text-[#8E9299] leading-relaxed pt-2">
+            <p className="text-sm text-slate-600 leading-relaxed pt-2">
               {current.desc}
             </p>
 
-            <div className="p-3 rounded bg-[#151619] border border-[#2D2F33] flex items-center justify-between text-xs">
-              <span className="text-[#8E9299] font-mono-code">Audited Milestone Verification:</span>
-              <strong className="text-[#00FF41] font-mono-code">{current.metric}</strong>
+            <div className="p-3.5 rounded-xl bg-white border border-slate-200 flex items-center justify-between text-xs shadow-2xs">
+              <span className="text-slate-500 font-mono-code">Audited Milestone Verification:</span>
+              <strong className="text-emerald-700 font-mono-code font-bold">{current.metric}</strong>
             </div>
           </div>
 
@@ -204,12 +204,12 @@ export const TraceTourModal: React.FC<TraceTourModalProps> = ({
               <button
                 key={idx}
                 onClick={() => setCurrentStep(idx)}
-                className={`w-7 h-7 rounded text-xs font-mono-code font-bold transition-all ${
+                className={`w-8 h-8 rounded-lg text-xs font-mono-code font-bold transition-all ${
                   idx === currentStep
-                    ? 'bg-[#00F5FF] text-[#0B0C0E]'
+                    ? 'bg-blue-600 text-white shadow-2xs'
                     : idx < currentStep
-                    ? 'bg-[#00FF41]/20 text-[#00FF41] border border-[#00FF41]/40'
-                    : 'bg-[#0B0C0E] text-[#8E9299] border border-[#2D2F33]'
+                    ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
+                    : 'bg-slate-100 text-slate-600 border border-slate-200 hover:bg-slate-200'
                 }`}
               >
                 {idx + 1}
@@ -219,13 +219,13 @@ export const TraceTourModal: React.FC<TraceTourModalProps> = ({
         </div>
 
         {/* Footer Navigation */}
-        <div className="p-4 bg-[#0B0C0E] border-t border-[#2D2F33] flex items-center justify-between">
+        <div className="p-4 bg-slate-50 border-t border-slate-100 flex items-center justify-between">
           <button
             onClick={() => {
               onNavigateToSection(current.sectionId);
               onClose();
             }}
-            className="text-xs font-mono-code text-[#00F5FF] hover:underline flex items-center gap-1.5 uppercase"
+            className="text-xs font-mono-code text-blue-700 hover:text-blue-900 hover:underline flex items-center gap-1.5 uppercase font-semibold"
           >
             <span>Jump directly to Section Detail</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -235,7 +235,7 @@ export const TraceTourModal: React.FC<TraceTourModalProps> = ({
             <button
               onClick={() => setCurrentStep((prev) => Math.max(0, prev - 1))}
               disabled={currentStep === 0}
-              className="px-3.5 py-1.5 rounded bg-[#151619] border border-[#2D2F33] text-[#8E9299] hover:text-[#FFFFFF] disabled:opacity-40 text-xs font-mono-code uppercase font-bold transition-colors flex items-center gap-1"
+              className="px-3.5 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-600 hover:text-slate-900 disabled:opacity-40 text-xs font-mono-code uppercase font-bold transition-colors flex items-center gap-1 shadow-2xs"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
               <span>Back</span>
@@ -244,7 +244,7 @@ export const TraceTourModal: React.FC<TraceTourModalProps> = ({
             {currentStep < tourSteps.length - 1 ? (
               <button
                 onClick={() => setCurrentStep((prev) => Math.min(tourSteps.length - 1, prev + 1))}
-                className="px-4 py-1.5 rounded bg-[#00F5FF] hover:bg-[#00F5FF]/80 text-[#0B0C0E] font-bold text-xs font-mono-code uppercase transition-colors flex items-center gap-1"
+                className="px-4 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs font-mono-code uppercase transition-colors flex items-center gap-1 shadow-2xs"
               >
                 <span>Next Step</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -252,7 +252,7 @@ export const TraceTourModal: React.FC<TraceTourModalProps> = ({
             ) : (
               <button
                 onClick={onClose}
-                className="px-4 py-1.5 rounded bg-[#00FF41] hover:bg-[#00FF41]/80 text-[#0B0C0E] font-bold text-xs font-mono-code uppercase transition-colors flex items-center gap-1"
+                className="px-4 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs font-mono-code uppercase transition-colors flex items-center gap-1 shadow-2xs"
               >
                 <span>Finish Tour</span>
                 <CheckCircle2 className="w-3.5 h-3.5" />

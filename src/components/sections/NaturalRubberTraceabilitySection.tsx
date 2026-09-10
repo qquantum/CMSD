@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import { RubberSupplyChainTier, DataProvenance } from '../../types';
 import { Trees, ShieldCheck, MapPin, CheckCircle2, AlertCircle, ArrowDown, Building2, Users, FileSearch, Satellite } from 'lucide-react';
+import { StageNavigationFooter } from '../StageNavigationFooter';
 
 interface NaturalRubberTraceabilitySectionProps {
   tiers: RubberSupplyChainTier[];
   onOpenProvenance: (prov: DataProvenance) => void;
+  onSelectSection?: (section: any) => void;
 }
 
 export const NaturalRubberTraceabilitySection: React.FC<NaturalRubberTraceabilitySectionProps> = ({
   tiers,
   onOpenProvenance,
+  onSelectSection,
 }) => {
   const [activeLevel, setActiveLevel] = useState<number>(4); // Default to farm/smallholder level
 
@@ -34,21 +37,21 @@ export const NaturalRubberTraceabilitySection: React.FC<NaturalRubberTraceabilit
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <span className="status-tag tag-verified">
-              SECTION 05
+            <span className="status-tag tag-verified text-xs">
+              SECTION 04 • EUDR
             </span>
-            <h2 className="text-xl sm:text-2xl font-extrabold text-[#FFFFFF] font-tech tracking-wide uppercase">
+            <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
               Natural Rubber Traceability (EUDR & GPSNR Forest-to-Factory)
             </h2>
           </div>
-          <p className="text-xs sm:text-sm text-[#8E9299] mt-1.5">
+          <p className="text-sm text-slate-500 mt-1">
             End-to-end chain of custody from 1,420 smallholder Hevea agroforestry parcels to the Clermont tire vulcanization press.
           </p>
         </div>
 
         {/* EUDR Compliance Status */}
-        <div className="flex items-center gap-2 px-3 py-1.5 rounded bg-[#151619] border border-[#00FF41]/40 text-[#00FF41] text-xs font-mono-code font-bold uppercase">
-          <Satellite className="w-4 h-4 text-[#00FF41]" />
+        <div className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-mono-code font-bold uppercase shadow-2xs">
+          <Satellite className="w-4 h-4 text-emerald-700" />
           <span>EUDR POLYGONS: 100% VERIFIED</span>
         </div>
       </div>
@@ -64,51 +67,51 @@ export const NaturalRubberTraceabilitySection: React.FC<NaturalRubberTraceabilit
                 <div
                   id={`rubber-tier-card-${tier.level}`}
                   onClick={() => setActiveLevel(tier.level)}
-                  className={`p-4 rounded border transition-all cursor-pointer ${
+                  className={`p-4 rounded-xl border transition-all cursor-pointer ${
                     isSelected
-                      ? 'bg-[#1A1C1F] border-[#00F5FF] shadow-lg shadow-[#00F5FF]/5'
-                      : 'bg-[#151619] border-[#2D2F33] hover:bg-[#1A1C1F] hover:border-[#3D4046]'
+                      ? 'bg-blue-50/70 border-blue-500 shadow-xs ring-1 ring-blue-400/50'
+                      : 'bg-white border-slate-200 hover:bg-slate-50 hover:border-slate-300 shadow-2xs'
                   }`}
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex items-start gap-3">
-                      <div className={`p-2.5 rounded mt-0.5 ${isSelected ? 'bg-[#00F5FF]/15 text-[#00F5FF]' : 'bg-[#0B0C0E] text-[#8E9299]'}`}>
-                        {tier.level === 4 ? <Trees className="w-5 h-5 text-[#00FF41]" /> : <Building2 className="w-5 h-5" />}
+                      <div className={`p-2.5 rounded-lg mt-0.5 ${isSelected ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-600'}`}>
+                        {tier.level === 4 ? <Trees className="w-5 h-5 text-emerald-500" /> : <Building2 className="w-5 h-5" />}
                       </div>
 
                       <div>
                         <div className="flex items-center gap-2">
-                          <span className="text-xs font-mono-code font-bold text-[#00F5FF]">
+                          <span className="text-xs font-mono-code font-bold text-blue-700">
                             TIER {tier.level}
                           </span>
-                          <span className={`status-tag ${getCustodyBadge(tier.massBalanceOrPhysical)}`}>
+                          <span className={`status-tag ${getCustodyBadge(tier.massBalanceOrPhysical)} text-[11px]`}>
                             {tier.massBalanceOrPhysical}
                           </span>
                         </div>
-                        <h4 className="text-sm font-bold text-[#FFFFFF] font-tech mt-0.5">
+                        <h4 className="text-sm font-bold text-slate-900 mt-0.5">
                           {tier.title}
                         </h4>
-                        <p className="text-xs text-[#8E9299] font-medium">
+                        <p className="text-xs text-slate-600 font-medium">
                           {tier.entityName}
                         </p>
-                        <span className="text-[11px] text-[#8E9299] flex items-center gap-1 mt-1 font-mono-code">
-                          <MapPin className="w-3 h-3 text-[#00FF41]" /> {tier.location}
+                        <span className="text-xs text-slate-500 flex items-center gap-1 mt-1 font-mono-code">
+                          <MapPin className="w-3.5 h-3.5 text-emerald-600" /> {tier.location}
                         </span>
                       </div>
                     </div>
 
                     <div className="text-right">
-                      <span className="text-sm font-bold font-mono-code text-[#00FF41]">
+                      <span className="text-base font-bold font-mono-code text-emerald-700">
                         {tier.traceabilityConfidence}%
                       </span>
-                      <span className="text-[10px] text-[#8E9299] font-mono-code block">Confidence</span>
+                      <span className="text-[11px] text-slate-500 font-mono-code block">Confidence</span>
                     </div>
                   </div>
                 </div>
 
                 {idx < tiers.length - 1 && (
                   <div className="flex justify-center my-0.5">
-                    <ArrowDown className="w-4 h-4 text-[#00F5FF]/40" />
+                    <ArrowDown className="w-4 h-4 text-blue-400" />
                   </div>
                 )}
               </React.Fragment>
@@ -117,71 +120,71 @@ export const NaturalRubberTraceabilitySection: React.FC<NaturalRubberTraceabilit
         </div>
 
         {/* Right: Selected Tier Deep-Dive Dossier */}
-        <div className="lg:col-span-6 bg-[#151619] border border-[#2D2F33] rounded-lg p-6 flex flex-col justify-between shadow-xl">
+        <div className="lg:col-span-6 bg-white border border-slate-200 rounded-xl p-6 flex flex-col justify-between shadow-xs space-y-4">
           <div className="space-y-4">
             {/* Header */}
             <div>
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-mono-code text-[#00F5FF] font-bold uppercase tracking-wider">
+                <span className="text-[11px] font-mono-code text-blue-700 font-bold uppercase tracking-wider">
                   TIER {activeTier.level} CHAIN OF CUSTODY AUDIT
                 </span>
-                <span className={`status-tag ${getCustodyBadge(activeTier.massBalanceOrPhysical)}`}>
+                <span className={`status-tag ${getCustodyBadge(activeTier.massBalanceOrPhysical)} text-xs`}>
                   {activeTier.massBalanceOrPhysical}
                 </span>
               </div>
-              <h3 className="text-xl font-bold font-tech text-[#FFFFFF] mt-1">
+              <h3 className="text-xl font-bold text-slate-900 mt-1">
                 {activeTier.title}
               </h3>
-              <p className="text-sm font-semibold text-[#00F5FF]">
+              <p className="text-sm font-semibold text-blue-800">
                 {activeTier.entityName}
               </p>
             </div>
 
             {/* Role & Operations Description */}
-            <div className="bg-[#0B0C0E] border border-[#2D2F33] p-3.5 rounded space-y-1">
-              <span className="text-[10px] font-bold text-[#8E9299] uppercase tracking-wider block font-mono-code">
+            <div className="bg-slate-50 border border-slate-200 p-4 rounded-lg space-y-1.5">
+              <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block font-mono-code">
                 Operational Scope & Transformation
               </span>
-              <p className="text-xs text-[#FFFFFF] leading-relaxed">
+              <p className="text-sm text-slate-700 leading-relaxed">
                 {activeTier.role}
               </p>
-              <div className="pt-2 flex items-center justify-between text-xs text-[#8E9299] border-t border-[#2D2F33]">
-                <span>Auditor: <strong className="text-[#FFFFFF]">{activeTier.auditor}</strong></span>
-                <span>GPSNR: <strong className="text-[#00FF41]">{activeTier.gpsnrCertified ? 'Certified Member' : 'Under Review'}</strong></span>
+              <div className="pt-2.5 flex items-center justify-between text-xs text-slate-600 border-t border-slate-200">
+                <span>Auditor: <strong className="text-slate-900">{activeTier.auditor}</strong></span>
+                <span>GPSNR: <strong className="text-emerald-700 font-semibold">{activeTier.gpsnrCertified ? 'Certified Member' : 'Under Review'}</strong></span>
               </div>
             </div>
 
-            {/* Smallholder Geolocation Polygon Intelligence (Specifically when Tier 4 or 3 is selected) */}
+            {/* Smallholder Geolocation Polygon Intelligence */}
             {activeTier.smallholderCount && (
-              <div className="bg-[#0B0C0E] border border-[#00FF41]/30 p-3.5 rounded space-y-1.5">
+              <div className="bg-emerald-50 border border-emerald-200 p-4 rounded-lg space-y-1.5">
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-bold text-[#00FF41] uppercase tracking-wider flex items-center gap-1.5 font-mono-code">
-                    <Satellite className="w-4 h-4 text-[#00FF41]" />
+                  <span className="text-xs font-bold text-emerald-900 uppercase tracking-wider flex items-center gap-1.5 font-mono-code">
+                    <Satellite className="w-4 h-4 text-emerald-700" />
                     EUDR Satellite Deforestation Monitoring
                   </span>
-                  <span className="text-xs font-mono-code text-[#00FF41] font-bold">
+                  <span className="text-xs font-mono-code text-emerald-800 font-bold">
                     {activeTier.smallholderCount} Geotagged Farms
                   </span>
                 </div>
-                <p className="text-xs text-[#8E9299] leading-relaxed">
+                <p className="text-xs text-emerald-950 leading-relaxed mt-1">
                   Every smallholder parcel boundary is registered with GPS polygons. Sentinel-2 satellite optical imagery audits confirm 0.00% tree cover loss after the EUDR cut-off date of December 31, 2020.
                 </p>
               </div>
             )}
 
             {/* Traceability Protocol & Verification Details */}
-            <div className="bg-[#0B0C0E] border border-[#2D2F33] p-3.5 rounded space-y-1.5 text-xs">
+            <div className="bg-slate-50 border border-slate-200 p-4 rounded-lg space-y-2 text-xs">
               <div className="flex items-start justify-between">
-                <span className="text-[#8E9299]">Forest Monitoring:</span>
-                <span className="text-[#FFFFFF] font-mono-code text-right max-w-xs">{activeTier.forestMonitoringMethod}</span>
+                <span className="text-slate-500">Forest Monitoring:</span>
+                <span className="text-slate-900 font-mono-code text-right max-w-xs font-medium">{activeTier.forestMonitoringMethod}</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-[#8E9299]">EUDR Regulation Status:</span>
-                <span className="text-[#00FF41] font-bold">{activeTier.eudrStatus}</span>
+                <span className="text-slate-500">EUDR Regulation Status:</span>
+                <span className="text-emerald-700 font-bold">{activeTier.eudrStatus}</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-[#8E9299]">Deforestation Risk Level:</span>
-                <span className="status-tag tag-green">
+                <span className="text-slate-500">Deforestation Risk Level:</span>
+                <span className="status-tag tag-green text-xs">
                   {activeTier.deforestationRisk} Risk
                 </span>
               </div>
@@ -189,20 +192,23 @@ export const NaturalRubberTraceabilitySection: React.FC<NaturalRubberTraceabilit
           </div>
 
           {/* Provenance Footer */}
-          <div className="mt-5 pt-3 border-t border-[#2D2F33] flex items-center justify-between">
-            <span className="text-xs text-[#8E9299] font-mono-code text-[11px]">
+          <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
+            <span className="text-xs text-slate-500 font-mono-code">
               Traceability Index: {activeTier.traceabilityConfidence}%
             </span>
             <button
               onClick={() => onOpenProvenance(activeTier.provenance)}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded bg-[#0B0C0E] hover:bg-[#1A1C1F] border border-[#2D2F33] text-[#00F5FF] text-xs font-mono-code font-bold uppercase transition-colors"
+              className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-xs font-mono-code font-bold uppercase transition-colors shadow-xs"
             >
-              <FileSearch className="w-3.5 h-3.5" />
-              [SOURCE: {activeTier.provenance.sourceDoc}]
+              <FileSearch className="w-3.5 h-3.5 text-cyan-400" />
+              <span>SOURCE: {activeTier.provenance.sourceDoc}</span>
             </button>
           </div>
         </div>
       </div>
+
+      {/* Stage Navigation Footer to Next Phase: Manufacturing & PCF */}
+      <StageNavigationFooter activeSection="rubber" onSelectSection={onSelectSection || (() => {})} />
     </div>
   );
 };

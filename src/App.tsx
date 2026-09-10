@@ -7,10 +7,11 @@ import React, { useState } from 'react';
 import { UserRole, SectionId, DataProvenance, DataMode } from './types';
 import { mockTirePassportData, initialLiveTelemetry, initialDownloadedSnapshot } from './data/mockTireData';
 
-// Top-level Navigation, Status HUD and Modals
+// Top-level Navigation, Status HUD, Stepper and Modals
 import { Navbar } from './components/Navbar';
 import { NavigationTabs } from './components/NavigationTabs';
 import { DataModeHUD } from './components/DataModeHUD';
+import { PassportFlowStepper } from './components/PassportFlowStepper';
 import { ProvenanceModal } from './components/ProvenanceModal';
 import { ComparisonModal } from './components/ComparisonModal';
 import { QrCodeModal } from './components/QrCodeModal';
@@ -81,7 +82,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0B0C0E] text-[#FFFFFF] flex flex-col circular-grid selection:bg-[#00F5FF]/20 selection:text-[#00F5FF]">
+    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col selection:bg-blue-100 selection:text-blue-900 font-sans antialiased">
       {/* Top Main Brand & Role Bar */}
       <Navbar
         currentRole={currentRole}
@@ -112,6 +113,12 @@ export default function App() {
           downloadedSnapshot={initialDownloadedSnapshot}
         />
 
+        {/* Full Lifecycle Flow Stepper Navigator */}
+        <PassportFlowStepper
+          activeSection={activeSection}
+          onSelectSection={setActiveSection}
+        />
+
         {/* 1. Passport Overview */}
         {activeSection === 'passport' && (
           <PassportOverviewSection
@@ -129,6 +136,7 @@ export default function App() {
             onOpenProvenance={setProvenanceData}
             onNavigateToMaterials={() => setActiveSection('materials')}
             onNavigateToCodeStudio={() => setActiveSection('code-studio')}
+            onSelectSection={setActiveSection}
           />
         )}
 
@@ -136,6 +144,7 @@ export default function App() {
         {activeSection === 'code-studio' && (
           <CodeStudioSection
             onNavigateTo3DStudio={() => setActiveSection('3d-studio')}
+            onSelectSection={setActiveSection}
           />
         )}
 
@@ -145,6 +154,7 @@ export default function App() {
             components={tireData.components}
             onOpenProvenance={setProvenanceData}
             onNavigateToMaterials={() => setActiveSection('materials')}
+            onSelectSection={setActiveSection}
           />
         )}
 
@@ -153,6 +163,7 @@ export default function App() {
           <MaterialCompositionSection
             materials={tireData.materials}
             onOpenProvenance={setProvenanceData}
+            onSelectSection={setActiveSection}
           />
         )}
 
@@ -161,6 +172,7 @@ export default function App() {
           <RawMaterialOriginSection
             originNodes={tireData.originNodes}
             onOpenProvenance={setProvenanceData}
+            onSelectSection={setActiveSection}
           />
         )}
 
@@ -169,6 +181,7 @@ export default function App() {
           <NaturalRubberTraceabilitySection
             tiers={tireData.rubberTraceability}
             onOpenProvenance={setProvenanceData}
+            onSelectSection={setActiveSection}
           />
         )}
 
@@ -177,6 +190,7 @@ export default function App() {
           <SupplierNetworkSection
             suppliers={tireData.supplierNetwork}
             onOpenProvenance={setProvenanceData}
+            onSelectSection={setActiveSection}
           />
         )}
 
@@ -185,6 +199,7 @@ export default function App() {
           <ManufacturingSection
             stages={tireData.manufacturingStages}
             onOpenProvenance={setProvenanceData}
+            onSelectSection={setActiveSection}
           />
         )}
 
@@ -193,6 +208,7 @@ export default function App() {
           <CarbonFootprintSection
             carbonLCA={tireData.carbonLCA}
             onOpenProvenance={setProvenanceData}
+            onSelectSection={setActiveSection}
           />
         )}
 
@@ -201,6 +217,7 @@ export default function App() {
           <PerformanceSection
             performance={tireData.performance}
             onOpenProvenance={setProvenanceData}
+            onSelectSection={setActiveSection}
           />
         )}
 
@@ -209,6 +226,7 @@ export default function App() {
           <CircularitySection
             tire={tireData}
             onOpenProvenance={setProvenanceData}
+            onSelectSection={setActiveSection}
           />
         )}
 
@@ -217,6 +235,7 @@ export default function App() {
           <EndOfLifeSection
             options={tireData.endOfLifeOptions}
             onOpenProvenance={setProvenanceData}
+            onSelectSection={setActiveSection}
           />
         )}
 
@@ -227,24 +246,25 @@ export default function App() {
             scores={tireData.scores}
             onOpenProvenance={setProvenanceData}
             onExportAuditReport={() => setIsExportOpen(true)}
+            onSelectSection={setActiveSection}
           />
         )}
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-[#2D2F33] bg-[#151619] py-4 px-4 sm:px-8 mt-12 text-[11px] text-[#8E9299]">
+      <footer className="border-t border-slate-200 bg-white py-5 px-4 sm:px-8 mt-12 text-xs text-slate-500 shadow-2xs">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex flex-wrap items-center gap-3">
-            <span className="font-tech font-bold text-[#FFFFFF] tracking-tight uppercase">MICHELIN DIGITAL PRODUCT PASSPORT (DPP)</span>
-            <span className="text-[#2D2F33]">•</span>
-            <span className="font-mono-code text-[#00F5FF]">EU ESPR (2024/1781) / CIRPASS / ISO 14067</span>
-            <span className="text-[#2D2F33]">•</span>
-            <span className="status-tag tag-verified">System Status: Operational</span>
+            <span className="font-bold text-slate-900 tracking-tight">MICHELIN DIGITAL PRODUCT PASSPORT (DPP)</span>
+            <span className="text-slate-300">•</span>
+            <span className="font-mono-code text-blue-700 font-semibold">EU ESPR (2024/1781) / CIRPASS / ISO 14067</span>
+            <span className="text-slate-300">•</span>
+            <span className="status-tag tag-verified text-xs">System Status: Operational</span>
           </div>
 
-          <div className="flex flex-wrap items-center gap-4 font-mono-code text-[#8E9299]">
-            <span>Auditor: <strong className="text-[#FFFFFF]">TÜV SÜD Mobility Node</strong></span>
-            <span>Last Sync: <strong className="text-[#00F5FF]">2026-08-22 GMT</strong></span>
+          <div className="flex flex-wrap items-center gap-4 font-mono-code text-slate-500 text-xs">
+            <span>Auditor: <strong className="text-slate-900">TÜV SÜD Mobility Node</strong></span>
+            <span>Last Sync: <strong className="text-emerald-700 font-bold">2026-08-22 GMT</strong></span>
           </div>
         </div>
       </footer>
