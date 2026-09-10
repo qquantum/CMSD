@@ -16,9 +16,29 @@ export const TireExplorerSection: React.FC<TireExplorerSectionProps> = ({
   onNavigateToMaterials,
   onSelectSection,
 }) => {
-  const [selectedCompId, setSelectedCompId] = useState<string>(components[0].id);
+  const safeComponents = Array.isArray(components) && components.length > 0 ? components : [];
+  const [selectedCompId, setSelectedCompId] = useState<string>(safeComponents[0]?.id || 'comp-tread');
 
-  const selectedComponent = components.find((c) => c.id === selectedCompId) || components[0];
+  const selectedComponent =
+    safeComponents.find((c) => c.id === selectedCompId) ||
+    safeComponents[0] || {
+      id: 'comp-tread',
+      name: 'Tread Layer',
+      percentageOfMass: 38.5,
+      weightKg: 3.25,
+      purpose: 'Provides direct contact with road, wet braking traction, wear resistance, and minimal rolling resistance.',
+      keyMaterials: ['Natural Rubber TSR20', 'Bio-SSBR', 'Recovered Carbon Black (rCB)', 'Bio-derived Rice Husk Silica', 'Silane Coupling Agents'],
+      recycledRenewablePercent: 54.2,
+      carbonContributionKgCO2e: 7.42,
+      mainSupplier: 'Siam Forestry Rubber Co. & GreenSilica SpA',
+      geographicOrigin: 'Surat Thani (Thailand) & Novara (Italy)',
+      colorCode: '#0ea5e9',
+      technicalDescription: 'Dual-compound cap and base extrudate engineered with silica-rich micro-structure for maximum wet grip and low hysteresis dissipation.',
+    };
+
+  const materialsList = selectedComponent.keyMaterials || (selectedComponent as any).materials || [];
+  const compMassShare = selectedComponent.percentageOfMass ?? (selectedComponent as any).weightPercent ?? 0;
+  const compPurpose = selectedComponent.purpose || (selectedComponent as any).function || '';
 
   return (
     <div className="space-y-6 animate-in fade-in duration-300">
@@ -27,7 +47,7 @@ export const TireExplorerSection: React.FC<TireExplorerSectionProps> = ({
         <div>
           <div className="flex items-center gap-2">
             <span className="status-tag tag-verified text-xs">
-              SECTION 02 • ANATOMY
+              SECTION 04 • ANATOMY EXPLORER
             </span>
             <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
               Interactive Tire Anatomy & Component Explorer
@@ -162,7 +182,7 @@ export const TireExplorerSection: React.FC<TireExplorerSectionProps> = ({
 
           {/* Layer Selector Chips */}
           <div className="w-full flex flex-wrap gap-1.5 justify-center pt-2 border-t border-slate-100">
-            {components.map((comp) => (
+            {safeComponents.map((comp) => (
               <button
                 key={comp.id}
                 onClick={() => setSelectedCompId(comp.id)}
@@ -184,20 +204,29 @@ export const TireExplorerSection: React.FC<TireExplorerSectionProps> = ({
             <div className="flex items-start justify-between">
               <div>
                 <span className="text-xs font-mono-code font-bold text-blue-700 uppercase">
-                  {selectedComponent.id} • {selectedComponent.weightPercent}% OF TIRE MASS
+                  {selectedComponent.id} • {compMassShare}% OF TIRE MASS
                 </span>
                 <h3 className="text-2xl font-bold text-slate-900 mt-1">
                   {selectedComponent.name}
                 </h3>
               </div>
               <span className="status-tag tag-verified text-xs">
-                {selectedComponent.weightKg.toFixed(2)} kg
+                {(selectedComponent.weightKg ?? 0).toFixed(2)} kg
               </span>
             </div>
 
             <p className="text-sm text-slate-600 leading-relaxed">
-              {selectedComponent.function}
+              {compPurpose}
             </p>
+
+            {selectedComponent.technicalDescription && (
+              <div className="p-3 bg-blue-50/50 border border-blue-100 rounded-lg text-xs text-blue-900 leading-relaxed font-mono-code">
+                <span className="font-bold text-blue-700 block mb-1 uppercase tracking-wider text-[10px]">
+                  Technical Formulation Architecture:
+                </span>
+                {selectedComponent.technicalDescription}
+              </div>
+            )}
 
             {/* Materials List */}
             <div>
@@ -205,7 +234,7 @@ export const TireExplorerSection: React.FC<TireExplorerSectionProps> = ({
                 Constituent Material Formulation
               </span>
               <div className="flex flex-wrap gap-1.5">
-                {selectedComponent.materials.map((mat, i) => (
+                {materialsList.map((mat: string, i: number) => (
                   <span
                     key={i}
                     className="status-tag tag-supplier text-xs"
@@ -265,10 +294,27 @@ export const TireExplorerSection: React.FC<TireExplorerSectionProps> = ({
             </div>
           </div>
 
-          <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-            <span className="text-slate-500 flex items-center gap-1 font-mono-code text-xs">
-              <ShieldCheck className="w-4 h-4 text-emerald-600" /> ISO 14044 LCA Model Verified
-            </span>
+          <div className="pt-3 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+            <button
+              onClick={() =>
+                onOpenProvenance({
+                  recordHash: `0x7a8f${selectedComponent.id.replace(/[^a-zA-Z0-9]/g, '')}f8821e9c`,
+                  blockchainNetwork: 'Polygon Enterprise Trace POS / CIRPASS Node',
+                  blockNumber: 49817263,
+                  timestampISO: '2026-08-14T09:30:00Z',
+                  witnessCertId: `TUV-SUD-MICHELIN-BOM-2026-${selectedComponent.id.toUpperCase()}`,
+                  auditorOrganization: 'TÜV SÜD Mobility Certification GmbH',
+                  verificationMethod: 'ISO 14044 LCA Life Cycle Inventory Audit',
+                  dataQualityConfidenceScore: 98.4,
+                  digitalSignature: `SHA256:7f9b2c3a4e1d9082michelin-${selectedComponent.id}`,
+                  immutableLedgerStatus: 'Committed & Finalized',
+                })
+              }
+              className="text-slate-600 hover:text-emerald-700 flex items-center gap-1.5 font-mono-code text-xs transition-colors"
+            >
+              <ShieldCheck className="w-4 h-4 text-emerald-600" />
+              <span>Audit Provenance (ISO 14044 Verified)</span>
+            </button>
             <button
               onClick={onNavigateToMaterials}
               className="text-blue-700 hover:underline font-mono-code font-bold text-xs uppercase flex items-center gap-1"

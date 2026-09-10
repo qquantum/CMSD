@@ -8,13 +8,32 @@ interface StageNavigationFooterProps {
   onSelectSection: (section: SectionId) => void;
 }
 
+const ALL_SECTIONS_NAV: { id: SectionId; label: string }[] = [
+  { id: 'passport', label: '1. Passport Overview' },
+  { id: '3d-studio', label: '2. 3D Twin & Cinema' },
+  { id: 'code-studio', label: '3. Code Studio' },
+  { id: 'explorer', label: '4. Tire Anatomy Explorer' },
+  { id: 'materials', label: '5. Materials & BOM' },
+  { id: 'origin', label: '6. Raw Material Origins' },
+  { id: 'rubber', label: '7. Rubber & EUDR Trace' },
+  { id: 'supply-chain', label: '8. Supplier Network' },
+  { id: 'manufacturing', label: '9. Clean Manufacturing' },
+  { id: 'carbon', label: '10. Product Carbon Footprint' },
+  { id: 'performance', label: '11. Homologation Performance' },
+  { id: 'lifecycle', label: '12. In-Service Fleet IoT' },
+  { id: 'circularity', label: '13. Circularity 10R' },
+  { id: 'end-of-life', label: '14. End of Life & Pyrolysis' },
+  { id: 'compliance', label: '15. Verification & Compliance' },
+];
+
 export const StageNavigationFooter: React.FC<StageNavigationFooterProps> = ({
   activeSection,
   onSelectSection
 }) => {
-  const currentIndex = FLOW_STAGES.findIndex(s => s.id === activeSection);
-  const prevStage = currentIndex > 0 ? FLOW_STAGES[currentIndex - 1] : null;
-  const nextStage = currentIndex < FLOW_STAGES.length - 1 ? FLOW_STAGES[currentIndex + 1] : null;
+  const currentIndex = ALL_SECTIONS_NAV.findIndex(s => s.id === activeSection);
+  const safeIndex = currentIndex >= 0 ? currentIndex : 0;
+  const prevStage = safeIndex > 0 ? ALL_SECTIONS_NAV[safeIndex - 1] : null;
+  const nextStage = safeIndex < ALL_SECTIONS_NAV.length - 1 ? ALL_SECTIONS_NAV[safeIndex + 1] : null;
 
   return (
     <div className="mt-8 pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4 select-none">
@@ -37,7 +56,7 @@ export const StageNavigationFooter: React.FC<StageNavigationFooterProps> = ({
       {/* Center Stage Counter */}
       <div className="flex items-center gap-2 text-xs font-mono-code text-slate-500">
         <span className="w-2 h-2 rounded-full bg-blue-600"></span>
-        <span>STAGE {currentIndex + 1} OF {FLOW_STAGES.length}</span>
+        <span>STAGE {safeIndex + 1} OF {ALL_SECTIONS_NAV.length}</span>
       </div>
 
       {/* Next Button */}
